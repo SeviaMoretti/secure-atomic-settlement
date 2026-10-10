@@ -1,0 +1,231 @@
+Pallet DataAssets
+自定义 Header
+Asset Root 计算逻辑
+区块最终化集成
+Runtime API 适配
+
+git clone 项目到本地后，不要更改catgo.toml中crate的version，cargo build --release
+
+实现benchmarking.rs&mock.rs: cargo test -p pallet-rewards --features runtime-benchmarks
+
+基准测试：cargo build --release --features runtime-benchmarks
+成功之后（生成weights）./target/release/assetxchain-node benchmark pallet
+                    --chain dev     
+                    --pallet pallet_dataassets     
+                    --extrinsic "*"     
+                    --steps 50     
+                    --repeat 20     
+                    --output pallets/dataassets/src/weights.rs
+
+./target/release/assetxchain-node benchmark pallet \
+    --chain dev \
+    --pallet pallet_markets\
+    --extrinsic "*" \
+    --steps 50 \
+    --repeat 20 \
+    --output pallets/markets/src/weights.rs
+
+# Single-Node Development Chain
+polkadot-sdk: https://github.com/paritytech/polkadot-sdk
+template-solochain: https://github.com/paritytech/polkadot-sdk-solochain-template
+Substrate and Polkadot Stack Exchange: https://substrate.stackexchange.com/
+polkdot-sdk （实现类型介绍）：https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/index.html
+rust库: https://docs.rs/
+reth_trie: https://reth.rs/
+substrate child trie:https://github.com/polkadot-developers/substrate-docs/blob/main/content/md/en/docs/learn/state-transitions-and-storage.md
+可以查适配版本：https://github.com/paritytech/polkadot-sdk/releases/tag/polkadot-v1.17.0
+
+crate:sc-network-types v0.15.5没有kad.rs，只有这个版本没有，直接用这个会报错，不会用
+T>（普通动态数组） + 长度上限约束（由 S 定义），是 Substrate 链上存储的安全替代方案（几乎不会直接用 不能用于包含 Vec 的类型，因为pallet编译的时候要求pallet里面的任何东西都要是定长，Vec是可变长度数据结构，所以不能有
+
+#########
+##启动开发链（最常用，自动生成临时数据，适合测试）
+单节点
+./target/release/assetxchain-node --dev
+./target/release/assetxchain-node --dev --tmp
+
+# 生成 Alice 的网络密钥
+mkdir -p /tmp/alice/chains/local_testnet/network
+./target/release/assetxchain-node key generate-node-key --file /tmp/alice/chains/local_testnet/network/secret_ed25519
+alice节点ID(不固定)：12D3KooW9pU34RzoFpDr7ua6yPXhMCUvzPTSokVzD4eWdTSTgbyD
+# 启动alice节点
+./target/release/assetxchain-node \
+  --chain local \
+  --alice \
+  --validator \
+  --base-path /tmp/alice \
+  --port 30333 \
+  --rpc-port 9944 \
+  --rpc-methods unsafe \
+  --rpc-cors all
+# 生成 bob 的网络密钥
+mkdir -p /tmp/bob/chains/local_testnet/network
+./target/release/assetxchain-node key generate-node-key --file /tmp/bob/chains/local_testnet/network/secret_ed25519
+bob节点ID：12D3KooWNCVxkhkWA3p4CRMVbZgyzLaoeAogYQdajidzSR1c28P7
+./target/release/assetxchain-node \
+  --chain local \
+  --bob \
+  --validator \
+  --base-path /tmp/bob \
+  --port 30334 \
+  --rpc-port 9945 \
+  --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/刚才Alice生成的ID
+
+# 新建moretti角色
+mkdir -p /tmp/moretti/chains/local_testnet/network
+./target/release/assetxchain-node key generate-node-key --file /tmp/moretti/chains/local_testnet/network/secret_ed25519
+12D3KooWCZEhURtNTvJfAiq1Em7d1wCprYriyq6fwtktzEJkJrJi
+./target/release/assetxchain-node \
+  --chain local \
+  --validator \
+  --base-path /tmp/moretti \
+  --port 30335 \
+  --rpc-port 9946 \
+  --prometheus-port 9617 \
+  --rpc-methods unsafe \
+  --name Moretti_Node \
+  --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWBjrVCqEjZVxyC1ss8jmsbU2zBD2xx9nWqUvJ3XB69Gis
+  
+  
+
+
+
+
+## To start the development chain with detailed logging, run the following command:
+RUST_BACKTRACE=1 ./target/release/assetxchain-node -ldebug --dev
+
+## Substrate 节点默认开启 RPC 服务（端口 9933，具体看终端输出的rpc端口）;通过 RPC 接口获取区块详细结构
+curl -X POST http://localhost:9944 \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0", "method":"chain_getBlock", "params": [], "id":1}'
+  
+curl -H "Content-Type: application/json" \\ -d '{ "id":1, "jsonrpc":"2.0", "method":"state_call", "params":[ "DataAssetsApi_get_asset", "0xa614a1709db2c8f37be07ea09a2939ce907fe7529b14a603f88c76e89ef724c5" ] }' \\ http://localhost:9944 | jq  
+
+## 区块链浏览器和开发交互前端
+仓库位置: https://github.com/polkadot-js/apps
+网址： https://polkadot.js.org/apps/
+
+
+crate版本的dependens的版本
+在runtime、pallets、根目录的cargo.toml目录中crate的[workspace.dependencies]或[dependencies]要加上default-features = false,如果只在node使用（pallet 或 runtime 没有直接使用这些依赖）可以不加。
+
+
+持久化存储
+回滚：不用管从哪里执行的交易（执行了多少条）只需要知道需要回滚到那个区块；要是只回滚一条交易的话，就没办法
+增量更新
+批量更新
+
+元证权证管理机制
+
+创建元证/权证
+交易元证/权证
+
+使用polkadot-substrate的template-solochain来开发一条区块链：数据资产流通交易链，想要在链上维护一颗资产状态树：使用mpt来组织数据资产状态（数据存储至IPFS，数据资产状态是数据的元数据），并且每个数据资产都可以有一颗子树来组织数据权证的状态（子树同样采用mpt组织管理），数据资产状态中有一项是子树的状态树根。已经在solochain上面自定义了区块头（添加了一个asset_root，对应资产状态树），并且使用trie-db实现了mpt的基本逻辑；(不能用，现在用的substrate的child trie);修改了共识算法aura-->babe，下一步打算添加区块奖励，再下一步-市场
+
+针对....问题、提出（公开）了什么方法、方法有什么特点（采用什么技术）、达到了什么效果
+
+
+
+。。。。。。。。。。。Substrate 状态存储的核心基础 ——Merkle Patricia Trie（MPT，默克尔帕特里夏树）。Substrate 的链上状态默认存储在一棵「主 MPT」中，而 Child Trie 是主 Trie 之下的独立子 MPT，专门用于解决主 Trie 在「大量同类数据存储」场景下的效率、隔离性问题。
+
+需要实现：1、注册资产需要质押
+2、市场功能
+3、经济模型设计
+4、数据资产治理平台
+
+
+pallet-dataassets中的权重不能是定值
+offchain-worker实现IPFS连接
+
+
+guozheng@guozheng-VMware-Virtual-Platform:~/blockchain/solochain/assetxchain$ ./target/release/assetxchain-node key inspect --public 0000000000000000000000000000000000000000000000000000000000000001 --network substratete
+Network ID/Version: substrate
+  Public key (hex):   0x0000000000000000000000000000000000000000000000000000000000000001
+  Account ID:         0x0000000000000000000000000000000000000000000000000000000000000001
+  Public key (SS58):  5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUqAsg
+  SS58 Address:       5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUqAsg
+
+curl -s -H "Content-Type: application/json" -d '{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "state_getStorage",
+  "params": [
+    "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9de1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"
+  ]
+}' http://localhost:9944 | jq -r '.result'
+
+基金会账户
+Secret phrase:       valley favorite green devote gate try garage oval worth pave anger fresh
+  Network ID:        substrate
+  Secret seed:       0xdfdf8188ff3357533be8a5384f3e63df024ec36b2b2356de8258776f79e18987
+  Public key (hex):  0x701f9c89ca77bc72933cd3c1d29b18cc9fc3a95bb4b9f137373e9ebf9239b34f
+  Account ID:        0x701f9c89ca77bc72933cd3c1d29b18cc9fc3a95bb4b9f137373e9ebf9239b34f
+  Public key (SS58): 5EbicP3W34hbZCZNTgtj9Tm9pH4avn3M6Vz2keYHTsCKAe49
+  SS58 Address:      5EbicP3W34hbZCZNTgtj9Tm9pH4avn3M6Vz2keYHTsCKAe49
+激励池账户
+Secret phrase:       suit square daring pair clarify open sponsor salmon garbage parrot exhibit sister
+  Network ID:        substrate
+  Secret seed:       0x7cca36ff3309b366d709a5ce8ba75150068959add118133f2b1d0bea48346f36
+  Public key (hex):  0x1a9de66d5ca5a6a7bad9add630d85b972f351082b0422e5f64c78a4eecc4a427
+  Account ID:        0x1a9de66d5ca5a6a7bad9add630d85b972f351082b0422e5f64c78a4eecc4a427
+  Public key (SS58): 5Cfc1S9WJCt4TchCjzGEEdTzSZnhPfmZgtUcE3Mhybcszrss
+  SS58 Address:      5Cfc1S9WJCt4TchCjzGEEdTzSZnhPfmZgtUcE3Mhybcszrss
+  
+  
+  在pallets/dataassets/中调用pallet-incentive方法的时候应该注意处理返回的错误，例如：创建元证的时候，要检查是否是除此创建，是的话就奖励DAT；但是有一些激励池的错误出现了，要保证创建元证不被打断。
+ 激励池分级：核心池 → 备用池 → 紧急池 → 可持续池 
+  激励池耗尽应该怎么做-->调低奖励额度；手续费；额度不足时账户进入等待队列，有额度了优先处理。
+  
+  
+  
+patient vacuum betray accident patch glimpse refuse frame rally exchange half trend
+https://ui.use.ink/
+
+
+./target/release/assetxchain-node key generate --scheme sr25519
+Secret phrase:       prefer forward neutral current fan fly vapor kid clinic party hurdle permit
+  Network ID:        substrate
+  Secret seed:       0x6e9e259f6286951bb2e6b48c2f84078ad04356a3e777d64aa544475882f698cd
+  Public key (hex):  0x50ce659e6a73ff3d6a83f3d3b85d1f6c5331ff79d57f653e7596afe348cd0640
+  Account ID:        0x50ce659e6a73ff3d6a83f3d3b85d1f6c5331ff79d57f653e7596afe348cd0640
+  Public key (SS58): 5DtezzQ18u1CTRvhqVZt7L3qRxRyEBnCRtuNyBrUZEPJLCZx
+  SS58 Address:      5DtezzQ18u1CTRvhqVZt7L3qRxRyEBnCRtuNyBrUZEPJLCZx
+
+assetId:0x81acc90ad8acadb38860b0db61901b9cac163696ba8507422d15393ad917fcba
+market_orderbook codehash:0xf4a81bd61431d94ea7faf34a298d1658cc92a087762952097b3d07ae582828b7
+
+
+
+
+启动节点的时候指令有--validator,应该将这个节点对应的账户添加到validator的存储列表中
+
+问题：
+sc-network出现依赖错误，0.15.5没有kad模块，但是还就依赖上0.15.5,能跑动的版本是依赖的0.15.3
+cargo update -p sc-network-types@o.15.5 --precise 0.15.4
+强制更新0.15.5-->0.15.4，直接build出现68个error!!!!!
+有时间就找原因，没时间就从码云上把最新版本clone下来
+
+cargo build --release就能finish
+cargo build --release --features runtime-benchmarks就会版本冲突？？？？？？？？？
+给pallet-dataassets添加benchmarking时，出现了版本冲突，
+
+现在想要将cargo.toml中的crate从 {version = "..."} 替换为 {git = "...", tag = "..."} 
+polkadot-v1.16.0  sp-runtime 39.0.1
+polkadot-v1-17.2
+polkadot-v1.18.0		
+polkadot-v1.21.0		
+(和目前项目crate最适配)polkadot-v1.18.3	41.1.0
+cargo build --release成功
+第一次需要从github中将polkadot-v1.18.3下载下来，很慢，得配置网络
+但是还是会出现cargo build --release --features runtime-benchmarks就会版本冲突
+改为v1.19.0，还是 pallet-staking 缺少 migrate_to_direct_staker
+改为v1.16.0，全废，重新git
+git的没有validator的版本，还是不行，各种版本都不行，
+最后发现问题是--features runtime-benchmarks没有传递到报错的包中，应该在runtime/.cargo.toml中[features]-->runtime-benchmarks = [???],开启对应特性。(polkadot-v1.19.0,no_validator)
+
+0x13ccc6771b9a2c40ed960af051476c1458f6d4a77d286978e6608f6724f4b078
+
+
+pallet-dataassets::types::DataAssets有价格的字段，但是应该在授权市场的时候设置，所以下一步应该将这部分逻辑移到授权市场并且市场存储。
+元证树：静态、低频，所以元证数据结构中会随着权证状态变化而变化的属性需要迁移到pallet中（不用元证树存这些状态了）
+权证树：动态、高频

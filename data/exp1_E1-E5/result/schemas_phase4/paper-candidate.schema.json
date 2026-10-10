@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-phase4-paper-candidate-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "candidate_id", "created_at", "timezone",
+    "phase_step", "status", "validity_level", "claim_boundary",
+    "source_provisional_candidate", "frozen_identity", "baselines",
+    "e0_reproducibility_runs", "correctness_runs", "candidate_gate",
+    "authorization", "immutability"
+  ],
+  "properties": {
+    "schema_id": {"const": "assetxchain-exp2-phase4-paper-candidate"},
+    "schema_version": {"const": 1},
+    "candidate_id": {"type": "string", "pattern": "^p4-paper-candidate-[0-9]{8}T[0-9]{6}\\+0800$"},
+    "created_at": {"$ref": "#/$defs/nonempty"},
+    "timezone": {"const": "Asia/Shanghai"},
+    "phase_step": {"const": "S4.8"},
+    "status": {"const": "frozen"},
+    "validity_level": {"const": "paper-candidate"},
+    "claim_boundary": {"$ref": "#/$defs/nonempty"},
+    "source_provisional_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "path", "sha256", "validity_level"],
+      "properties": {
+        "candidate_id": {"$ref": "#/$defs/nonempty"},
+        "path": {"$ref": "#/$defs/nonempty"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "validity_level": {"const": "provisional-candidate"}
+      }
+    },
+    "frozen_identity": {"type": "object"},
+    "baselines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["B1", "B2", "G3"],
+      "properties": {"B1": {"type": "object"}, "B2": {"type": "object"}, "G3": {"type": "object"}}
+    },
+    "e0_reproducibility_runs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["B1", "B2", "G3"],
+      "properties": {"B1": {"$ref": "#/$defs/run_record"}, "B2": {"$ref": "#/$defs/run_record"}, "G3": {"$ref": "#/$defs/run_record"}}
+    },
+    "correctness_runs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["E1", "E2", "E3", "E4", "E5"],
+      "properties": {
+        "E1": {"$ref": "#/$defs/run_family"}, "E2": {"$ref": "#/$defs/run_family"},
+        "E3": {"$ref": "#/$defs/run_family"}, "E4": {"$ref": "#/$defs/run_family"},
+        "E5": {"$ref": "#/$defs/run_family"}
+      }
+    },
+    "candidate_gate": {"type": "object"},
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["next_allowed_step", "e6_authorized", "paper_candidate", "paper_final", "performance_claims_authorized"],
+      "properties": {
+        "next_allowed_step": {"const": "S4.9"}, "e6_authorized": {"const": true},
+        "paper_candidate": {"const": true}, "paper_final": {"const": false},
+        "performance_claims_authorized": {"const": false}
+      }
+    },
+    "immutability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_raw_must_not_be_modified", "manifest_must_not_be_modified_after_creation", "semantic_change_requires_return_to"],
+      "properties": {
+        "source_raw_must_not_be_modified": {"const": true},
+        "manifest_must_not_be_modified_after_creation": {"const": true},
+        "semantic_change_requires_return_to": {"const": "S4.2"}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nonempty": {"type": "string", "minLength": 1},
+    "run_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "preflight_sha256", "build_artifacts_sha256", "checker_sha256", "seal_sha256", "independent_recheck_sha256", "independent_recheck_status", "seal_status", "artifact_validation", "artifact_count", "result_count", "planned_units", "completed_units", "planned_attempts", "completed_attempts"],
+      "properties": {
+        "run_id": {"$ref": "#/$defs/nonempty"}, "preflight_sha256": {"$ref": "#/$defs/sha256"},
+        "build_artifacts_sha256": {"$ref": "#/$defs/sha256"},
+        "checker_sha256": {"$ref": "#/$defs/sha256"}, "seal_sha256": {"$ref": "#/$defs/sha256"},
+        "independent_recheck_sha256": {"$ref": "#/$defs/sha256"}, "independent_recheck_status": {"const": "PASS"},
+        "seal_status": {"const": "completed"}, "artifact_validation": {"const": "PASS"},
+        "artifact_count": {"type": "integer", "minimum": 1}, "result_count": {"type": "integer", "minimum": 0},
+        "planned_units": {"type": "integer", "minimum": 1}, "completed_units": {"type": "integer", "minimum": 1},
+        "planned_attempts": {"type": "integer", "minimum": 1}, "completed_attempts": {"type": "integer", "minimum": 1}
+      }
+    },
+    "run_family": {
+      "type": "object", "additionalProperties": false, "required": ["B1", "B2", "G3"],
+      "properties": {"B1": {"$ref": "#/$defs/run_record"}, "B2": {"$ref": "#/$defs/run_record"}, "G3": {"$ref": "#/$defs/run_record"}}
+    }
+  }
+}

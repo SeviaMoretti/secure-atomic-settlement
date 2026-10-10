@@ -1,0 +1,74 @@
+{
+  "schema_id": "assetxchain-exp2-baseline-manifest",
+  "schema_version": 1,
+  "baseline_id": "B1",
+  "baseline_name": "Contract-only",
+  "baseline_profile_version": "1",
+  "contract_version": "phase3-adapter-contract-v1",
+  "validity_level": "legacy-pilot",
+  "git": {
+    "worktree": "/home/gz785/code/assetxchain-b1",
+    "branch": "codex/s31-b1-baseline",
+    "head": "8514bf0720ec9b5ed3c8d3ec1501264ae7bf1642",
+    "formal_base_commit": "393bc52af495ccd72ff883059d7715cbb153f964",
+    "source_preservation_commit": "cf3859eeadfc7286a1f0656a148a9fa245f82605",
+    "phase2_g3_commit": null,
+    "dirty_expected": false
+  },
+  "authority": {
+    "domain_authority": "contract",
+    "market_logic": "contract",
+    "payment_authority": "contract-order-escrow-ledger",
+    "order_authority": "contract",
+    "settlement_evidence_authority": "contract",
+    "projection_role": "not-applicable",
+    "normalized_authority_source": "contract"
+  },
+  "ownership": [
+    {
+      "path": "contracts/market_pure_contract",
+      "owner": "B1",
+      "role": "domain objects, authorization, market logic, per-order payment ledger, orders, and evidence"
+    },
+    {
+      "path": "runtime/src/configs/mod.rs",
+      "owner": "B1",
+      "role": "Contracts deploy limit configuration for the B1 release Wasm"
+    }
+  ],
+  "prohibited_dependencies": [
+    "AssetXChain Runtime domain mutation",
+    "G3 typed settlement gateway",
+    "Runtime-authoritative ownership, payment, order finality, or evidence"
+  ],
+  "build": {
+    "source_root": "/home/gz785/code/assetxchain-b1",
+    "entries": [
+      {
+        "id": "contract-unit",
+        "cwd": "/home/gz785/code/assetxchain-b1",
+        "command": "cargo test --manifest-path contracts/market_pure_contract/Cargo.toml",
+        "artifact_kind": "test"
+      },
+      {
+        "id": "contract-wasm-check",
+        "cwd": "/home/gz785/code/assetxchain-b1",
+        "command": "cargo check --manifest-path contracts/market_pure_contract/Cargo.toml --no-default-features --target wasm32-unknown-unknown",
+        "artifact_kind": "wasm-check"
+      }
+    ]
+  },
+  "shared_fixture": {
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "vector_bundle_id": "assetxchain-paper2-shared-vectors-v1",
+    "vector_bundle": "fixtures/phase3/assetxchain-paper2-shared-fixture-v1.json",
+    "generator": "scripts/common/generate_shared_fixture.py",
+    "consumer": "scripts/common/shared_fixture_codec.py#baseline_consumer_view"
+  },
+  "adapter": {
+    "interface": "scripts/common/phase3_contract.py#BaselineAdapter",
+    "implementation_status": "implemented",
+    "entrypoint": "scripts/baselines/b1_adapter.py#B1Adapter",
+    "planned_step": "S3.5"
+  }
+}

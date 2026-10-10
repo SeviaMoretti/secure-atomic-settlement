@@ -1,0 +1,106 @@
+{
+  "schema_id": "assetxchain-exp2-r2-workload",
+  "schema_version": 1,
+  "metadata": {
+    "config_path": "configs/workloads/r2-x3-mechanism-ablation-v1.json",
+    "workload_id": "r2-x3-mechanism-ablation-v1",
+    "experiment_id": "X3",
+    "title": "Single-mechanism ablation",
+    "protocol_id": "assetxchain-paper2-shared",
+    "settlement_protocol_version": 1,
+    "baseline_ids": ["G3"],
+    "seed": 20260807,
+    "evidence_level": "auxiliary-ablation",
+    "claim_boundary": "mechanism necessity observations for G3 only; excluded from B1/B2/G3 primary ranking"
+  },
+  "research_question": "Which authorization, atomicity, commitment, uniqueness, or audit failures are actually observed when exactly one CRS protection is removed from G3?",
+  "independent_variables": {
+    "ablation_variant": [
+      "X3-A1-no-runtime-commitment-recompute",
+      "X3-A2-no-object-authorization",
+      "X3-A3-no-unique-settlement-guard",
+      "X3-A4-no-quota-reservation-protection",
+      "X3-A5-record-separated-from-atomic-transition"
+    ]
+  },
+  "variants": [
+    {
+      "variant_id": "X3-A1-no-runtime-commitment-recompute",
+      "removed_mechanism": "Runtime recomputation and equality check of canonical commitment",
+      "target_scenario": "tamper committed price or buyer while retaining the market-supplied commitment",
+      "secure_oracle": "reject before settlement; false_accept=true if the tampered request changes business state or settles"
+    },
+    {
+      "variant_id": "X3-A2-no-object-authorization",
+      "removed_mechanism": "object-level market authorization check",
+      "target_scenario": "a registered and operation-capable market without object-level authorization requests TransferRight",
+      "secure_oracle": "reject AuthorizationMissing; false_accept=true if a protected order is created, funded, or settled"
+    },
+    {
+      "variant_id": "X3-A3-no-unique-settlement-guard",
+      "removed_mechanism": "order terminal-state and unique SettlementRecord guard",
+      "target_scenario": "two settle attempts target the same Funded TransferMeta order",
+      "secure_oracle": "at most one success and exactly one SettlementRecord; duplicate_success=true for any second success"
+    },
+    {
+      "variant_id": "X3-A4-no-quota-reservation-protection",
+      "removed_mechanism": "atomic issuance quota reservation at funding",
+      "target_scenario": "two IssueRight orders compete for the last available authorization quota",
+      "secure_oracle": "at most one funded-and-settled issuance and issued + reserved <= max; duplicate_success=true if both issue"
+    },
+    {
+      "variant_id": "X3-A5-record-separated-from-atomic-transition",
+      "removed_mechanism": "SettlementRecord creation inside the atomic settlement transition",
+      "target_scenario": "complete the state transition and intentionally withhold the separated record-finalization call",
+      "secure_oracle": "a Settled order and changed ownership/right state require exactly one matching SettlementRecord; audit_gap=true when closure is absent or mismatched"
+    }
+  ],
+  "dependent_variables": [
+    "false_accept",
+    "duplicate_success",
+    "dirty_state",
+    "audit_gap",
+    "observed_invariant_violations",
+    "actual_protocol_outcomes",
+    "settlement_record_count",
+    "success_event_count"
+  ],
+  "controls": {
+    "baseline_id": "G3",
+    "reference_commit": "the approved clean G3 candidate selected at preflight",
+    "one_mechanism_per_variant": true,
+    "settlement_protocol_version": 1,
+    "fixture_roles_prices_fees_timing_and_seed": "frozen and identical across reference and variant",
+    "target_request_sequence": "frozen per variant",
+    "checker_oracle": "derived from unablated shared protocol v1, not from expected ablation behavior",
+    "ranking_policy": "never aggregate with or rank B1, B2, and G3"
+  },
+  "repetitions": {
+    "targeted_trials_per_variant": 10
+  },
+  "variant_identity": {
+    "independent_clean_commit_required": true,
+    "independent_manifest_required": true,
+    "independent_run_id_required": true,
+    "E0_required_per_variant": true,
+    "diff_allowlist": "only the named protection and the minimum test wiring needed to expose it",
+    "result_reporting": "report only checker-derived observed violations; an expected violation that is not observed remains a valid zero observation"
+  },
+  "expected_result_rules": [
+    "The secure oracle remains the unablated shared protocol v1 expectation for every trial.",
+    "false_accept, duplicate_success, dirty_state, and audit_gap are computed from actual authoritative pre/post state, records, and events.",
+    "No violation is inserted because it was anticipated; only observed checker output is reportable.",
+    "Ablation results remain auxiliary-ablation evidence and cannot enter the primary architecture cost or correctness ranking."
+  ],
+  "checker_contract": "configs/r2/checker-contracts-v1.json#X3",
+  "checker_ids": ["R2-COMMON-01", "R2-COMMON-02", "R2-COMMON-04", "X3-C01", "X3-C02", "X3-C03", "X3-C04", "X3-C05", "X3-C06"],
+  "result_schema": "schemas/r2/extended-experiment-result.schema.json#/$defs/x3_result",
+  "stop_gates": [
+    "variant commit is dirty, unidentified, reused, or has not passed E0",
+    "the diff removes or changes more than one named protection",
+    "fixture, request sequence, secure oracle, checker, or schema changes after preflight",
+    "actual authoritative state, record, or event evidence is incomplete",
+    "checker cannot distinguish a protocol violation from harness failure",
+    "result is labeled as primary evidence or included in B1/B2/G3 ranking"
+  ]
+}

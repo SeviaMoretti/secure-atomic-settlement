@@ -1,0 +1,21 @@
+cat <<EOF > .dockerignore
+# 忽略根目录及所有子目录下的 target 文件夹
+**/target/
+
+# 忽略 Git 历史记录
+.git/
+
+# 忽略做实验生成的各种数据库快照和压测脚本日志
+rocksdb_*/
+paritydb_*/
+geth_*/
+*.csv
+
+# 忽略 Node.js 模块 
+node_modules/
+
+# 忽略环境配置和文档
+env-setup/
+docs/
+README.md
+EOF

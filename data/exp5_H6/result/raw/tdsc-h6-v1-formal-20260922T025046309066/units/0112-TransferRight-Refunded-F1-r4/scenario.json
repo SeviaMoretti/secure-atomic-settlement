@@ -1,0 +1,39 @@
+{
+  "operation": "TransferRight",
+  "terminal": "Refunded",
+  "condition": "F1",
+  "seller": "RIGHT_SELLER",
+  "buyer": "BUYER_2",
+  "artifact": "normal",
+  "preparation": [
+    {
+      "method": "relayCreateOrder",
+      "role": "RELAYER",
+      "label": "create"
+    },
+    {
+      "method": "relayFundOrder",
+      "role": "BUYER_2",
+      "label": "fund"
+    },
+    {
+      "method": "relayRefundFunded",
+      "role": "BUYER_2",
+      "label": "refund",
+      "waitForGrace": true
+    }
+  ],
+  "injection": null,
+  "recovery": [
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync1"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync2"
+    }
+  ]
+}

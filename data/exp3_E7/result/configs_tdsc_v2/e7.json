@@ -1,0 +1,35 @@
+{
+  "protocol": "tdsc-e7-node-reuse-v2",
+  "baselines": [
+    "B1",
+    "B2",
+    "G3"
+  ],
+  "operations": [
+    "TransferMeta",
+    "IssueRight",
+    "TransferRight"
+  ],
+  "variants": [
+    "V0",
+    "V1",
+    "V2",
+    "V3",
+    "V4"
+  ],
+  "quota_variant": "Q1",
+  "seed": 2026091907,
+  "formal_repetitions": 5,
+  "formal_units": 240,
+  "formal_sessions": 15,
+  "pilot_units_per_mode": 48,
+  "pilot_modes": [
+    "reused",
+    "fresh"
+  ],
+  "unit_timeout_seconds": 600,
+  "rpc": "ws://127.0.0.1:9944",
+  "chain_mode": "--dev --tmp",
+  "validity_level": "paper-candidate",
+  "claim_boundary": "tested chain-side E7 correctness only; no performance comparison or real TEE claim"
+}

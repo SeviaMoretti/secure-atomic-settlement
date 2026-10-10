@@ -1,0 +1,79 @@
+{
+  "schema_id": "assetxchain-exp2-baseline-manifest",
+  "schema_version": 1,
+  "baseline_id": "B2",
+  "baseline_name": "Runtime-only",
+  "baseline_profile_version": "1",
+  "contract_version": "phase3-adapter-contract-v1",
+  "validity_level": "legacy-pilot",
+  "git": {
+    "worktree": "/home/gz785/code/assetxchain-b2",
+    "branch": "codex/s31-b2-baseline",
+    "head": "dc10ea68ffddacf93e6d57d91c9acfa35a4b1bfa",
+    "formal_base_commit": "393bc52af495ccd72ff883059d7715cbb153f964",
+    "source_preservation_commit": "cf3859eeadfc7286a1f0656a148a9fa245f82605",
+    "phase2_g3_commit": null,
+    "dirty_expected": false
+  },
+  "authority": {
+    "domain_authority": "runtime",
+    "market_logic": "runtime",
+    "payment_authority": "runtime-escrow",
+    "order_authority": "runtime",
+    "settlement_evidence_authority": "runtime",
+    "projection_role": "not-applicable",
+    "normalized_authority_source": "runtime"
+  },
+  "ownership": [
+    {
+      "path": "pallets/market_runtime",
+      "owner": "B2",
+      "role": "Runtime-authoritative domain objects, fixed market logic, authorization, orders, payment, settlement, and evidence"
+    },
+    {
+      "path": "runtime/src/configs",
+      "owner": "B2",
+      "role": "Runtime-only integration boundary"
+    },
+    {
+      "path": "Cargo.lock",
+      "owner": "B2",
+      "role": "reproducible B2 pallet dependency feature graph"
+    }
+  ],
+  "prohibited_dependencies": [
+    "market contract execution in the measured path",
+    "typed contract-Runtime settlement gateway",
+    "contract-owned domain state or payment ledger"
+  ],
+  "build": {
+    "source_root": "/home/gz785/code/assetxchain-b2",
+    "entries": [
+      {
+        "id": "pallet-unit",
+        "cwd": "/home/gz785/code/assetxchain-b2",
+        "command": "cargo test -p pallet-market-runtime",
+        "artifact_kind": "test"
+      },
+      {
+        "id": "runtime-check",
+        "cwd": "/home/gz785/code/assetxchain-b2",
+        "command": "cargo check -p assetxchain-runtime",
+        "artifact_kind": "runtime-check"
+      }
+    ]
+  },
+  "shared_fixture": {
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "vector_bundle_id": "assetxchain-paper2-shared-vectors-v1",
+    "vector_bundle": "fixtures/phase3/assetxchain-paper2-shared-fixture-v1.json",
+    "generator": "scripts/common/generate_shared_fixture.py",
+    "consumer": "scripts/common/shared_fixture_codec.py#baseline_consumer_view"
+  },
+  "adapter": {
+    "interface": "scripts/common/phase3_contract.py#BaselineAdapter",
+    "implementation_status": "implemented",
+    "entrypoint": "scripts/baselines/b2_adapter.py#B2Adapter",
+    "planned_step": "S3.8"
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "schema_id": "assetxchain-exp2-paper-final",
+  "schema_version": 2,
+  "final_id": "p4-paper-final-20260807T124151+0800",
+  "created_at": "2026-08-07T12:41:51+08:00",
+  "step": "S4.12",
+  "status": "approved",
+  "validity_level": "paper-final",
+  "promotion_rule": "Independent S4.12 index promotion; raw, processed, figure, candidate, and historical final artifacts remain immutable and are not relabeled in place.",
+  "sample_unit_resolution": {
+    "status": "PASS",
+    "run_units_per_baseline": 30,
+    "phase_attempts_per_baseline": 90,
+    "complete_orders_per_baseline_operation": 10,
+    "primary_table_n": 10,
+    "reason": "Each baseline run contains three operations at R=10, while each primary table cell is grouped by one baseline and one operation. The three protocol phases are summed within each repetition before descriptive statistics. Treating the phases as 30 independent complete orders would change the statistical unit."
+  },
+  "candidate": {
+    "candidate_id": "p4-paper-candidate-20260806T004403+0800",
+    "path": "/home/gz785/code/exp2/results/candidates/p4-paper-candidate-20260806T004403+0800/candidate.manifest.json",
+    "sha256": "40c349d225241d08509f5ff9bf688c65da257a853b01eb02aab374499309cca2",
+    "candidate_gate": "PASS",
+    "phase3_gate": "PASS",
+    "ready_for_phase4": true
+  },
+  "frozen_identity": {
+    "formal_base_commit": "393bc52af495ccd72ff883059d7715cbb153f964",
+    "protocol_id": "assetxchain-paper2-shared",
+    "protocol_version": 1,
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "workload_id": "formal-cost-medium-v2",
+    "workload_path": "/home/gz785/code/exp2/configs/workloads/formal_cost_v2.json",
+    "workload_sha256": "9a8b56c26c449b97560857c29fb7adde208f4ebd4878eabc29d7de2973283530",
+    "seed": 20260726,
+    "repetitions": 10,
+    "baseline_commits": {
+      "B1": "8514bf0720ec9b5ed3c8d3ec1501264ae7bf1642",
+      "B2": "dc10ea68ffddacf93e6d57d91c9acfa35a4b1bfa",
+      "G3": "47ebd794c4ef1264bb8265c49d8e92c5b44e6323"
+    },
+    "all_formal_worktrees_clean": true
+  },
+  "correctness_evidence": {
+    "binding": "The immutable candidate manifest SHA-256 binds all 15 E1-E5 raw run IDs and their seal/checker hashes.",
+    "families": [
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5"
+    ],
+    "source_seal_count": 15,
+    "seal_hash_matches": 15,
+    "checker_hash_matches": 15,
+    "scenario_catalog": 42,
+    "covered_scenarios": 42,
+    "completed_units": 705,
+    "completed_attempts": 1110,
+    "successful_settlement_records": 75,
+    "settlement_record_fields": 24,
+    "required_invariants": [
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "I5",
+      "I6",
+      "I7",
+      "I8",
+      "I9",
+      "I10"
+    ],
+    "invariant_violations": 0,
+    "expected_outcome_mismatches": 0,
+    "false_accepts": 0,
+    "false_rejects": 0,
+    "duplicates": 0,
+    "dirty_state": 0,
+    "event_mismatches": 0,
+    "timeouts": 0,
+    "rerun_performed": false
+  },
+  "cost_evidence": {
+    "claim_boundary": "Descriptive fixed-medium-load formal cost only; no inferential significance, causal ranking, or scalability claim.",
+    "warm_up_policy": "none; all R=10 fresh-chain cold-start observations retained",
+    "scenarios": [
+      "LEG-META-01",
+      "LEG-ISSUE-01",
+      "LEG-RESALE-01"
+    ],
+    "metric_semantics": {
+      "weight_ref_time": "same-extrinsic terminal system.ExtrinsicSuccess/ExtrinsicFailed dispatch weight",
+      "weight_proof_size": "same-extrinsic terminal system.ExtrinsicSuccess/ExtrinsicFailed dispatch weight",
+      "partial_fee": "same-extrinsic transactionPayment.TransactionFeePaid.actual_fee",
+      "declared_payment_info": "audit-only",
+      "declared_contract_gas_limit": "audit-only"
+    },
+    "runs": {
+      "B1": {
+        "run_id": "p4-e6-b1-20260807T032215+0800-8514bf07-9a8b56c2",
+        "raw_root": "/home/gz785/code/exp2/results/raw/p4-e6-b1-20260807T032215+0800-8514bf07-9a8b56c2",
+        "units": 30,
+        "attempts": 90,
+        "artifacts": 874,
+        "anomaly_count": 0,
+        "seal_status": "completed",
+        "preflight_sha256": "be9f4b1a0cb325f8eb8c6aed6f825c9e42537a073f92b42b251321cc54874413",
+        "seal_sha256": "b58b413071d10582ba71a16c65d911b6cd2be631cfc6cb54a6e60833ed1ebc12",
+        "checker_sha256": "da0c0ce193cc45f29866b89fc022eeff384d059ec186b42a7284cb4df63fcdb1"
+      },
+      "B2": {
+        "run_id": "p4-e6-b2-20260807T032218+0800-dc10ea68-9a8b56c2",
+        "raw_root": "/home/gz785/code/exp2/results/raw/p4-e6-b2-20260807T032218+0800-dc10ea68-9a8b56c2",
+        "units": 30,
+        "attempts": 90,
+        "artifacts": 874,
+        "anomaly_count": 0,
+        "seal_status": "completed",
+        "preflight_sha256": "0ce9e13c2f9e1b17a7d337ee57468abce57bf0597150e6de5dea381a519d0abc",
+        "seal_sha256": "56ac5dce611f4c6daa2e22532947a858e46ca3def198ed77eaee8bc733f11300",
+        "checker_sha256": "e056fd6082647d319db4dcf3b335ae098daf88e951536bf34d41724e6f680fc2"
+      },
+      "G3": {
+        "run_id": "p4-e6-g3-20260807T032220+0800-47ebd794-9a8b56c2",
+        "raw_root": "/home/gz785/code/exp2/results/raw/p4-e6-g3-20260807T032220+0800-47ebd794-9a8b56c2",
+        "units": 30,
+        "attempts": 90,
+        "artifacts": 874,
+        "anomaly_count": 0,
+        "seal_status": "completed",
+        "preflight_sha256": "4078a71843e48ea1f87f7bebb92f90ef6b8c985889a4601dc4e51cf8d77d54fe",
+        "seal_sha256": "d8cf97338455679201ae43fed7692b7404cef51fce69ff571571d7615374cd03",
+        "checker_sha256": "b004131374749e12153fb545454889b12dbfd7918002c008029277fc5065a83a"
+      }
+    }
+  },
+  "processed_evidence": {
+    "runs": {
+      "B1": {
+        "root": "/home/gz785/code/exp2/results/processed/p4-e6-b1-20260807T032215+0800-8514bf07-9a8b56c2",
+        "rows": 90,
+        "attempts_sha256": "fba9c202ece8afd94e630d24e3a1da90719275ca4e2621b16d0af97f3987b5de",
+        "derivation_sha256": "d53b635146a879bac54a583578857ceb58e3e04989fafc8fa70320ede8175a22"
+      },
+      "B2": {
+        "root": "/home/gz785/code/exp2/results/processed/p4-e6-b2-20260807T032218+0800-dc10ea68-9a8b56c2",
+        "rows": 90,
+        "attempts_sha256": "f489278a042627950f4dd5ae4063bbc46dc473b8c340b637b6b6812b8ec5a475",
+        "derivation_sha256": "6e00347a40aada930cd6928f03ae9e479f523c265897afbc25011f3c36aabf23"
+      },
+      "G3": {
+        "root": "/home/gz785/code/exp2/results/processed/p4-e6-g3-20260807T032220+0800-47ebd794-9a8b56c2",
+        "rows": 90,
+        "attempts_sha256": "dde02af420b9b96e3106277f3d64d2e58a59b6e9e551fb80539075103ce32449",
+        "derivation_sha256": "316f1818c3c9ddf2edf3f233fab97f68b7c85875a5bf539076d0bf030500b79b"
+      }
+    },
+    "main_root": "/home/gz785/code/exp2/results/processed/p4-e6-main-p4-paper-candidate-20260806T004403+0800-9a8b56c2",
+    "main_scope": "B1/B2/G3 only; 90 accepted results each",
+    "main_hashes": {
+      "comparison.json": "ae1ecc9bd40d3c778c5f1316f8331fce74b01f576e872b101c3c9dcf999e3388",
+      "comparison.csv": "2a00efac896bba0ffcc449696c03ea31586833874d78beefb39331f6d21b69fb"
+    },
+    "all_files_mode": "0444"
+  },
+  "s4_11_evidence": {
+    "generator_path": "/home/gz785/code/exp2/scripts/phase4/generate_s411_artifacts.py",
+    "generator_sha256": "dd2ddd8ecc06537b42294572f372173d6aff7aa62c13620440b01fe60f8e9667",
+    "table_root": "/home/gz785/code/exp2/results/processed/p4-s4.11-p4-paper-candidate-20260806T004403+0800-9a8b56c2-v2",
+    "table_hashes": {
+      "correctness_runs.csv": "fdff6bc3f4f8dba00cc6cbe13bce0ea8e70d572f509fe267df9f939a1d65448a",
+      "correctness_gate.csv": "df7f99a967252edf48c2ea52da0c722bea0065afea5ef93087058f030777d107",
+      "e6_cost_table.csv": "38685afc806b3e921ab34885a48d5172a8261dfefe387c75c4e2194670d7b2bf",
+      "e6_phase_cost_table.csv": "8bd9cd05f412fe9a9be036cd73f1f70dd493b7849cb798adf6c00c4fb5531e5c",
+      "e6_order_call_counts.csv": "292bc3992164fd16ae478730c84e2ed4a7641320fa6a6a418dff670141c93108",
+      "tables_and_figures.md": "24c26fd84e6f6e2d1247af79062a1f1a7aa8de258f478ba5c2292118545fc6ae",
+      "derivation.json": "29fb6abb4a45f2741b704f8d60b1fb265d7b5a90e2222c5ab4c4e06b40747572"
+    },
+    "figure_root": "/home/gz785/code/exp2/results/figures/p4-s4.11-p4-paper-candidate-20260806T004403+0800-9a8b56c2-v2",
+    "figure_hashes": {
+      "s4_11_order_latency_median_ms.svg": "a70d67444f1815e7e9e906747c7854a884dae9812da3994922e324c5c883c129",
+      "s4_11_order_actual_fee_median_plancks.svg": "620ccb94a6c2a540fe78b71398ab7ac6451f7e1ca95347733b527a1974ec1929",
+      "s4_11_order_weight_ref_time_median.svg": "36cca8cf87cfaa4f58bff20912bdb626b62a58a5b44b9e0017668d8526622610"
+    },
+    "primary_rows": 126,
+    "phase_rows": 378,
+    "primary_measured_n": 10,
+    "architecture_na_rows": 24,
+    "statistics": [
+      "n",
+      "median",
+      "mean",
+      "sample_stdev",
+      "p10",
+      "p90"
+    ],
+    "setup_calls": "not-collected; outside processed E6 schema and not architecture N/A",
+    "all_files_mode": "0444"
+  },
+  "independent_review": {
+    "isolated_root": "/home/gz785/code/exp2/tmp/s4.12-rebuild.CsTiQ3",
+    "passing_table_root": "/home/gz785/code/exp2/tmp/s4.12-rebuild.CsTiQ3/tables-rel",
+    "passing_figure_root": "/home/gz785/code/exp2/tmp/s4.12-rebuild.CsTiQ3/figures-rel",
+    "validator_path": "/home/gz785/code/exp2/tmp/s4.12-rebuild.CsTiQ3/validate_s412.py",
+    "validator_sha256": "8cfca5235df14799f608ffbc57439b2540cf8e1f78a585081c92476abbc40fe4",
+    "core_byte_identical_files": 9,
+    "normalized_derivation": "PASS; identical after removing output-directory metadata only",
+    "numeric_audit": "PASS; independently recomputed 126 primary and 378 phase rows from 270 processed attempts",
+    "g3_actual_metric_audit": "PASS; all 90 attempts reconcile to same-extrinsic terminal dispatch weight and TransactionFeePaid.actual_fee",
+    "svg_parse_and_value_audit": "PASS",
+    "sample_retention": "PASS; anomaly_count=0 and no sample removed",
+    "inferential_significance_test": false,
+    "scalability_curve": false,
+    "initial_rebuild_note": "The preserved tables/figures attempt used an absolute candidate path, producing an extra derivation metadata difference. The passing tables-rel/figures-rel attempt reproduced the official relative-path invocation."
+  },
+  "scope_boundary": {
+    "main_baselines": [
+      "B1",
+      "B2",
+      "G3"
+    ],
+    "excluded_baselines": [
+      "L1",
+      "L2"
+    ],
+    "legacy_pilot_excluded": true,
+    "conditions": [
+      "single-chain Runtime",
+      "native-balance payment",
+      "shared ownership domain",
+      "frozen protocol/config/seed",
+      "fixed medium load"
+    ],
+    "deferred": [
+      "I11",
+      "complete proof",
+      "real TEE security",
+      "long-term custody",
+      "dispute",
+      "IPFS/storage availability",
+      "legal ownership",
+      "subjective data quality",
+      "final download"
+    ]
+  },
+  "invalidation": {
+    "superseded_final": "p4-paper-final-20260806T161158+0800",
+    "superseded_final_correctness_component": "still valid and rebound through the unchanged candidate manifest",
+    "superseded_final_cost_component": "invalid actual-weight semantics; not authorized",
+    "historical_b140542f_cost_runs_and_derivatives": "invalid and excluded",
+    "dependent_chapter5_cost_text": "requires S4.15 revision against this final index",
+    "s4_13_s4_14": "completed and unaffected"
+  },
+  "review": {
+    "raw_to_figure_chain": "PASS",
+    "metadata_repetitions_scenarios": "PASS",
+    "e1_e6_gates_and_i1_i10": "PASS",
+    "main_scope_and_na_semantics": "PASS",
+    "active_runner_node_rpc_listener": false,
+    "source_artifacts_modified": false,
+    "paper_final_authorized": true
+  }
+}

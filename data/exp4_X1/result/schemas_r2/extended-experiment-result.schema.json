@@ -1,0 +1,331 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-r2-extended-experiment-result-v1",
+  "title": "AssetXChain paper 2 R2 extended experiment result",
+  "oneOf": [
+    {"$ref": "#/$defs/x1_result"},
+    {"$ref": "#/$defs/x2_result"},
+    {"$ref": "#/$defs/x3_result"},
+    {"$ref": "#/$defs/x4_result"}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "git_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "nonempty": {"type": "string", "minLength": 1},
+    "nonnegative": {"type": "integer", "minimum": 0},
+    "positive": {"type": "integer", "minimum": 1},
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["availability", "value", "unit", "source", "reason"],
+      "properties": {
+        "availability": {"enum": ["measured", "not-collected", "N/A"]},
+        "value": {"type": ["string", "null"], "pattern": "^-?[0-9]+(\\.[0-9]+)?$"},
+        "unit": {"type": "string"},
+        "source": {"type": ["string", "null"]},
+        "reason": {"type": ["string", "null"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"availability": {"const": "measured"}}, "required": ["availability"]},
+          "then": {"properties": {"value": {"type": "string"}, "source": {"type": "string", "minLength": 1}}}
+        },
+        {
+          "if": {"properties": {"availability": {"const": "N/A"}}, "required": ["availability"]},
+          "then": {"properties": {"value": {"const": null}, "reason": {"type": "string", "minLength": 1}}}
+        }
+      ]
+    },
+    "cost_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latency_ms", "completion_blocks", "actual_weight_ref_time", "actual_weight_proof_size", "actual_fee", "storage_writes", "events_count", "contract_gas_or_ref_time"],
+      "properties": {
+        "latency_ms": {"$ref": "#/$defs/metric"},
+        "completion_blocks": {"$ref": "#/$defs/metric"},
+        "actual_weight_ref_time": {"$ref": "#/$defs/metric"},
+        "actual_weight_proof_size": {"$ref": "#/$defs/metric"},
+        "actual_fee": {"$ref": "#/$defs/metric"},
+        "storage_writes": {"$ref": "#/$defs/metric"},
+        "events_count": {"$ref": "#/$defs/metric"},
+        "contract_gas_or_ref_time": {"$ref": "#/$defs/metric"}
+      }
+    },
+    "path_hash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/nonempty"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "created_at", "timezone", "baseline_id", "implementation_commit", "git_dirty", "e0_status", "settlement_protocol_version", "seed", "repetition", "inputs"],
+      "properties": {
+        "run_id": {"type": "string", "pattern": "^r2-x[1-4]-(b1|b2|g3)-[0-9]{8}T[0-9]{6}\\+0800-[0-9a-f]{8}-[0-9a-f]{8}$"},
+        "created_at": {"$ref": "#/$defs/nonempty"},
+        "timezone": {"const": "Asia/Shanghai"},
+        "baseline_id": {"enum": ["B1", "B2", "G3"]},
+        "implementation_commit": {"$ref": "#/$defs/git_sha"},
+        "git_dirty": {"const": false},
+        "e0_status": {"const": "PASS"},
+        "settlement_protocol_version": {"const": 1},
+        "seed": {"type": "integer", "minimum": 0},
+        "repetition": {"$ref": "#/$defs/positive"},
+        "inputs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["workload", "result_schema", "checker_contract", "fixture", "e0_manifest"],
+          "properties": {
+            "workload": {"$ref": "#/$defs/path_hash"},
+            "result_schema": {"$ref": "#/$defs/path_hash"},
+            "checker_contract": {"$ref": "#/$defs/path_hash"},
+            "fixture": {"$ref": "#/$defs/path_hash"},
+            "e0_manifest": {"$ref": "#/$defs/path_hash"}
+          }
+        }
+      }
+    },
+    "invariant_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "deferred", "violation_count", "violated_ids"],
+      "properties": {
+        "required": {"type": "array", "items": {"enum": ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I10"]}, "uniqueItems": true},
+        "deferred": {"type": "array", "items": {"const": "I11"}, "maxItems": 1},
+        "violation_count": {"$ref": "#/$defs/nonnegative"},
+        "violated_ids": {"type": "array", "items": {"enum": ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I10"]}, "uniqueItems": true}
+      }
+    },
+    "checker_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checker_contract_id", "checker_contract_sha256", "evaluated_check_ids", "status", "failures"],
+      "properties": {
+        "checker_contract_id": {"const": "assetxchain-exp2-r2-checkers-v1"},
+        "checker_contract_sha256": {"$ref": "#/$defs/sha256"},
+        "evaluated_check_ids": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/nonempty"}, "uniqueItems": true},
+        "status": {"enum": ["PASS", "FAIL", "BLOCKED"]},
+        "failures": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "x1_structural": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["control_commit", "variant_commit", "changed_dimension", "changed_deployment_unit_count", "changed_component_ids", "privileged_upgrade_count", "deployment_transaction_count", "migration_step_count", "migration_entry_count", "migration_bytes", "diff_inventory_sha256"],
+      "properties": {
+        "control_commit": {"$ref": "#/$defs/git_sha"},
+        "variant_commit": {"$ref": "#/$defs/git_sha"},
+        "changed_dimension": {"enum": ["none", "pricing", "fee", "matching"]},
+        "changed_deployment_unit_count": {"$ref": "#/$defs/nonnegative"},
+        "changed_component_ids": {"type": "array", "items": {"enum": ["market_policy", "settlement_authority", "protocol_adapter", "state_migration", "deployment_descriptor"]}, "uniqueItems": true},
+        "privileged_upgrade_count": {"$ref": "#/$defs/nonnegative"},
+        "deployment_transaction_count": {"$ref": "#/$defs/nonnegative"},
+        "migration_step_count": {"$ref": "#/$defs/nonnegative"},
+        "migration_entry_count": {"$ref": "#/$defs/nonnegative"},
+        "migration_bytes": {"$ref": "#/$defs/nonnegative"},
+        "diff_inventory_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "x1_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "experiment_id", "run", "variant_id", "operation", "structural", "recovery_blocks", "setup_actual_fee", "invariants", "checker", "evidence_level", "claim_boundary"],
+      "properties": {
+        "schema_id": {"const": "assetxchain-exp2-r2-x1-result"},
+        "schema_version": {"const": 1},
+        "experiment_id": {"const": "X1"},
+        "run": {"$ref": "#/$defs/run"},
+        "variant_id": {"enum": ["control-fixed-price-zero-fee-fifo", "pricing-demand-markup-500bps", "fee-market-fee-100bps", "matching-highest-offer-then-arrival"]},
+        "operation": {"enum": ["TransferMeta", "IssueRight", "TransferRight"]},
+        "structural": {"$ref": "#/$defs/x1_structural"},
+        "recovery_blocks": {"$ref": "#/$defs/nonnegative"},
+        "setup_actual_fee": {"$ref": "#/$defs/metric"},
+        "invariants": {"$ref": "#/$defs/invariant_summary"},
+        "checker": {"$ref": "#/$defs/checker_ref"},
+        "evidence_level": {"const": "extended-experiment-candidate"},
+        "claim_boundary": {"const": "evolvability-only; no performance or architecture ranking"}
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempt_id", "market_slot", "local_contender_slot", "submission_sequence", "included_block", "extrinsic_index", "event_index", "protocol_outcome", "common_error_code", "actual_pre_state", "actual_post_state", "settlement_record_delta", "success_event_delta", "dirty_state", "cost", "event_names"],
+      "properties": {
+        "attempt_id": {"$ref": "#/$defs/nonempty"},
+        "market_slot": {"$ref": "#/$defs/positive"},
+        "local_contender_slot": {"$ref": "#/$defs/positive"},
+        "submission_sequence": {"$ref": "#/$defs/positive"},
+        "included_block": {"type": ["integer", "null"], "minimum": 0},
+        "extrinsic_index": {"type": ["integer", "null"], "minimum": 0},
+        "event_index": {"type": ["integer", "null"], "minimum": 0},
+        "protocol_outcome": {"enum": ["accepted", "rejected", "timeout"]},
+        "common_error_code": {"type": ["string", "null"]},
+        "actual_pre_state": {"type": "object"},
+        "actual_post_state": {"type": "object"},
+        "settlement_record_delta": {"type": "integer"},
+        "success_event_delta": {"type": "integer"},
+        "dirty_state": {"type": "boolean"},
+        "cost": {"$ref": "#/$defs/cost_metrics"},
+        "event_names": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "x2_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "experiment_id", "run", "scenario_id", "operation", "market_count", "concurrency_per_market", "contender_count", "attempts", "successful_settlement_count", "duplicate_settlement_count", "loser_dirty_state_count", "settlement_record_count", "unique_settlement_record_count", "success_event_count", "completion_block", "invariants", "checker", "evidence_level", "claim_boundary"],
+      "properties": {
+        "schema_id": {"const": "assetxchain-exp2-r2-x2-result"},
+        "schema_version": {"const": 1},
+        "experiment_id": {"const": "X2"},
+        "run": {"$ref": "#/$defs/run"},
+        "scenario_id": {"enum": ["X2-META-SALE", "X2-RIGHT-LAST-QUOTA", "X2-RIGHT-RESALE"]},
+        "operation": {"enum": ["TransferMeta", "IssueRight", "TransferRight"]},
+        "market_count": {"enum": [1, 2, 4, 8]},
+        "concurrency_per_market": {"enum": [1, 2, 4, 8]},
+        "contender_count": {"$ref": "#/$defs/positive"},
+        "attempts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/attempt"}},
+        "successful_settlement_count": {"$ref": "#/$defs/nonnegative"},
+        "duplicate_settlement_count": {"$ref": "#/$defs/nonnegative"},
+        "loser_dirty_state_count": {"$ref": "#/$defs/nonnegative"},
+        "settlement_record_count": {"$ref": "#/$defs/nonnegative"},
+        "unique_settlement_record_count": {"$ref": "#/$defs/nonnegative"},
+        "success_event_count": {"$ref": "#/$defs/nonnegative"},
+        "completion_block": {"type": ["integer", "null"], "minimum": 0},
+        "invariants": {"$ref": "#/$defs/invariant_summary"},
+        "checker": {"$ref": "#/$defs/checker_ref"},
+        "evidence_level": {"const": "extended-experiment-candidate"},
+        "claim_boundary": {"const": "shared-authority contention and exactly-once behavior; no universal scalability claim"}
+      }
+    },
+    "x3_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "experiment_id", "run", "variant_id", "target_scenario", "secure_oracle", "actual_outcomes", "false_accept", "duplicate_success", "dirty_state", "audit_gap", "observed_invariant_violations", "settlement_record_count", "success_event_count", "checker", "evidence_level", "claim_boundary"],
+      "properties": {
+        "schema_id": {"const": "assetxchain-exp2-r2-x3-result"},
+        "schema_version": {"const": 1},
+        "experiment_id": {"const": "X3"},
+        "run": {"$ref": "#/$defs/run"},
+        "variant_id": {"enum": ["X3-A1-no-runtime-commitment-recompute", "X3-A2-no-object-authorization", "X3-A3-no-unique-settlement-guard", "X3-A4-no-quota-reservation-protection", "X3-A5-record-separated-from-atomic-transition"]},
+        "target_scenario": {"$ref": "#/$defs/nonempty"},
+        "secure_oracle": {"$ref": "#/$defs/nonempty"},
+        "actual_outcomes": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+        "false_accept": {"type": "boolean"},
+        "duplicate_success": {"type": "boolean"},
+        "dirty_state": {"type": "boolean"},
+        "audit_gap": {"type": "boolean"},
+        "observed_invariant_violations": {"type": "array", "items": {"enum": ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I10"]}, "uniqueItems": true},
+        "settlement_record_count": {"$ref": "#/$defs/nonnegative"},
+        "success_event_count": {"$ref": "#/$defs/nonnegative"},
+        "checker": {"$ref": "#/$defs/checker_ref"},
+        "evidence_level": {"const": "auxiliary-ablation"},
+        "claim_boundary": {"const": "mechanism necessity observations for G3 only; excluded from B1/B2/G3 primary ranking"}
+      },
+      "allOf": [{"properties": {"run": {"properties": {"baseline_id": {"const": "G3"}}}}}]
+    },
+    "setup_component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "sample_role", "applicability", "setup_id", "metrics"],
+      "properties": {
+        "category": {"enum": ["deployment", "market_registration", "capability_authorization", "object_authorization", "projection_establishment"]},
+        "sample_role": {"enum": ["warmup", "measured"]},
+        "applicability": {"enum": ["measured", "N/A"]},
+        "setup_id": {"$ref": "#/$defs/nonempty"},
+        "metrics": {"$ref": "#/$defs/cost_metrics"}
+      }
+    },
+    "order_sample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["order_index", "sample_role", "setup_id", "operation", "settled", "invariant_violation_count", "metrics"],
+      "properties": {
+        "order_index": {"$ref": "#/$defs/positive"},
+        "sample_role": {"enum": ["warmup", "measured"]},
+        "setup_id": {"$ref": "#/$defs/nonempty"},
+        "operation": {"enum": ["TransferMeta", "IssueRight", "TransferRight"]},
+        "settled": {"type": "boolean"},
+        "invariant_violation_count": {"$ref": "#/$defs/nonnegative"},
+        "metrics": {"$ref": "#/$defs/cost_metrics"}
+      }
+    },
+    "amortized_metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["availability", "setup_numerator", "order_numerator", "combined_numerator", "denominator", "derived_decimal", "unit", "reason"],
+      "properties": {
+        "availability": {"enum": ["measured", "N/A"]},
+        "setup_numerator": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "order_numerator": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "combined_numerator": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "denominator": {"type": ["integer", "null"], "minimum": 1},
+        "derived_decimal": {"type": ["string", "null"], "pattern": "^[0-9]+(\\.[0-9]+)?$"},
+        "unit": {"type": "string"},
+        "reason": {"type": ["string", "null"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"availability": {"const": "measured"}}, "required": ["availability"]},
+          "then": {"properties": {"setup_numerator": {"type": "string"}, "order_numerator": {"type": "string"}, "combined_numerator": {"type": "string"}, "denominator": {"type": "integer", "minimum": 1}, "derived_decimal": {"type": "string"}, "unit": {"type": "string", "minLength": 1}}}
+        },
+        {
+          "if": {"properties": {"availability": {"const": "N/A"}}, "required": ["availability"]},
+          "then": {"properties": {"setup_numerator": {"const": null}, "order_numerator": {"const": null}, "combined_numerator": {"const": null}, "denominator": {"const": null}, "derived_decimal": {"const": null}, "reason": {"type": "string", "minLength": 1}}}
+        }
+      ]
+    },
+    "amortized_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latency_ms", "completion_blocks", "actual_weight_ref_time", "actual_weight_proof_size", "actual_fee", "storage_writes", "events_count", "contract_gas_or_ref_time"],
+      "properties": {
+        "latency_ms": {"$ref": "#/$defs/amortized_metric"},
+        "completion_blocks": {"$ref": "#/$defs/amortized_metric"},
+        "actual_weight_ref_time": {"$ref": "#/$defs/amortized_metric"},
+        "actual_weight_proof_size": {"$ref": "#/$defs/amortized_metric"},
+        "actual_fee": {"$ref": "#/$defs/amortized_metric"},
+        "storage_writes": {"$ref": "#/$defs/amortized_metric"},
+        "events_count": {"$ref": "#/$defs/amortized_metric"},
+        "contract_gas_or_ref_time": {"$ref": "#/$defs/amortized_metric"}
+      }
+    },
+    "x4_repetition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repetition", "setup_id", "setup_components", "orders", "amortized_metrics"],
+      "properties": {
+        "repetition": {"$ref": "#/$defs/positive"},
+        "setup_id": {"$ref": "#/$defs/nonempty"},
+        "setup_components": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/setup_component"}},
+        "orders": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/order_sample"}},
+        "amortized_metrics": {"$ref": "#/$defs/amortized_metrics"}
+      }
+    },
+    "x4_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "experiment_id", "run", "operation", "orders_per_setup", "warmup_setup_components", "warmup_orders", "measured_repetitions", "latency_repetition_count", "deterministic_cost_repetition_count", "invariants", "checker", "evidence_level", "claim_boundary"],
+      "properties": {
+        "schema_id": {"const": "assetxchain-exp2-r2-x4-result"},
+        "schema_version": {"const": 1},
+        "experiment_id": {"const": "X4"},
+        "run": {"$ref": "#/$defs/run"},
+        "operation": {"enum": ["TransferMeta", "IssueRight", "TransferRight"]},
+        "orders_per_setup": {"enum": [1, 10, 100]},
+        "warmup_setup_components": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/setup_component"}},
+        "warmup_orders": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/order_sample"}},
+        "measured_repetitions": {"type": "array", "minItems": 30, "items": {"$ref": "#/$defs/x4_repetition"}},
+        "latency_repetition_count": {"type": "integer", "minimum": 30},
+        "deterministic_cost_repetition_count": {"type": "integer", "minimum": 10},
+        "invariants": {"$ref": "#/$defs/invariant_summary"},
+        "checker": {"$ref": "#/$defs/checker_ref"},
+        "evidence_level": {"const": "extended-experiment-candidate"},
+        "claim_boundary": {"const": "measured setup, per-order, and amortized costs at registered order counts; no extrapolation beyond the grid"}
+      }
+    }
+  }
+}

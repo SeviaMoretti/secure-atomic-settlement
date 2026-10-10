@@ -1,0 +1,90 @@
+{
+  "schema_id": "assetxchain-exp2-baseline-manifest",
+  "schema_version": 1,
+  "baseline_id": "G3",
+  "baseline_name": "AssetXChain-CRS",
+  "baseline_profile_version": "1",
+  "contract_version": "phase3-adapter-contract-v1",
+  "validity_level": "legacy-pilot",
+  "git": {
+    "worktree": "/home/gz785/code/assetxchain-g3-v2",
+    "branch": "codex/s21-market-auth-v2",
+    "head": "47ebd794c4ef1264bb8265c49d8e92c5b44e6323",
+    "formal_base_commit": "393bc52af495ccd72ff883059d7715cbb153f964",
+    "source_preservation_commit": null,
+    "phase2_g3_commit": "628803038743ac3b5bfa90e685ac38a1163d1482",
+    "dirty_expected": false
+  },
+  "authority": {
+    "domain_authority": "runtime",
+    "market_logic": "contract",
+    "payment_authority": "runtime-escrow",
+    "order_authority": "runtime",
+    "settlement_evidence_authority": "runtime",
+    "projection_role": "recoverable-contract-projection",
+    "normalized_authority_source": "runtime"
+  },
+  "ownership": [
+    {
+      "path": "contracts/market_orderbook",
+      "owner": "G3-contract",
+      "role": "programmable market intent and recoverable projection only"
+    },
+    {
+      "path": "pallets/dataassets",
+      "owner": "G3-runtime",
+      "role": "authoritative objects, authorization, payment, order finality, and evidence"
+    },
+    {
+      "path": "pallets/markets",
+      "owner": "G3-runtime",
+      "role": "market identity, capability, lifecycle, and capacity"
+    },
+    {
+      "path": "runtime/src/asset_market_extension.rs",
+      "owner": "G3-runtime",
+      "role": "typed contract-Runtime settlement and query boundary"
+    }
+  ],
+  "prohibited_dependencies": [
+    "contract-authoritative ownership, payment, order finality, or evidence",
+    "CE v1 domain mutation",
+    "projection-driven Runtime mutation"
+  ],
+  "build": {
+    "source_root": "/home/gz785/code/assetxchain-g3-v2",
+    "entries": [
+      {
+        "id": "runtime-unit",
+        "cwd": "/home/gz785/code/assetxchain-g3-v2",
+        "command": "cargo test -p pallet-markets -p pallet-dataassets",
+        "artifact_kind": "test"
+      },
+      {
+        "id": "runtime-check",
+        "cwd": "/home/gz785/code/assetxchain-g3-v2",
+        "command": "cargo check -p assetxchain-runtime",
+        "artifact_kind": "runtime-check"
+      },
+      {
+        "id": "market-contract-unit",
+        "cwd": "/home/gz785/code/assetxchain-g3-v2",
+        "command": "cargo test --manifest-path contracts/market_orderbook/Cargo.toml",
+        "artifact_kind": "test"
+      }
+    ]
+  },
+  "shared_fixture": {
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "vector_bundle_id": "assetxchain-paper2-shared-vectors-v1",
+    "vector_bundle": "fixtures/phase3/assetxchain-paper2-shared-fixture-v1.json",
+    "generator": "scripts/common/generate_shared_fixture.py",
+    "consumer": "scripts/common/shared_fixture_codec.py#baseline_consumer_view"
+  },
+  "adapter": {
+    "interface": "scripts/common/phase3_contract.py#BaselineAdapter",
+    "implementation_status": "implemented",
+    "entrypoint": "scripts/baselines/g3_adapter.py#G3Adapter",
+    "planned_step": "S3.9"
+  }
+}

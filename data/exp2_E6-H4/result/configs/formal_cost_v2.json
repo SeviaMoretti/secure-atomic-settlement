@@ -1,0 +1,114 @@
+{
+  "schema_id": "assetxchain-exp2-workload",
+  "schema_version": 2,
+  "metadata": {
+    "config_path": "configs/workloads/formal_cost_v2.json",
+    "environment_config": "configs/dev.json",
+    "workload_id": "formal-cost-medium-v2",
+    "workload_class": "formal-cost",
+    "protocol_id": "assetxchain-paper2-shared",
+    "settlement_protocol_version": 1,
+    "signature_scheme_id": "sr25519-substrate-v1",
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "baseline_ids": [
+      "B1",
+      "B2",
+      "G3"
+    ],
+    "seed": 20260726,
+    "repetitions": 10
+  },
+  "variables": {
+    "A": 100,
+    "K": 8,
+    "M": 4,
+    "B": 32,
+    "C": 8,
+    "R": 10
+  },
+  "variable_definitions": {
+    "A": "assets",
+    "K": "rights-per-asset-or-issue-capacity",
+    "M": "markets",
+    "B": "buyers",
+    "C": "maximum-concurrent-requests",
+    "R": "repetitions"
+  },
+  "experiment_families": [
+    "E6"
+  ],
+  "scenario_selection": {
+    "source": "reports/planning/invariant-scenario-matrix.md",
+    "mode": "explicit",
+    "scenario_ids": [
+      "LEG-META-01",
+      "LEG-ISSUE-01",
+      "LEG-RESALE-01"
+    ],
+    "measure_each_operation_separately": true
+  },
+  "fixture_policy": {
+    "fixture_profile_source": "configs/dev.json#shared_fixture",
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "require_exact_role_account_match": true,
+    "require_exact_price_quantity_timing_match": true,
+    "reset": "before-each-repetition-and-operation",
+    "same_inputs_for_all_baselines": true,
+    "transfer_meta_active_rights_per_asset": 0,
+    "issue_right_authorization_capacity_per_asset": 8,
+    "transfer_right_active_rights_per_asset": 8
+  },
+  "scale_policy": {
+    "profile": "single-fixed-medium-point",
+    "full_cartesian_product": false,
+    "scalability_curve_claim_allowed": false
+  },
+  "prerequisite_gate": {
+    "required_experiment_families": [
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5"
+    ],
+    "required_baselines": [
+      "B1",
+      "B2",
+      "G3"
+    ],
+    "all_applicable_invariants_must_pass": true,
+    "same_protocol_and_signature_config_required": true,
+    "gate_failure_policy": "block-run"
+  },
+  "metrics": [
+    "latency_ms",
+    "completion_blocks",
+    "weight_ref_time",
+    "weight_proof_size",
+    "partial_fee",
+    "contract_gas_or_ref_time",
+    "storage_writes",
+    "events_count",
+    "rpc_response_ms"
+  ],
+  "metric_policy": {
+    "weight_ref_time_source": "system.ExtrinsicSuccess/Failed.dispatch_info.weight.refTime for the same extrinsic",
+    "weight_proof_size_source": "system.ExtrinsicSuccess/Failed.dispatch_info.weight.proofSize for the same extrinsic",
+    "partial_fee_source": "transactionPayment.TransactionFeePaid.actual_fee for the same extrinsic",
+    "declared_estimate_policy": "paymentInfo.partialFee and paymentInfo.weight are retained as declared audit fields only",
+    "g3_outer_contract_gas_limit": {
+      "ref_time": "1000000000000",
+      "proof_size": "104857600",
+      "role": "declared bound only; never substituted for post-dispatch weight"
+    },
+    "architecture_specific_not_applicable_value": "N/A",
+    "not_applicable_must_not_be_encoded_as_zero": true,
+    "report_per_operation_and_baseline": true
+  },
+  "result_policy": {
+    "paper_result_eligible_after_gate_review": true,
+    "claim_boundary": "fixed-medium-load-cost-comparison-only",
+    "must_not_claim_scalability_curve": true
+  },
+  "run_metadata_contract": "configs/dev.json#run_metadata_contract"
+}

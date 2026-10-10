@@ -1,0 +1,13 @@
+{
+  "schema":"h6-v1", "seed":2026091906, "baseline":"G3", "protocol_version":1,
+  "operations":["TransferMeta","IssueRight","TransferRight"],
+  "terminals":["Settled","Cancelled","Refunded"], "conditions":["F0","F1","F2","F3"],
+  "pilot_repetitions":2, "formal_repetitions":10,
+  "pilot_episodes":72, "formal_episodes":360, "syncs_per_episode":2,
+  "node_mode":"fresh temporary development chain per episode",
+  "rpc":"ws://127.0.0.1:9944", "episode_timeout_seconds":1200,
+  "bootstrap_repetitions":50000, "validity_level":"paper-candidate",
+  "scope":"known order projection only; no automatic index discovery or node disaster recovery",
+  "fault_build":"F3 only; admin changes projection.order.state to Open and clears local settlement copy",
+  "timing":"signed RPC submission to inclusion/finalization callbacks; finalized pinned readback; first and second sync reported separately"
+}

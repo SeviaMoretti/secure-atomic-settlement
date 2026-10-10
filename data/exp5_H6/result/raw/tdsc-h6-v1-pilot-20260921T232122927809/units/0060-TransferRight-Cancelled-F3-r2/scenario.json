@@ -1,0 +1,42 @@
+{
+  "operation": "TransferRight",
+  "terminal": "Cancelled",
+  "condition": "F3",
+  "seller": "RIGHT_SELLER",
+  "buyer": "BUYER_2",
+  "artifact": "fault",
+  "preparation": [
+    {
+      "method": "relayCreateOrder",
+      "role": "RELAYER",
+      "label": "create"
+    },
+    {
+      "method": "relayCancelOpen",
+      "role": "RIGHT_SELLER",
+      "label": "cancel"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "seed-terminal"
+    }
+  ],
+  "injection": {
+    "method": "h6CorruptProjection",
+    "role": "MARKET_OK",
+    "label": "inject"
+  },
+  "recovery": [
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync1"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync2"
+    }
+  ]
+}

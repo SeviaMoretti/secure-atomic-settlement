@@ -1,0 +1,273 @@
+{
+  "schema_id": "assetxchain-exp2-phase3-capability-conformance",
+  "schema_version": 1,
+  "gate_version": "phase3-capability-conformance-v1",
+  "validity_level": "legacy-pilot",
+  "sources": {
+    "capability_matrix": "reports/planning/baseline-capability-matrix.md",
+    "scenario_matrix": "reports/planning/invariant-scenario-matrix.md",
+    "traceability_matrix": "reports/planning/traceability-matrix.md",
+    "common_contract": "configs/baselines/phase3-common.json",
+    "fixture_bundle": "fixtures/phase3/assetxchain-paper2-shared-fixture-v1.json",
+    "invocation_schema": "schemas/phase3/phase-invocation.schema.json",
+    "snapshot_schema": "schemas/phase3/normalized-snapshot.schema.json",
+    "result_schema": "schemas/phase3/normalized-result.schema.json"
+  },
+  "label_policy": {
+    "matrix_labels": [
+      "Native",
+      "Adapted",
+      "N/A",
+      "Deferred"
+    ],
+    "blocking_label": "Blocked",
+    "missing_common_core": "Blocked/Missing"
+  },
+  "common_capabilities": [
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "C05",
+    "C06",
+    "C07",
+    "C08",
+    "C09",
+    "C10",
+    "C11",
+    "C12",
+    "C13",
+    "C14",
+    "C15",
+    "C16",
+    "C17",
+    "C18",
+    "C19",
+    "C20",
+    "C21",
+    "C22",
+    "C23",
+    "C24"
+  ],
+  "architecture_capabilities": {
+    "B1": {
+      "Native": ["A01", "A03", "A08", "A10", "A13", "A15"],
+      "Adapted": [],
+      "N/A": ["A02", "A04", "A05", "A06", "A07", "A09", "A11", "A12", "A14"]
+    },
+    "B2": {
+      "Native": ["A02", "A04", "A07", "A09", "A11", "A14", "A15"],
+      "Adapted": [],
+      "N/A": ["A01", "A03", "A05", "A06", "A08", "A10", "A12", "A13"]
+    },
+    "G3": {
+      "Native": ["A02", "A03", "A05", "A06", "A07", "A09", "A10", "A11", "A12", "A13", "A14", "A15"],
+      "Adapted": [],
+      "N/A": ["A01", "A04", "A08"]
+    },
+    "L1": {
+      "Native": ["A01", "A03", "A08"],
+      "Adapted": ["A10", "A13", "A15"],
+      "N/A": ["A02", "A04", "A05", "A06", "A07", "A09", "A11", "A12", "A14"]
+    },
+    "L2": {
+      "Native": ["A02", "A04", "A07", "A09"],
+      "Adapted": ["A11", "A14", "A15"],
+      "N/A": ["A01", "A03", "A05", "A06", "A08", "A10", "A12", "A13"]
+    }
+  },
+  "deferred_capabilities": {
+    "Deferred": ["D01", "D02", "D03", "D04", "D05", "D06", "D09"],
+    "N/A": ["D07", "D08", "D10"]
+  },
+  "scenarios": {
+    "LEG": [
+      "LEG-META-01",
+      "LEG-ISSUE-01",
+      "LEG-RESALE-01",
+      "LEG-CANCEL-01",
+      "LEG-EXPIRE-01",
+      "LEG-REFUND-01"
+    ],
+    "NEG": [
+      "NEG-PROTO-01",
+      "NEG-SIGN-01",
+      "NEG-MARKET-01",
+      "NEG-CAPABILITY-01",
+      "NEG-AUTH-01",
+      "NEG-OWNER-01",
+      "NEG-HOLDER-01",
+      "NEG-PARENT-01",
+      "NEG-RIGHT-MISSING-01",
+      "NEG-RIGHT-EXPIRED-01",
+      "NEG-RIGHT-EXHAUSTED-01",
+      "NEG-RIGHT-REVOKED-01",
+      "NEG-META-RIGHT-01",
+      "NEG-VERSION-01",
+      "NEG-NONCE-01",
+      "NEG-PRICE-01",
+      "NEG-FEE-01",
+      "NEG-BALANCE-01",
+      "NEG-PAYER-01",
+      "NEG-ORDER-PHASE-01",
+      "NEG-AUTH-REVOKED-01",
+      "NEG-REFUND-EARLY-01",
+      "NEG-MARKET-RESTRICTED-01",
+      "NEG-CAPACITY-01"
+    ],
+    "CLEAN": [
+      "CLEAN-LATE-META-01",
+      "CLEAN-LATE-RESALE-01",
+      "CLEAN-ABORT-META-01",
+      "CLEAN-ABORT-ISSUE-01",
+      "CLEAN-ABORT-RESALE-01"
+    ],
+    "DUP": ["DUP-SETTLE-01", "DUP-CREATE-01", "DUP-REFUND-01"],
+    "RACE": ["RACE-BUYER-01", "RACE-RELAYER-01", "RACE-QUOTA-01", "RACE-OBJECT-01"]
+  },
+  "normalized_contract": {
+    "phases": [
+      "setup",
+      "create_order",
+      "fund_order",
+      "settle",
+      "cancel_open",
+      "expire_open",
+      "refund_funded",
+      "query"
+    ],
+    "invocation_required": [
+      "schema_id",
+      "schema_version",
+      "contract_version",
+      "run_id",
+      "baseline_id",
+      "scenario_id",
+      "attempt_id",
+      "repetition",
+      "phase",
+      "operation",
+      "actor_role",
+      "expected_outcome",
+      "expected_error_code",
+      "payload"
+    ],
+    "snapshot_required": [
+      "schema_id",
+      "schema_version",
+      "contract_version",
+      "baseline_id",
+      "authority_source",
+      "observed_at",
+      "meta",
+      "right",
+      "order",
+      "authorization",
+      "payment",
+      "evidence",
+      "market",
+      "identity",
+      "state_commitment",
+      "projection"
+    ],
+    "result_required": [
+      "schema_id",
+      "schema_version",
+      "contract_version",
+      "run",
+      "request",
+      "outcome",
+      "snapshots",
+      "events",
+      "settlement",
+      "correctness",
+      "cost",
+      "architecture_cost",
+      "claim_boundary"
+    ],
+    "common_cost_fields": [
+      "latency_ms",
+      "completion_blocks",
+      "partial_fee",
+      "weight_ref_time",
+      "weight_proof_size",
+      "storage_writes",
+      "events_count",
+      "rpc_response_ms",
+      "phase_call_count"
+    ],
+    "architecture_cost_fields": [
+      "contract_gas_or_ref_time",
+      "contract_storage_writes",
+      "runtime_dispatch_count",
+      "runtime_storage_writes",
+      "typed_ce_call_count",
+      "projection_storage_writes"
+    ]
+  },
+  "fixture": {
+    "expected_operation_count": 3,
+    "expected_error_count": 33,
+    "expected_consumer_hash": "0xc427552f41308fe6e7345a4af448ef3670caba676f1da46e433a1b0aa88e9c13"
+  },
+  "baselines": {
+    "B1": {
+      "manifest": "configs/baselines/b1.json",
+      "adapter_module": "scripts/baselines/b1_adapter.py",
+      "adapter_class": "B1Adapter",
+      "scenario_source": "contracts/market_pure_contract/s35_scenarios.rs",
+      "protocol_error_source": "contracts/market_pure_contract/lib.rs",
+      "native_error_source": "contracts/market_pure_contract/lib.rs",
+      "authority_source": "contract",
+      "projection_mode": "N/A",
+      "applicable_architecture_metrics": ["contract_gas_or_ref_time", "contract_storage_writes"]
+    },
+    "B2": {
+      "manifest": "configs/baselines/b2.json",
+      "adapter_module": "scripts/baselines/b2_adapter.py",
+      "adapter_class": "B2Adapter",
+      "scenario_source": "pallets/market_runtime/src/s38_scenarios.rs",
+      "protocol_error_source": "pallets/market_runtime/src/types.rs",
+      "native_error_source": "pallets/market_runtime/src/lib.rs",
+      "authority_source": "runtime",
+      "projection_mode": "N/A",
+      "applicable_architecture_metrics": ["runtime_dispatch_count", "runtime_storage_writes"]
+    },
+    "G3": {
+      "manifest": "configs/baselines/g3.json",
+      "adapter_module": "scripts/baselines/g3_adapter.py",
+      "adapter_class": "G3Adapter",
+      "scenario_source": "pallets/dataassets/src/tests/invariant_scenarios.rs",
+      "protocol_error_source": "pallets/dataassets/src/protocol.rs",
+      "native_error_source": null,
+      "authority_source": "runtime",
+      "projection_mode": "recoverable-contract-projection",
+      "applicable_architecture_metrics": [
+        "contract_gas_or_ref_time",
+        "contract_storage_writes",
+        "runtime_dispatch_count",
+        "runtime_storage_writes",
+        "typed_ce_call_count",
+        "projection_storage_writes"
+      ]
+    }
+  },
+  "literature_auxiliaries": {
+    "L1": {
+      "name": "DT-SC-adapted",
+      "status": "excluded",
+      "review": "reports/planning/l1-dt-sc-source-review.md",
+      "decision_marker": "Decision: `EXCLUDED_FROM_CURRENT_AUXILIARY_RUN`",
+      "declared_common_subset": [],
+      "must_not_alias": "B1"
+    },
+    "L2": {
+      "name": "DataMarket-Pallet-adapted",
+      "status": "excluded",
+      "review": "reports/planning/l2-datamarket-pallet-source-review.md",
+      "decision_marker": "Decision: `EXCLUDED_FROM_CURRENT_AUXILIARY_RUN`",
+      "declared_common_subset": [],
+      "must_not_alias": "B2"
+    }
+  }
+}

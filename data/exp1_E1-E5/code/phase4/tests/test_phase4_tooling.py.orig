@@ -1,0 +1,912 @@
+from __future__ import annotations
+
+import copy
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import unittest
+from datetime import datetime
+from pathlib import Path
+from unittest.mock import patch
+from zoneinfo import ZoneInfo
+
+PHASE4_DIR = Path(__file__).resolve().parents[1]
+if str(PHASE4_DIR) not in sys.path:
+    sys.path.insert(0, str(PHASE4_DIR))
+
+from phase4_checker import (
+    CheckFailure,
+    _check_accept,
+    _check_e0_reproducibility,
+    _check_scenario_aggregation,
+    check_run,
+    seal_summary,
+)
+from phase4_contract import (
+    EXP_ROOT,
+    Phase4ValidationError,
+    canonical_json_bytes,
+    load_catalog,
+    load_json,
+    scenario_map,
+    write_json_exclusive,
+)
+from phase4_manifest import build_preflight, create_seal, validate_artifacts
+from phase4_runner import _formal_environment, plan as runner_plan
+from process_formal import process_run
+
+
+H = lambda byte: "0x" + byte * 64
+OWNER = H("1")
+BUYER = H("2")
+MARKET = H("3")
+
+
+def metric(availability: str, unit: str):
+    return {"availability": availability, "value": None, "unit": unit}
+
+
+def costs(baseline: str):
+    common_units = {
+        "latency_ms": "ms", "completion_blocks": "blocks", "partial_fee": "plancks",
+        "weight_ref_time": "ref_time", "weight_proof_size": "bytes",
+        "storage_writes": "count", "events_count": "count",
+        "rpc_response_ms": "ms", "phase_call_count": "count",
+    }
+    architecture_units = {
+        "contract_gas_or_ref_time": "ref_time", "contract_storage_writes": "count",
+        "runtime_dispatch_count": "count", "runtime_storage_writes": "count",
+        "typed_ce_call_count": "count", "projection_storage_writes": "count",
+    }
+    applicable = {
+        "B1": {"contract_gas_or_ref_time", "contract_storage_writes"},
+        "B2": {"runtime_dispatch_count", "runtime_storage_writes"},
+        "G3": set(architecture_units),
+    }[baseline]
+    return (
+        {name: metric("not-collected", unit) for name, unit in common_units.items()},
+        {name: metric("not-collected" if name in applicable else "N/A", unit) for name, unit in architecture_units.items()},
+    )
+
+
+def snapshot(baseline: str, operation: str, phase: str, attempt_sequence: int = 1):
+    order_exists = phase != "create_order"
+    order_state = None
+    payment_state = "Unfunded"
+    escrow = "0"
+    if phase in {"fund_order", "settle", "refund_funded"}:
+        order_state = "Open" if phase == "fund_order" else "Funded"
+    if phase in {"settle", "refund_funded"}:
+        payment_state = "Escrowed"
+        escrow = "100"
+    projection = (
+        {"availability": "N/A", "authoritative": False, "order_state": None, "settlement_record_count": None}
+        if baseline in {"B1", "B2"}
+        else {"availability": "observed", "authoritative": False, "order_state": order_state, "settlement_record_count": 0}
+    )
+    return {
+        "schema_id": "assetxchain-exp2-normalized-snapshot",
+        "schema_version": 1,
+        "contract_version": "phase3-adapter-contract-v1",
+        "baseline_id": baseline,
+        "authority_source": "contract" if baseline == "B1" else "runtime",
+        "observed_at": {"block_number": 10 + attempt_sequence, "attempt_sequence": attempt_sequence},
+        "meta": {"exists": True, "asset_id": H("a"), "owner": OWNER, "status": "Tradable", "state_version": 1, "owner_index_matches": True, "active_right_count": 0, "active_order_id": H("d") if order_exists else None},
+        "right": {"exists": operation != "TransferMeta", "right_id": H("b") if operation != "TransferMeta" else None, "holder": OWNER if operation != "TransferMeta" else None, "status": "Active" if operation != "TransferMeta" else None, "state_version": 1 if operation != "TransferMeta" else None, "parent_asset_id": H("a") if operation != "TransferMeta" else None, "valid": True if operation != "TransferMeta" else None, "remaining_uses": 1 if operation != "TransferMeta" else None, "holder_index_matches": True if operation != "TransferMeta" else None, "parent_index_matches": True if operation != "TransferMeta" else None, "active_order_id": H("d") if order_exists and operation == "TransferRight" else None},
+        "order": {"exists": order_exists, "order_id": H("d") if order_exists else None, "operation": operation if order_exists else None, "state": order_state, "seller": OWNER if order_exists else None, "buyer": BUYER if order_exists and phase != "fund_order" else None, "expiry": 30 if order_exists else None, "grace_deadline": 40 if order_exists else None, "active_capacity_occupied": order_exists, "funded_capacity_occupied": order_state == "Funded"},
+        "authorization": {"exists": True, "authorization_id": H("e"), "status": "Active", "policy_hash": H("f"), "issued_count": 0, "reserved_count": 1 if order_state == "Funded" and operation == "IssueRight" else 0, "issued_use_units": 0, "reserved_use_units": 0, "consumed": False, "consumed_order_id": None},
+        "payment": {"state": payment_state, "escrow_amount": escrow, "buyer_balance": "1000", "seller_balance": "1000", "royalty_balance": "0", "market_balance": "1000", "safety_balance": "0"},
+        "evidence": {"settlement_record_count": 0, "settlement_id": None, "record_fields_hash": None, "pre_state_commitment": None},
+        "market": {"exists": True, "market_id": MARKET, "status": "Active", "capabilities": ["TransferMeta", "IssueRight", "TransferRight"], "active_orders": 1 if order_exists else 0, "funded_orders": 1 if order_state == "Funded" else 0, "active_exposure_value": escrow},
+        "identity": {"settlement_protocol_version": 1, "settlement_domain_id": "axc/p2/shared", "order_commitment_hash": H("c") if order_exists else None, "seller_nonce": 0, "buyer_nonce": 0, "authorization_nonce": 0, "object_state_version": 1},
+        "state_commitment": H("9"),
+        "projection": projection,
+    }
+
+
+def rejected_result(preflight, scenario, expected, repetition, sequence):
+    baseline = preflight["baseline"]["baseline_id"]
+    pre = snapshot(baseline, scenario["operation"], expected["phase"], sequence)
+    post = copy.deepcopy(pre)
+    pre["observed_at"] = {"block_number": 19, "attempt_sequence": sequence}
+    post["observed_at"] = {"block_number": 20, "attempt_sequence": sequence}
+    common, architecture = costs(baseline)
+    outcome = {
+        "dispatch_success": False, "protocol_outcome": "rejected",
+        "common_error_code": expected["expected_error_code"], "native_error": expected["expected_error_code"],
+        "included_block": 20, "completion_block": 20, "completion_blocks": 0,
+        "submission_sequence": sequence, "extrinsic_index": 0,
+        "event_index": 0, "dispatch_fee_payer_role": "RELAYER", "dispatch_fee_amount": "0",
+        "environmental_balance_adjustments": [],
+    }
+    events = {"event_names": [], "success_event_count": 0, "post_state_commitment": None}
+    result = {
+        "schema_id": "assetxchain-exp2-phase4-formal-result", "schema_version": 1,
+        "contract_version": "phase3-adapter-contract-v1",
+        "run": {"run_id": preflight["run_id"], "timestamp": preflight["created_at"], "timezone": "Asia/Shanghai", "baseline_id": baseline, "baseline_name": preflight["baseline"]["baseline_name"], "baseline_profile_version": "1", "settlement_protocol_version": 1, "validity_level": "provisional-candidate", "implementation_commit": preflight["baseline"]["head"], "git_dirty": False, "config_path": preflight["inputs"]["workload"]["path"], "workload_id": preflight["inputs"]["workload_id"], "seed": preflight["inputs"]["seed"], "repetition": repetition},
+        "request": {"scenario_id": scenario["scenario_id"], "attempt_id": expected["attempt_id"], "phase": expected["phase"], "operation": scenario["operation"], "expected_outcome": expected["expected_outcome"], "expected_error_code": expected["expected_error_code"]},
+        "outcome": outcome, "snapshots": {"pre": pre, "post": post}, "events": events,
+        "settlement": {"settlement_id": None, "settlement_record_count": 0, "refund_recipient": None, "refund_amount": None, "record": None},
+        "correctness": {"expected_outcome_match": True, "invariant_violation_count": 0, "false_accept_count": 0, "false_reject_count": 0, "duplicate_settlement_count": 0, "dirty_order_count": 0, "dirty_authorization_count": 0, "event_mismatch_count": 0, "timeout_count": 0, "critical_state_diff_count": 0, "unexpected_balance_delta_count": 0, "unexpected_index_delta_count": 0},
+        "cost": common, "architecture_cost": architecture, "claim_boundary": "formal-correctness-only",
+    }
+    invocation = {"run_id": preflight["run_id"], "baseline_id": baseline, "scenario_id": scenario["scenario_id"], "attempt_id": expected["attempt_id"], "repetition": repetition, "phase": expected["phase"], "operation": scenario["operation"], "actor_role": "RELAYER"}
+    return result, invocation
+
+
+def write_attempt(root: Path, result, invocation):
+    write_json_exclusive(root / "result.json", result)
+    write_json_exclusive(root / "invocation.json", invocation)
+    write_json_exclusive(root / "dispatch.json", result["outcome"])
+    write_json_exclusive(root / "pre-state.json", result["snapshots"]["pre"])
+    write_json_exclusive(root / "post-state.json", result["snapshots"]["post"])
+    write_json_exclusive(root / "events.json", result["events"])
+    write_json_exclusive(root / "block-events.json", {
+        "schema_id": "assetxchain-exp2-phase4-attempt-block-evidence",
+        "schema_version": 1,
+        "transaction_hash": H("1"),
+        "parent_block_hash": H("2"),
+        "included_block_hash": H("3"),
+        "parent_block_number": 19,
+        "included_block_number": 20,
+        "terminal_status": "in-block",
+        "extrinsic_index": 0,
+        "transaction_event_indexes": [0],
+        "complete_block_event_count": 1,
+        "events": [{
+            "event_index": 0,
+            "section": "system",
+            "method": "ExtrinsicFailed",
+            "phase": "ApplyExtrinsic(0)",
+            "data": [],
+        }],
+    })
+
+
+class Phase4ToolingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.fixed = datetime(2026, 7, 29, 16, 0, 0, tzinfo=ZoneInfo("Asia/Shanghai"))
+        cls.executor = [sys.executable, str(PHASE4_DIR / "tests/fake_executor.py")]
+        cls.node = Path("/home/gz785/.local/node-v24.15.0-linux-x64/bin/node")
+        cls.e0_executor = PHASE4_DIR / "formal_e0_executor.js"
+        cls.e0_dependencies = [
+            cls.e0_executor,
+            EXP_ROOT / "scripts/scenarios/s314_live_common.js",
+            EXP_ROOT / "scripts/scenarios/s314_b1_live_smoke.js",
+            EXP_ROOT / "scripts/scenarios/s314_b2_live_smoke.js",
+            EXP_ROOT / "scripts/scenarios/s314_g3_live_smoke.js",
+            PHASE4_DIR / "node/package.json",
+            PHASE4_DIR / "node/package-lock.json",
+            EXP_ROOT / "configs/phase4/formal-toolchain-v1.json",
+        ]
+        cls.live_e0_executor = [str(cls.node), str(cls.e0_executor)]
+        for dependency in cls.e0_dependencies:
+            cls.live_e0_executor.extend(["--dependency", str(dependency)])
+
+    def test_live_e0_executor_argv_and_dependency_capture(self):
+        source = self.e0_executor.read_text(encoding="utf-8")
+        self.assertNotIn("fake_executor", source)
+        self.assertNotIn("synthetic", source.lower())
+        self.assertIn("decoded.event.identifier.split('::').pop()", source)
+        script = f"""
+const executor = require({json.dumps(str(self.e0_executor))});
+const base = ['--preflight','p','--scenario-id','LEG-META-01','--repetition','1',
+  '--execution-mode','live-chain','--output-root','o','--rpc','ws://127.0.0.1:9944',
+  '--dependency','d'];
+const parsed = executor.parseArgs(base);
+const parsedFive = executor.parseArgs(base.map((item, index) => index === 5 ? '5' : item));
+let unknown = false;
+let badRepetition = false;
+let fractionalRepetition = false;
+try {{ executor.parseArgs([...base, '--unknown', 'x']); }} catch (_error) {{ unknown = true; }}
+try {{ executor.parseArgs(base.map((item, index) => index === 5 ? '0' : item)); }} catch (_error) {{ badRepetition = true; }}
+try {{ executor.parseArgs(base.map((item, index) => index === 5 ? '1.5' : item)); }} catch (_error) {{ fractionalRepetition = true; }}
+(async () => {{
+  const balance = await executor.freeBalance({{
+    query: {{ system: {{ account: async () => ({{ data: {{ free: {{ toString: () => '123456' }} }} }}) }} }},
+  }}, {{ address: 'test' }});
+  let block = 13;
+  const anchor = await executor.deterministicFixtureAnchor({{
+    rpc: {{ chain: {{ getHeader: async () => ({{ number: {{ toNumber: () => ++block }} }}) }} }},
+  }}, 16, 0, 1000);
+  let overrunRejected = false;
+  try {{
+    await executor.deterministicFixtureAnchor({{
+      rpc: {{ chain: {{ getHeader: async () => ({{ number: {{ toNumber: () => 17 }} }}) }} }},
+    }}, 16, 0, 1000);
+  }} catch (_error) {{ overrunRejected = true; }}
+  console.log(JSON.stringify({{
+    repetition: parsed.repetition, repetitionFive: parsedFive.repetition, unknown, badRepetition,
+    fractionalRepetition, balance, anchor, overrunRejected,
+  }}));
+}})().catch((error) => {{ console.error(error); process.exit(1); }});
+"""
+        completed = subprocess.run(
+            [str(self.node), "-e", script], text=True, capture_output=True, check=True,
+            timeout=30, env={key: value for key, value in os.environ.items() if key != "POLKADOT_DRIVER_ROOT"},
+        )
+        self.assertEqual(json.loads(completed.stdout.strip()), {
+            "repetition": 1,
+            "repetitionFive": 5,
+            "unknown": True,
+            "badRepetition": True,
+            "fractionalRepetition": True,
+            "balance": "123456",
+            "anchor": 16,
+            "overrunRejected": True,
+        })
+        preflight = build_preflight(
+            exp_root=EXP_ROOT, baseline_id="B1", family="E0",
+            executor_command=self.live_e0_executor, created_at=self.fixed,
+        )
+        captured = {Path(item["path"]).resolve() for item in preflight["execution"]["executor_artifacts"]}
+        self.assertTrue({self.node.resolve(), *(item.resolve() for item in self.e0_dependencies)}.issubset(captured))
+        environment, toolchain = _formal_environment(preflight)
+        self.assertEqual(environment["RUSTUP_TOOLCHAIN"], "1.85.0")
+        self.assertEqual(toolchain["versions"]["rustc"], "rustc 1.85.0 (4d91de4e4 2025-02-17)")
+        self.assertEqual(toolchain["versions"]["cargo"], "cargo 1.85.0 (d73d2caf9 2024-12-31)")
+        self.assertEqual(toolchain["versions"]["cargo_contract"], "cargo-contract 4.1.1-unknown-x86_64-unknown-linux-gnu")
+        self.assertIn(
+            "cargo contract build --release --manifest-path contracts/market_pure_contract/Cargo.toml",
+            preflight["execution"]["build_commands"],
+        )
+        g3_preflight = build_preflight(
+            exp_root=EXP_ROOT, baseline_id="G3", family="E0",
+            executor_command=self.live_e0_executor, created_at=self.fixed,
+        )
+        self.assertIn(
+            "cargo contract build --release --manifest-path contracts/market_orderbook/Cargo.toml",
+            g3_preflight["execution"]["build_commands"],
+        )
+        self.assertIn(
+            "/home/gz785/code/assetxchain-g3-v2/target/ink/market_orderbook/market_orderbook.wasm",
+            g3_preflight["execution"]["artifact_paths"],
+        )
+
+    def test_b1_decodes_ordinary_and_manual_payable_reverts(self):
+        b1_script = EXP_ROOT / "scripts/scenarios/s314_b1_live_smoke.js"
+        metadata = Path(
+            "/home/gz785/code/assetxchain-b1/contracts/market_pure_contract/target/ink/market_pure_contract.json"
+        )
+        script = f"""
+process.env.POLKADOT_DRIVER_ROOT = {json.dumps(str(PHASE4_DIR / 'node'))};
+const fs = require('fs');
+const b1 = require({json.dumps(str(b1_script))});
+const {{ TypeRegistry }} = require({json.dumps(str(PHASE4_DIR / 'node/node_modules/@polkadot/types/create'))});
+const {{ Abi }} = require({json.dumps(str(PHASE4_DIR / 'node/node_modules/@polkadot/api-contract'))});
+const abi = new Abi(
+  JSON.parse(fs.readFileSync({json.dumps(str(metadata))}, 'utf8')),
+  new TypeRegistry().getChainProperties()
+);
+const message = abi.findMessage('fundOrder');
+const decode = (hex, reverted) => b1.decodeMessageOutput(
+  {{ abi }}, message, Uint8Array.from(Buffer.from(hex.slice(2), 'hex')), reverted
+).toJSON();
+let innerWithoutRevertRejected = false;
+let unknownRejected = false;
+try {{ decode('0x0137', false); }} catch (_error) {{ innerWithoutRevertRejected = true; }}
+try {{ decode('0x01ff', true); }} catch (_error) {{ unknownRejected = true; }}
+console.log(JSON.stringify({{
+  ordinary: decode('0x000115', true),
+  payable: decode('0x0137', true),
+  innerWithoutRevertRejected,
+  unknownRejected,
+}}));
+"""
+        completed = subprocess.run(
+            [str(self.node), "-e", script], text=True, capture_output=True, check=True,
+            timeout=30, env={key: value for key, value in os.environ.items() if key != "POLKADOT_DRIVER_ROOT"},
+        )
+        self.assertEqual(json.loads(completed.stdout.strip()), {
+            "ordinary": {"ok": {"err": "UnsupportedProtocolVersion"}},
+            "payable": {"err": "InsufficientBalance"},
+            "innerWithoutRevertRejected": True,
+            "unknownRejected": True,
+        })
+
+    def test_send_tx_captures_one_terminal_block_event_snapshot(self):
+        common_script = EXP_ROOT / "scripts/scenarios/s314_live_common.js"
+        g3_source = (EXP_ROOT / "scripts/scenarios/s314_g3_live_smoke.js").read_text(encoding="utf-8")
+        self.assertNotIn("async function sendTx", g3_source)
+        self.assertIn("  sendTx,", g3_source)
+        script = f"""
+process.env.POLKADOT_DRIVER_ROOT = {json.dumps(str(PHASE4_DIR / 'node'))};
+const common = require({json.dumps(str(common_script))});
+let callback;
+let unsubscribed = 0;
+let eventQueries = 0;
+const status = {{
+  isInBlock: true, isFinalized: false,
+  asInBlock: {{ toHex: () => '0x' + '11'.repeat(32) }},
+}};
+const tx = {{
+  hash: {{ toHex: () => '0x' + '22'.repeat(32) }},
+  paymentInfo: async () => ({{ partialFee: {{ toString: () => '9' }}, weight: {{ toJSON: () => ({{ refTime: '1' }}) }} }}),
+  signAndSend: async (_signer, handler) => {{ callback = handler; return () => {{ unsubscribed += 1; }}; }},
+}};
+const reward = {{
+  event: {{ section: 'rewards', method: 'RewardPaid', data: [
+    {{ toString: () => 'owner' }}, {{ toString: () => '5000' }},
+  ] }},
+  phase: {{ toString: () => 'Finalization' }},
+}};
+const api = {{
+  rpc: {{ chain: {{ getHeader: async () => ({{
+    number: {{ toNumber: () => 19 }}, parentHash: {{ toHex: () => '0x' + '10'.repeat(32) }},
+  }}) }} }},
+  query: {{ system: {{ events: {{ at: async () => {{ eventQueries += 1; return [reward]; }} }} }} }},
+}};
+(async () => {{
+  const pending = common.sendTx(api, 'test', tx, {{ address: 'actor' }});
+  await Promise.resolve();
+  const result = {{ status, events: [] }};
+  callback(result);
+  callback(result);
+  const captured = await pending;
+  await Promise.resolve();
+  console.log(JSON.stringify({{
+    blockNumber: captured.blockNumber,
+    credits: captured.environmentalBalanceCredits,
+    eventQueries,
+    unsubscribed,
+  }}));
+}})().catch((error) => {{ console.error(error); process.exit(1); }});
+"""
+        completed = subprocess.run(
+            [str(self.node), "-e", script], text=True, capture_output=True, check=True,
+            timeout=30, env={key: value for key, value in os.environ.items() if key != "POLKADOT_DRIVER_ROOT"},
+        )
+        value = json.loads(completed.stdout.strip())
+        self.assertEqual(value["blockNumber"], 19)
+        self.assertEqual(value["eventQueries"], 1)
+        self.assertEqual(value["unsubscribed"], 1)
+        self.assertEqual(value["credits"], [{
+            "account": "owner", "amount": "5000", "reason": "block-author-reward",
+            "blockNumber": 19, "eventIndex": 0, "phase": "Finalization",
+        }])
+
+    def test_live_executor_enforces_e0_e2_scope_and_lifecycle_contracts(self):
+        script = f"""
+const executor = require({json.dumps(str(self.e0_executor))});
+const catalog = require({json.dumps(str(EXP_ROOT / 'configs/phase4/formal-scenarios-v1.json'))});
+const args = {{ scenario_id: 'LEG-META-01', repetition: 2 }};
+const base = {{
+  validity_level: 'provisional-candidate',
+  inputs: {{ repetitions: 2, selected_scenario_ids: executor.FAMILY_SCENARIOS.E0 }},
+  experiment_family: 'E0',
+}};
+const e0 = executor.validateExecutionContract(args, base, catalog);
+const e1Preflight = {{
+  ...base, experiment_family: 'E1',
+  inputs: {{ repetitions: 5, selected_scenario_ids: executor.FAMILY_SCENARIOS.E1 }},
+}};
+const lifecycle = {{}};
+for (const scenarioId of ['LEG-CANCEL-01', 'LEG-EXPIRE-01', 'LEG-REFUND-01']) {{
+  lifecycle[scenarioId] = executor.validateExecutionContract(
+    {{ scenario_id: scenarioId, repetition: 5 }}, e1Preflight, catalog
+  ).attempts[0].phase;
+}}
+const e2Preflight = {{
+  ...base, experiment_family: 'E2',
+  inputs: {{ repetitions: 5, selected_scenario_ids: executor.FAMILY_SCENARIOS.E2 }},
+}};
+const e2 = executor.validateExecutionContract(
+  {{ scenario_id: 'NEG-PROTO-01', repetition: 5 }}, e2Preflight, catalog
+);
+let incompleteE2Rejected = false;
+try {{
+  executor.validateExecutionContract(
+    {{ scenario_id: 'NEG-PROTO-01', repetition: 1 }},
+    {{ ...e2Preflight, inputs: {{ repetitions: 5, selected_scenario_ids: ['NEG-PROTO-01'] }} }},
+    catalog
+  );
+}} catch (_error) {{ incompleteE2Rejected = true; }}
+let incompleteE1Rejected = false;
+try {{
+  executor.validateExecutionContract(
+    {{ scenario_id: 'LEG-META-01', repetition: 1 }},
+    {{ ...e1Preflight, inputs: {{ repetitions: 5, selected_scenario_ids: executor.FAMILY_SCENARIOS.E0 }} }},
+    catalog
+  );
+}} catch (_error) {{ incompleteE1Rejected = true; }}
+console.log(JSON.stringify({{
+  e0: e0.scenario_id, e2: e2.scenario_id, lifecycle, incompleteE2Rejected,
+  incompleteE1Rejected, e0Count: executor.FAMILY_SCENARIOS.E0.length,
+  e1Count: executor.FAMILY_SCENARIOS.E1.length,
+  e2Count: executor.FAMILY_SCENARIOS.E2.length,
+}}));
+"""
+        completed = subprocess.run(
+            [str(self.node), "-e", script], text=True, capture_output=True, check=True, timeout=30,
+            env={key: value for key, value in os.environ.items() if key != "POLKADOT_DRIVER_ROOT"},
+        )
+        self.assertEqual(json.loads(completed.stdout.strip()), {
+            "e0": "LEG-META-01",
+            "e2": "NEG-PROTO-01",
+            "lifecycle": {
+                "LEG-CANCEL-01": "cancel_open",
+                "LEG-EXPIRE-01": "expire_open",
+                "LEG-REFUND-01": "refund_funded",
+            },
+            "incompleteE2Rejected": True,
+            "incompleteE1Rejected": True,
+            "e0Count": 3,
+            "e1Count": 6,
+            "e2Count": 24,
+        })
+
+    def test_missing_resale_authorization_uses_a_registered_witness_market(self):
+        source = self.e0_executor.read_text(encoding="utf-8")
+        self.assertEqual(source.count("authorizationWitnessMarketId || marketId"), 3)
+        self.assertIn("registerG3AuthorizationWitnessMarket", source)
+        self.assertIn("register_authorization_witness_market", source)
+        self.assertNotIn("authorizationId: b1.fixedHash(0xed)", source)
+        self.assertNotIn("authorizationId: b2.fixedHash(0xed)", source)
+        self.assertNotIn("e2-missing-authorization", source)
+        self.assertNotIn("e2-denied-market", source)
+
+    def test_live_executor_rejection_mapping_priority_and_fee_normalization(self):
+        script = f"""
+const executor = require({json.dumps(str(self.e0_executor))});
+let unmappedRejected = false;
+try {{ executor.mappedNativeError('B1', 'UnknownNativeError'); }}
+catch (_error) {{ unmappedRejected = true; }}
+let g3PriorityRejected = false;
+try {{
+  executor.g3Rejection({{ decoded: {{ error: 'ChainExtension', code: 8, name: 'InvalidSignature' }} }});
+}} catch (_error) {{ g3PriorityRejected = true; }}
+const g3 = executor.g3Rejection({{
+  decoded: {{ error: 'ChainExtension', code: 8, name: 'AuthorizationMissing' }},
+}});
+
+const pre = {{
+  schema_id: 'snapshot', observed_at: {{ block_number: 10, attempt_sequence: 1 }},
+  payment: {{
+    buyer_balance: '100', seller_balance: '100', royalty_balance: '0',
+    market_balance: '100', safety_balance: '0',
+  }},
+  evidence: {{ settlement_record_count: 0 }},
+}};
+const post = JSON.parse(JSON.stringify(pre));
+post.observed_at = {{ block_number: 11, attempt_sequence: 1 }};
+post.payment.buyer_balance = '99';
+post.payment.seller_balance = '105';
+const reward = {{
+  account: '0x' + '11'.repeat(32), amount: '5', reason: 'block-author-reward',
+  blockNumber: 11, eventIndex: 7, phase: 'Finalization',
+}};
+const context = {{
+  baseline: 'B2', repetition: 1, submissionSequence: 1,
+  snapshotSellerRole: 'OWNER', snapshotBuyerRole: 'BUYER_1',
+  accountsByRole: {{
+    OWNER: {{ address: '0x' + '11'.repeat(32) }},
+    BUYER_1: {{ address: '0x' + '22'.repeat(32) }},
+  }},
+  operation: 'TransferMeta', scenario: {{ scenario_id: 'NEG-AUTH-01' }},
+  preflight: {{
+    run_id: 'test', created_at: '2026-07-29T16:00:00+08:00', baseline: {{ head: 'abc' }},
+    inputs: {{ workload: {{ path: 'formal.json' }}, workload_id: 'formal-correctness-v1', seed: 20260729 }},
+  }},
+}};
+const expected = {{
+  attempt_id: 'reject', phase: 'create_order', expected_outcome: 'reject',
+  expected_error_code: 'AuthorizationMissing',
+}};
+const txEvidence = {{
+  txHash: '0x' + '01'.repeat(32), parentBlockHash: '0x' + '02'.repeat(32),
+  blockHash: '0x' + '03'.repeat(32), terminalStatus: 'in-block',
+  events: [{{ phase: {{ isApplyExtrinsic: true, asApplyExtrinsic: {{ toNumber: () => 0 }} }} }}],
+  eventIndexes: [0],
+  blockEventRows: [{{
+    eventIndex: 0, section: 'system', method: 'ExtrinsicFailed',
+    phase: 'ApplyExtrinsic(0)', data: [],
+  }}],
+}};
+const result = executor.makeRejectedResult(
+  context, expected, {{
+    ...txEvidence, blockNumber: 11, partialFee: '1', environmentalBalanceCredits: [reward],
+  }},
+  pre, post, {{ names: [], eventIndex: 0, postStateCommitment: null }}, 'BUYER_1',
+  {{ nativeError: 'AuthorizationMissing', commonError: 'AuthorizationMissing' }}
+);
+const resalePre = JSON.parse(JSON.stringify(pre));
+const resalePost = JSON.parse(JSON.stringify(pre));
+resalePost.observed_at = {{ block_number: 11, attempt_sequence: 1 }};
+const resaleResult = executor.makeRejectedResult(
+  {{
+    ...context, operation: 'TransferRight', snapshotSellerRole: 'RIGHT_SELLER',
+    snapshotBuyerRole: 'BUYER_2',
+  }},
+  expected, {{
+    ...txEvidence, blockNumber: 11, partialFee: '0', environmentalBalanceCredits: [reward],
+  }},
+  resalePre, resalePost, {{ names: [], eventIndex: 0, postStateCommitment: null }}, 'RELAYER',
+  {{ nativeError: 'AuthorizationMissing', commonError: 'AuthorizationMissing' }}
+);
+let wrongPriorityRejected = false;
+try {{
+  executor.makeRejectedResult(
+    context, expected, {{
+      ...txEvidence, blockNumber: 11, partialFee: '1', environmentalBalanceCredits: [reward],
+    }},
+    pre, post, {{ names: [], eventIndex: 0, postStateCommitment: null }}, 'BUYER_1',
+    {{ nativeError: 'InvalidSignature', commonError: 'InvalidSignature' }}
+  );
+}} catch (_error) {{ wrongPriorityRejected = true; }}
+console.log(JSON.stringify({{
+  unmappedRejected, g3PriorityRejected, wrongPriorityRejected,
+  g3Common: g3.commonError,
+  clean: result.snapshots.pre.state_commitment === result.snapshots.post.state_commitment,
+  feePayer: result.outcome.dispatch_fee_payer_role,
+  fee: result.outcome.dispatch_fee_amount,
+  adjustment: result.outcome.environmental_balance_adjustments[0],
+  resaleClean: resaleResult.snapshots.pre.state_commitment === resaleResult.snapshots.post.state_commitment,
+}}));
+"""
+        completed = subprocess.run(
+            [str(self.node), "-e", script], text=True, capture_output=True, check=True, timeout=30,
+            env={key: value for key, value in os.environ.items() if key != "POLKADOT_DRIVER_ROOT"},
+        )
+        self.assertEqual(json.loads(completed.stdout.strip()), {
+            "unmappedRejected": True,
+            "g3PriorityRejected": True,
+            "wrongPriorityRejected": True,
+            "g3Common": "AuthorizationMissing",
+            "clean": True,
+            "feePayer": "BUYER_1",
+            "fee": "1",
+            "adjustment": {
+                "role": "OWNER",
+                "account": "0x" + "11" * 32,
+                "reason": "block-author-reward",
+                "amount": "5",
+                "block_number": 11,
+                "event_index": 7,
+                "event_phase": "Finalization",
+            },
+            "resaleClean": True,
+        })
+
+    def test_live_executor_refund_result_uses_authoritative_pre_and_post_state(self):
+        script = f"""
+const executor = require({json.dumps(str(self.e0_executor))});
+const hash = '0x' + '11'.repeat(32);
+const pre = {{ payment: {{ escrow_amount: '700' }} }};
+const post = {{ order: {{ buyer: hash }}, evidence: {{ settlement_record_count: 0 }} }};
+const context = {{
+  baseline: 'B2', repetition: 1, submissionSequence: 1, lastRecord: null,
+  operation: 'IssueRight', scenario: {{ scenario_id: 'LEG-REFUND-01' }},
+  preflight: {{
+    experiment_family: 'E1', run_id: 'test', created_at: '2026-07-29T16:00:00+08:00',
+    baseline: {{ head: 'abc' }},
+    inputs: {{ workload: {{ path: 'configs/workloads/formal_correctness.json' }}, workload_id: 'formal-correctness-v1', seed: 20260729 }},
+  }},
+}};
+const expected = {{ attempt_id: 'refund', phase: 'refund_funded', expected_outcome: 'accept', expected_error_code: null }};
+const tx = {{
+  txHash: '0x' + '01'.repeat(32), parentBlockHash: '0x' + '02'.repeat(32),
+  blockHash: '0x' + '03'.repeat(32), blockNumber: 20, terminalStatus: 'in-block', partialFee: '1',
+  events: [{{ phase: {{ isApplyExtrinsic: true, asApplyExtrinsic: {{ toNumber: () => 0 }} }} }}],
+  eventIndexes: [0], environmentalBalanceCredits: [],
+  blockEventRows: [{{
+    eventIndex: 0, section: 'system', method: 'ExtrinsicSuccess',
+    phase: 'ApplyExtrinsic(0)', data: [],
+  }}],
+}};
+const result = executor.makeResult(context, expected, tx, pre, post, {{ names: ['OrderRefunded'], eventIndex: 0, postStateCommitment: null }}, 'RELAYER');
+console.log(JSON.stringify({{
+  recipient: result.settlement.refund_recipient, amount: result.settlement.refund_amount,
+  successEvents: result.events.success_event_count, claimBoundary: result.claim_boundary,
+}}));
+"""
+        completed = subprocess.run(
+            [str(self.node), "-e", script], text=True, capture_output=True, check=True, timeout=30,
+            env={key: value for key, value in os.environ.items() if key != "POLKADOT_DRIVER_ROOT"},
+        )
+        self.assertEqual(json.loads(completed.stdout.strip()), {
+            "recipient": "0x" + "11" * 32,
+            "amount": "700",
+            "successEvents": 0,
+            "claimBoundary": "formal-correctness-only; not-performance-evidence",
+        })
+
+    def test_e0_repetition_hash_gate_detects_drift(self):
+        preflight = {"experiment_family": "E0", "inputs": {"selected_scenario_ids": ["LEG-META-01"]}}
+        shared = "0xc427552f41308fe6e7345a4af448ef3670caba676f1da46e433a1b0aa88e9c13"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for repetition in (1, 2):
+                write_json_exclusive(
+                    root / "attempts/LEG-META-01" / f"r-{repetition:03d}" / "unit-manifest.json",
+                    {
+                        "genesis_hash": H("a"), "metadata_hash": H("b"),
+                        "fixture_state_hash": H("c"), "scenario_result_hash": H("d"),
+                        "shared_input_hash": shared,
+                    },
+                )
+            failures = CheckFailure()
+            _check_e0_reproducibility(root, preflight, failures)
+            self.assertEqual(failures.rows, [])
+            second = root / "attempts/LEG-META-01/r-002/unit-manifest.json"
+            second.chmod(0o644)
+            changed = load_json(second)
+            changed["scenario_result_hash"] = H("e")
+            second.write_bytes(canonical_json_bytes(changed))
+            failures = CheckFailure()
+            _check_e0_reproducibility(root, preflight, failures)
+            self.assertTrue(any(row["code"] == "reproducibility" for row in failures.rows))
+
+    def test_catalog_exact_scope_and_race_contracts(self):
+        catalog = load_catalog()
+        self.assertEqual(len(catalog["scenarios"]), 42)
+        self.assertEqual(sum(item["execution_mode"] == "live-chain" for item in catalog["scenarios"]), 39)
+        self.assertEqual(sum(item["execution_mode"] == "test-gate" for item in catalog["scenarios"]), 3)
+        races = [item for item in catalog["scenarios"] if item["category"] == "competition"]
+        self.assertEqual(len(races), 4)
+        self.assertTrue(all("cardinality" in item for item in races))
+
+    def test_executor_closes_e3_scope_commands_and_test_gate_evidence(self):
+        source = self.e0_executor.read_text(encoding="utf-8")
+        self.assertIn("configureMetaStatusForExperiment", source)
+        self.assertIn("configureRightStatusForExperiment", source)
+        self.assertIn("scenario.execution_mode === args.execution_mode", source)
+        script = f"""
+const executor = require({json.dumps(str(self.e0_executor))});
+const output = Buffer.from('rollback-ok', 'utf8');
+const context = {{
+  baseline: 'B1', repetition: 3,
+  scenario: {{ scenario_id: 'CLEAN-ABORT-META-01' }},
+  preflight: {{ run_id: 'run-e3', baseline: {{ head: 'commit-e3' }} }},
+}};
+const evidence = executor.makeTestGateEvidence(
+  context,
+  executor.testGateCommand('B1', 'CLEAN-ABORT-META-01'),
+  0, true, false, output
+);
+console.log(JSON.stringify({{
+  family: executor.FAMILY_SCENARIOS.E3,
+  commands: {{
+    B1: executor.testGateCommand('B1', 'CLEAN-ABORT-ISSUE-01'),
+    B2: executor.testGateCommand('B2', 'CLEAN-ABORT-ISSUE-01'),
+    G3: executor.testGateCommand('G3', 'CLEAN-ABORT-ISSUE-01'),
+  }},
+  evidence,
+}}));
+"""
+        completed = subprocess.run(
+            [str(self.node), "-e", script], text=True, capture_output=True,
+            check=True, timeout=30,
+            env={key: value for key, value in os.environ.items() if key != "POLKADOT_DRIVER_ROOT"},
+        )
+        value = json.loads(completed.stdout)
+        self.assertEqual(value["family"], [
+            "CLEAN-LATE-META-01", "CLEAN-LATE-RESALE-01",
+            "CLEAN-ABORT-META-01", "CLEAN-ABORT-ISSUE-01",
+            "CLEAN-ABORT-RESALE-01",
+        ])
+        self.assertEqual(value["commands"], {
+            "B1": ["cargo", "test", "--manifest-path", "contracts/market_pure_contract/Cargo.toml", "clean_abort_issue_01", "--", "--nocapture"],
+            "B2": ["cargo", "test", "-p", "pallet-market-runtime", "s38_clean_abort_issue_01", "--", "--nocapture"],
+            "G3": ["cargo", "test", "-p", "pallet-dataassets", "clean_abort_issue_01", "--", "--nocapture"],
+        })
+        evidence = value["evidence"]
+        self.assertEqual(set(evidence), {
+            "schema_id", "schema_version", "run_id", "baseline_id", "scenario_id",
+            "repetition", "attempt_id", "command", "exit_code", "source_commit",
+            "q_all_equal", "production_failpoint_exposed", "test_output_sha256",
+        })
+        self.assertTrue(evidence["q_all_equal"])
+        self.assertFalse(evidence["production_failpoint_exposed"])
+        self.assertEqual(
+            evidence["test_output_sha256"], hashlib.sha256(b"rollback-ok").hexdigest()
+        )
+
+    def test_e6_requires_approved_candidate(self):
+        with self.assertRaisesRegex(Phase4ValidationError, "E6 requires"):
+            build_preflight(exp_root=EXP_ROOT, baseline_id="B1", family="E6", executor_command=self.executor, created_at=self.fixed)
+
+    def test_exclusive_write_rejects_reuse(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "immutable.json"
+            write_json_exclusive(path, {"a": 1})
+            with self.assertRaisesRegex(Phase4ValidationError, "overwrite"):
+                write_json_exclusive(path, {"a": 1})
+
+    def test_runner_plan_closes_e3_live_and_test_gate_coverage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            raw = Path(directory) / "raw"
+            preflight = build_preflight(exp_root=EXP_ROOT, baseline_id="G3", family="E3", executor_command=self.executor, created_at=self.fixed)
+            preflight = copy.deepcopy(preflight)
+            preflight["paths"]["raw"] = str(raw)
+            path = raw / "manifest.preflight.json"
+            write_json_exclusive(path, preflight)
+            with patch("phase4_runner.validate_preflight"):
+                value = runner_plan(path)
+            self.assertEqual(value["units"], 25)
+            self.assertEqual(value["attempts"], 25)
+            self.assertEqual(value["live_units"], 10)
+            self.assertEqual(value["test_gate_units"], 15)
+
+    def _e2_raw(self, directory: Path):
+        preflight = build_preflight(exp_root=EXP_ROOT, baseline_id="B2", family="E2", executor_command=self.executor, created_at=self.fixed)
+        raw = directory / "raw"
+        log = directory / "log"
+        preflight = copy.deepcopy(preflight)
+        preflight["paths"] = {"raw": str(raw), "log": str(log), "processed": str(directory / "processed"), "report": str(directory / "report.md")}
+        write_json_exclusive(raw / "manifest.preflight.json", preflight)
+        scenarios = scenario_map(load_catalog())
+        for unit in preflight["planned_execution"]:
+            scenario = scenarios[unit["scenario_id"]]
+            expected = scenario["attempts"][0]
+            result, invocation = rejected_result(preflight, scenario, expected, unit["repetition"], 1)
+            attempt = raw / "attempts" / scenario["scenario_id"] / f"r-{unit['repetition']:03d}" / "attempt-001"
+            write_attempt(attempt, result, invocation)
+        return preflight, raw
+
+    def test_checker_accepts_complete_e2_and_detects_q_all_pollution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            preflight, raw = self._e2_raw(Path(directory))
+            with patch("phase4_checker.validate_preflight"):
+                report = check_run(raw)
+                self.assertEqual(report["summary"]["status"], "PASS")
+                self.assertEqual(report["summary"]["completed_attempts"], 120)
+                first = next(raw.glob("attempts/*/r-*/attempt-*/result.json"))
+                result = load_json(first)
+                result["snapshots"]["post"]["payment"]["seller_balance"] = str(
+                    int(result["snapshots"]["post"]["payment"]["seller_balance"]) + 5
+                )
+                result["outcome"]["environmental_balance_adjustments"] = [{
+                    "role": "OWNER",
+                    "account": OWNER,
+                    "reason": "block-author-reward",
+                    "amount": "5",
+                    "block_number": result["outcome"]["included_block"],
+                    "event_index": 1,
+                    "event_phase": "Finalization",
+                }]
+                first.chmod(0o644)
+                first.write_bytes(canonical_json_bytes(result))
+                dispatch_path = first.parent / "dispatch.json"
+                dispatch_path.chmod(0o644)
+                dispatch_path.write_bytes(canonical_json_bytes(result["outcome"]))
+                post_path = first.parent / "post-state.json"
+                post_path.chmod(0o644)
+                post_path.write_bytes(canonical_json_bytes(result["snapshots"]["post"]))
+                block_path = first.parent / "block-events.json"
+                block = load_json(block_path)
+                block["events"].append({
+                    "event_index": 1,
+                    "section": "rewards",
+                    "method": "RewardPaid",
+                    "phase": "Finalization",
+                    "data": [OWNER, "5"],
+                })
+                block["complete_block_event_count"] = 2
+                block_path.chmod(0o644)
+                block_path.write_bytes(canonical_json_bytes(block))
+                adjusted = check_run(raw)
+                self.assertEqual(adjusted["summary"]["status"], "PASS", adjusted["failures"])
+                result["snapshots"]["post"]["meta"]["owner"] = BUYER
+                first.write_bytes(canonical_json_bytes(result))
+                post_path.write_bytes(canonical_json_bytes(result["snapshots"]["post"]))
+                polluted = check_run(raw)
+                self.assertEqual(polluted["summary"]["status"], "FAIL")
+                self.assertGreater(polluted["summary"]["dirty_state"], 0)
+
+    def test_race_cardinality_detects_second_winner(self):
+        scenario = scenario_map(load_catalog())["RACE-BUYER-01"]
+        base = {"snapshots": {"post": {"evidence": {"settlement_record_count": 0}}}, "events": {"success_event_count": 0}}
+        first = copy.deepcopy(base)
+        first["outcome"] = {"protocol_outcome": "accepted", "common_error_code": None}
+        second = copy.deepcopy(base)
+        second["outcome"] = {"protocol_outcome": "accepted", "common_error_code": None}
+        failures = CheckFailure()
+        _check_scenario_aggregation(scenario, [first, second], 1, failures)
+        self.assertTrue(any(row["code"] == "duplicate" for row in failures.rows))
+
+    def test_issue_settlement_closes_i1_i3_i7_i10(self):
+        scenario = scenario_map(load_catalog())["LEG-ISSUE-01"]
+        pre = snapshot("B2", "IssueRight", "settle", 1)
+        post = copy.deepcopy(pre)
+        post["observed_at"] = {"block_number": 12, "attempt_sequence": 1}
+        post["state_commitment"] = H("8")
+        post["order"]["state"] = "Settled"
+        post["order"]["buyer"] = BUYER
+        post["payment"]["state"] = "Released"
+        post["payment"]["escrow_amount"] = "0"
+        post["right"].update({"exists": True, "right_id": H("b"), "holder": BUYER, "status": "Active", "state_version": 1, "parent_asset_id": H("a"), "valid": True, "remaining_uses": 1, "holder_index_matches": True, "parent_index_matches": True})
+        post["authorization"]["issued_count"] = 1
+        post["authorization"]["reserved_count"] = 0
+        post["evidence"] = {"settlement_record_count": 1, "settlement_id": H("7"), "record_fields_hash": H("6"), "pre_state_commitment": pre["state_commitment"]}
+        record = {
+            "settlement_id": H("7"), "order_id": post["order"]["order_id"], "operation": "IssueRight",
+            "asset_id": H("a"), "right_id": H("b"), "authorization_id": post["authorization"]["authorization_id"],
+            "market_id": post["market"]["market_id"], "policy_hash": post["authorization"]["policy_hash"],
+            "order_commitment_hash": post["identity"]["order_commitment_hash"], "seller": OWNER, "buyer": BUYER,
+            "currency": "Native", "gross_price": "100", "seller_amount": "100", "royalty_recipient": None,
+            "royalty_amount": "0", "market_fee_recipient": MARKET, "market_fee_amount": "0", "safety_fee_amount": "0",
+            "pre_state_version": 1, "post_state_version": 2, "pre_state_commitment": pre["state_commitment"],
+            "block_number": 12, "settlement_protocol_version": 1,
+        }
+        result = {
+            "request": {"phase": "settle"}, "snapshots": {"pre": pre, "post": post},
+            "settlement": {"settlement_id": H("7"), "record": record},
+            "events": {"success_event_count": 1, "event_names": ["SettlementFinalized"], "post_state_commitment": post["state_commitment"]},
+        }
+        failures = CheckFailure()
+        _check_accept(result, scenario, (scenario["scenario_id"], 1, "settle"), failures)
+        self.assertEqual(failures.rows, [])
+        broken = copy.deepcopy(result)
+        broken["snapshots"]["post"]["right"]["holder"] = OWNER
+        broken["snapshots"]["post"]["authorization"]["issued_count"] = 0
+        failures = CheckFailure()
+        _check_accept(broken, scenario, (scenario["scenario_id"], 1, "settle"), failures)
+        self.assertTrue(any(row["code"] == "I1" for row in failures.rows))
+        self.assertTrue(any(row["code"] == "I10" for row in failures.rows))
+
+    def test_processor_is_deterministic_from_sealed_raw(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            preflight, raw = self._e2_raw(root)
+            try:
+                with patch("phase4_checker.validate_preflight"):
+                    checker = check_run(raw, write_report=True)
+                create_seal(
+                    preflight=preflight, status="completed", started_at=self.fixed.isoformat(), finished_at=self.fixed.isoformat(),
+                    genesis_hashes={}, fixture_anchor_blocks={},
+                    attempt_counts={"planned_units": 120, "completed_units": 120, "planned_attempts": 120, "completed_attempts": 120},
+                    teardown={"owned_processes_stopped": True, "closed_ports": [9944, 30333, 9615], "residual_listener_count": 0},
+                    checker=seal_summary(checker), failure_reason=None,
+                )
+                with patch("phase4_manifest.validate_preflight"):
+                    first = process_run(raw)
+                    second = process_run(raw)
+                self.assertEqual(first["output_hashes"], second["output_hashes"])
+                self.assertTrue((Path(preflight["paths"]["processed"]) / "correctness.csv").is_file())
+            finally:
+                for path in root.rglob("*"):
+                    try:
+                        path.chmod(0o755 if path.is_dir() else 0o644)
+                    except FileNotFoundError:
+                        pass
+
+    def test_artifact_inventory_detects_byte_tampering(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            preflight = build_preflight(exp_root=EXP_ROOT, baseline_id="B2", family="E2", executor_command=self.executor, created_at=self.fixed)
+            preflight = copy.deepcopy(preflight)
+            raw = root / "raw"
+            log = root / "log"
+            preflight["paths"] = {"raw": str(raw), "log": str(log), "processed": str(root / "processed"), "report": str(root / "report.md")}
+            write_json_exclusive(raw / "manifest.preflight.json", preflight)
+            write_json_exclusive(raw / "evidence.json", {"value": 1})
+            seal, _ = create_seal(
+                preflight=preflight, status="invalid", started_at=self.fixed.isoformat(), finished_at=self.fixed.isoformat(),
+                genesis_hashes={}, fixture_anchor_blocks={},
+                attempt_counts={"planned_units": 120, "completed_units": 0, "planned_attempts": 120, "completed_attempts": 0},
+                teardown={"owned_processes_stopped": True, "closed_ports": [9944, 30333, 9615], "residual_listener_count": 0},
+                checker={"status": "FAIL", "expected_outcome_mismatches": 0, "invariant_violations": 0, "false_accepts": 0, "false_rejects": 0, "duplicates": 0, "dirty_state": 0, "event_mismatches": 0, "timeouts": 0},
+                failure_reason="tooling-test",
+            )
+            try:
+                with patch("phase4_manifest.validate_preflight"):
+                    self.assertEqual(validate_artifacts(raw)["status"], "PASS")
+                    raw.chmod(0o755)
+                    (raw / "evidence.json").chmod(0o644)
+                    (raw / "evidence.json").write_bytes(canonical_json_bytes({"value": 2}))
+                    with self.assertRaisesRegex(Phase4ValidationError, "inventory drift"):
+                        validate_artifacts(raw)
+            finally:
+                for path in root.rglob("*"):
+                    try:
+                        path.chmod(0o755 if path.is_dir() else 0o644)
+                    except FileNotFoundError:
+                        pass
+
+
+if __name__ == "__main__":
+    unittest.main()

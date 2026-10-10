@@ -1,0 +1,64 @@
+[package]
+name = "pallet-incentive"
+description = "FRAME pallet incentive for defining custom runtime logic."
+version = "0.1.0"
+license = "Unlicense"
+authors.workspace = true
+homepage.workspace = true
+repository.workspace = true
+edition.workspace = true
+publish = false
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { features = ["derive"], workspace = true }
+frame-benchmarking = { optional = true, workspace = true }
+frame-support.workspace = true
+frame-system.workspace = true
+scale-info = { features = ["derive"], workspace = true }
+sp-std.workspace = true
+pallet-timestamp.workspace = true
+pallet-shared-traits.workspace = true
+sp-runtime.workspace = true
+sp-core.workspace = true
+hex-literal.workspace = true
+log.workspace = true
+pallet-dataassets.workspace = true
+
+[dev-dependencies]
+pallet-balances = { features = ["std"], workspace = true }
+sp-core = { default-features = true, workspace = true }
+sp-io = { default-features = true, workspace = true }
+sp-runtime = { default-features = true, workspace = true }
+pallet-timestamp = { default-features = true, workspace = true }
+tokio.workspace = true
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"frame-benchmarking?/std",
+	"frame-support/std",
+	"frame-system/std",
+	"scale-info/std",
+	"sp-core/std",
+    "sp-io/std",
+    "sp-std/std",
+    "sp-runtime/std",
+    "log/std",
+    "pallet-shared-traits/std",
+	"pallet-dataassets/std",
+]
+runtime-benchmarks = [
+	"frame-benchmarking/runtime-benchmarks",
+	"frame-support/runtime-benchmarks",
+	"frame-system/runtime-benchmarks",
+	"sp-runtime/runtime-benchmarks",
+]
+try-runtime = [
+	"frame-support/try-runtime",
+	"frame-system/try-runtime",
+	"sp-runtime/try-runtime",
+]

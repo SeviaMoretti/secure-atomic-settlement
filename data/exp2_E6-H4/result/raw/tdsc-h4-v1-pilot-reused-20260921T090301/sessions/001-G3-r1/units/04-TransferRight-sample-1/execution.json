@@ -1,0 +1,200 @@
+{
+  "operation": "TransferRight",
+  "kind": "sample",
+  "within_cell": 1,
+  "baseline": "G3",
+  "repetition": 1,
+  "run_id": "tdsc-h4-v1-pilot-reused-20260921T090301",
+  "episode_id": "tdsc-h4-v1-pilot-reused-20260921T090301/001-G3-r1/04-TransferRight-sample-1",
+  "session_id": "001-G3-r1",
+  "session_index": 1,
+  "session_order_index": 4,
+  "prior_complete_orders": 3,
+  "output_root": "/home/gz785/code/exp2/results/raw/tdsc-h4-v1-pilot-reused-20260921T090301/sessions/001-G3-r1/units/04-TransferRight-sample-1",
+  "rpc": "ws://127.0.0.1:9944",
+  "artifact_root": "/home/gz785/code/exp2/build/r3-x1-formal-artifacts-20260808-v1/g3-control/ink/market_orderbook",
+  "node_mode": "reused",
+  "instrumentation": "on",
+  "node_log": "/home/gz785/code/exp2/logs/tdsc-h4-v1-pilot-reused-20260921T090301/001-G3-r1.node.log",
+  "calibration_pair_id": null,
+  "fixture_id": "tdsc-h4-v1-pilot-reused-20260921T090301/001-G3-r1/04-TransferRight-sample-1",
+  "execution_complete": true,
+  "fixture": {
+    "schema_id": "assetxchain-exp2-phase4-e0-fixture",
+    "schema_version": 1,
+    "run_id": "tdsc-h4-v1-pilot-reused-20260921T090301",
+    "baseline_id": "G3",
+    "scenario_id": "LEG-RESALE-01",
+    "repetition": 1,
+    "genesis_hash": "0x76035a8202c00aa13d236d819404d7bab5e2731f9458c3d2194b42722200d32d",
+    "fixture_anchor_block": 44,
+    "runtime_version": "assetxchain-runtime-103",
+    "metadata_hash": "0x438ab7620d5a0b9e13d712740b949dc7beef65d4556231976a3cf213f8356d30",
+    "shared_input_hash": "0xc427552f41308fe6e7345a4af448ef3670caba676f1da46e433a1b0aa88e9c13",
+    "contract_address": "5CvzrudJ7k6TtTGkHXcbry31h5kNJDQoz82KLrwABJGrcXNL",
+    "contract_code_hash": "0x88ab3d9ea2b423efaece1e661cfa8ecd35448285898d19d3dad252971442f1c4",
+    "asset_id": "0xf12449bfcbc05ea663f054f12704eb702834c7e18eac71d5e2c55d75faf8a9ed",
+    "right_id": "0xa69562455511638db34e9f9e5d361cc458bb3b9e99423a92a2ada44a208aeb25",
+    "authorization_id": "0xc0e3be90919c0792189b56d7df4743488585b7e420fd7303a9396ecc8c6a29f9",
+    "market_id": "0x9b19cc12eb7a8f144187a1959849eaa73589c08ee265d2d41f5d1af413f2083b",
+    "order_id": "0x4166608c41d8f5862c96f69faf6e1c1560456fe73c7e9d72b99aacf2d265d073",
+    "competing_order_id": null,
+    "competing_right_id": null,
+    "initial_state": {
+      "schema_id": "assetxchain-exp2-normalized-snapshot",
+      "schema_version": 1,
+      "contract_version": "phase3-adapter-contract-v1",
+      "baseline_id": "G3",
+      "authority_source": "runtime",
+      "observed_at": {
+        "block_number": 49,
+        "attempt_sequence": 1
+      },
+      "meta": {
+        "exists": true,
+        "asset_id": "0xf12449bfcbc05ea663f054f12704eb702834c7e18eac71d5e2c55d75faf8a9ed",
+        "owner": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "status": "Tradable",
+        "state_version": 1,
+        "owner_index_matches": true,
+        "active_right_count": 1,
+        "active_order_id": null
+      },
+      "right": {
+        "exists": true,
+        "right_id": "0xa69562455511638db34e9f9e5d361cc458bb3b9e99423a92a2ada44a208aeb25",
+        "holder": "0xd41e131fdfed65e13b0235e52a96609dcd8941f743a9d25fe074f521117bb75e",
+        "status": "Active",
+        "state_version": 1,
+        "parent_asset_id": "0xf12449bfcbc05ea663f054f12704eb702834c7e18eac71d5e2c55d75faf8a9ed",
+        "valid": true,
+        "remaining_uses": 1,
+        "holder_index_matches": true,
+        "parent_index_matches": true,
+        "active_order_id": null
+      },
+      "order": {
+        "exists": false,
+        "order_id": null,
+        "operation": null,
+        "state": null,
+        "seller": null,
+        "buyer": null,
+        "expiry": null,
+        "grace_deadline": null,
+        "active_capacity_occupied": false,
+        "funded_capacity_occupied": false
+      },
+      "authorization": {
+        "exists": true,
+        "authorization_id": "0xc0e3be90919c0792189b56d7df4743488585b7e420fd7303a9396ecc8c6a29f9",
+        "status": "Active",
+        "policy_hash": "0x94ad0e04d9fd76b83ca40e8cd52e459160e1aae3fd0f7ae1ab850f3d1bd67817",
+        "issued_count": 0,
+        "reserved_count": 0,
+        "issued_use_units": 0,
+        "reserved_use_units": 0,
+        "consumed": false,
+        "consumed_order_id": null
+      },
+      "payment": {
+        "state": "Unfunded",
+        "escrow_amount": "0",
+        "buyer_balance": "100000000000000000",
+        "seller_balance": "99996997018627614",
+        "royalty_balance": null,
+        "market_balance": "89536080260265198",
+        "safety_balance": null
+      },
+      "evidence": {
+        "settlement_record_count": 0,
+        "settlement_id": null,
+        "record_fields_hash": null,
+        "pre_state_commitment": null
+      },
+      "market": {
+        "exists": true,
+        "market_id": "0x9b19cc12eb7a8f144187a1959849eaa73589c08ee265d2d41f5d1af413f2083b",
+        "status": "Active",
+        "capabilities": [
+          "TransferMeta",
+          "IssueRight",
+          "TransferRight"
+        ],
+        "active_orders": 0,
+        "funded_orders": 0,
+        "active_exposure_value": "0"
+      },
+      "identity": {
+        "settlement_protocol_version": 1,
+        "settlement_domain_id": "axc/p2/shared",
+        "order_commitment_hash": null,
+        "seller_nonce": 0,
+        "buyer_nonce": 0,
+        "authorization_nonce": null,
+        "object_state_version": 1
+      },
+      "state_commitment": "0x3434b7a5a3d111c1376dd0af466037fdf64a83fd0c7dfa2d7a9c63280f9436df",
+      "projection": {
+        "availability": "unavailable",
+        "authoritative": false,
+        "order_state": null,
+        "settlement_record_count": null
+      }
+    }
+  },
+  "timing": {
+    "preparation_start": "55977758595112",
+    "fixture_ready": "56036491422148",
+    "measurement_end": "56068372315138",
+    "audit_done": "56068422679763"
+  },
+  "preparation_scope": "account funding,isolated contract/market,asset,authorization,outside c0",
+  "shared_accounts": [
+    "OWNER (development faucet/admin)"
+  ],
+  "market_policy": "isolated instance each order; pre-existing before measured transaction",
+  "resources_before": {
+    "at_ns": "55977758598989",
+    "load": [
+      0.04,
+      1.42,
+      1.97
+    ],
+    "free_memory": 11041320960,
+    "total_memory": 12428410880,
+    "client_cpu": {
+      "user": 2439912,
+      "system": 237094
+    },
+    "node_stat": "63418 (assetxchain-nod) S 63417 63418 63418 0 -1 4194304 124429 0 0 0 2885 96 0 0 20 0 87 0 5574359 420778057728 96582 18446744073709551615 97378619310080 97378659146205 140734784954208 0 0 0 0 4096 17610 0 0 0 17 5 0 0 0 0 0 97378673094208 97378675088496 97378695188480 140734784954985 140734784955136 140734784955136 140734784958395 0\n",
+    "node_io": "rchar: 2430878\nwchar: 6740467\nsyscr: 3037\nsyscw: 12284\nread_bytes: 180224\nwrite_bytes: 5435392\ncancelled_write_bytes: 45056\n",
+    "node_status": "Name:\tassetxchain-nod\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t63418\nNgid:\t0\nPid:\t63418\nPPid:\t63417\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t256\nGroups:\t4 24 27 30 46 100 1000 1001 \nNStgid:\t63418\nNSpid:\t63418\nNSpgid:\t63418\nNSsid:\t63418\nKthread:\t0\nVmPeak:\t410972536 kB\nVmSize:\t410916072 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t  396312 kB\nVmRSS:\t  388256 kB\nRssAnon:\t  341496 kB\nRssFile:\t   46760 kB\nRssShmem:\t       0 kB\nVmData:\t  923192 kB\nVmStk:\t     132 kB\nVmExe:\t   38904 kB\nVmLib:\t   13252 kB\nVmPTE:\t    1624 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t87\nSigQ:\t1/47367\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t00000001000044ca\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tfffff\nCpus_allowed_list:\t0-19\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t120\nnonvoluntary_ctxt_switches:\t1\n",
+    "meminfo": "MemTotal:       12137120 kB\nMemFree:         2032296 kB\nMemAvailable:   10782540 kB\nBuffers:          142984 kB\nCached:          8416612 kB\nSwapCached:          556 kB\nActive:          5489600 kB\nInactive:        3766084 kB\nActive(anon):       3276 kB\nInactive(anon):   697356 kB\nActive(file):    5486324 kB\nInactive(file):  3068728 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       3145728 kB\nSwapFree:        3144704 kB\nDirty:               220 kB\nWriteback:           140 kB\nAnonPages:        695540 kB\nMapped:           280092 kB\nShmem:              4460 kB\nKReclaimable:     410900 kB\nSlab:             538680 kB\nSReclaimable:     410900 kB\nSUnreclaim:       127780 kB\nKernelStack:        8480 kB\nPageTables:        15548 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     9214288 kB\nCommitted_AS:    2787196 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       37928 kB\nVmallocChunk:          0 kB\nPercpu:            11424 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:    540672 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       68608 kB\nDirectMap2M:     5064704 kB\nDirectMap1G:    16777216 kB\n",
+    "diskstats": "   1       0 ram0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       1 ram1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       2 ram2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       3 ram3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       4 ram4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       5 ram5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       6 ram6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       7 ram7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       8 ram8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       9 ram9 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      10 ram10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      11 ram11 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      12 ram12 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      13 ram13 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      14 ram14 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      15 ram15 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       0 loop0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       1 loop1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       2 loop2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       3 loop3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       4 loop4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       5 loop5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       6 loop6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       7 loop7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   8       0 sda 792 459 322290 245 0 0 0 0 0 184 245 0 0 0 0 0 0\n   8      16 sdb 900 131 37218 788 0 0 0 0 0 22024988 788 0 0 0 0 0 0\n   8      32 sdc 101 6 4784 6 128 130 2056 510 0 20 518 0 0 0 0 1 1\n   8      48 sdd 440421 97237 45327970 1250087 157549 230616 19370056 296048 0 457692 1572622 13497 747 20329400 1557 38973 24928\n"
+  },
+  "resources_after": {
+    "at_ns": "56068422689735",
+    "load": [
+      0.01,
+      1.05,
+      1.78
+    ],
+    "free_memory": 11037638656,
+    "total_memory": 12428410880,
+    "client_cpu": {
+      "user": 3096573,
+      "system": 262421
+    },
+    "node_stat": "63418 (assetxchain-nod) S 63417 63418 63418 0 -1 4194304 127521 0 0 0 2921 117 0 0 20 0 87 0 5574359 420778323968 96989 18446744073709551615 97378619310080 97378659146205 140734784954208 0 0 0 0 4096 17610 0 0 0 17 5 0 0 0 0 0 97378673094208 97378675088496 97378695188480 140734784954985 140734784955136 140734784955136 140734784958395 0\n",
+    "node_io": "rchar: 2431449\nwchar: 7585210\nsyscr: 3041\nsyscw: 16925\nread_bytes: 180224\nwrite_bytes: 6303744\ncancelled_write_bytes: 45056\n",
+    "node_status": "Name:\tassetxchain-nod\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t63418\nNgid:\t0\nPid:\t63418\nPPid:\t63417\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t256\nGroups:\t4 24 27 30 46 100 1000 1001 \nNStgid:\t63418\nNSpid:\t63418\nNSpgid:\t63418\nNSsid:\t63418\nKthread:\t0\nVmPeak:\t410972536 kB\nVmSize:\t410916332 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t  396312 kB\nVmRSS:\t  389576 kB\nRssAnon:\t  342816 kB\nRssFile:\t   46760 kB\nRssShmem:\t       0 kB\nVmData:\t  924632 kB\nVmStk:\t     132 kB\nVmExe:\t   38904 kB\nVmLib:\t   13252 kB\nVmPTE:\t    1624 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t87\nSigQ:\t1/47367\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t00000001000044ca\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tfffff\nCpus_allowed_list:\t0-19\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t120\nnonvoluntary_ctxt_switches:\t1\n",
+    "meminfo": "MemTotal:       12137120 kB\nMemFree:         2026756 kB\nMemAvailable:   10778944 kB\nBuffers:          143140 kB\nCached:          8418340 kB\nSwapCached:          556 kB\nActive:          5489792 kB\nInactive:        3769736 kB\nActive(anon):       3276 kB\nInactive(anon):   699256 kB\nActive(file):    5486516 kB\nInactive(file):  3070480 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       3145728 kB\nSwapFree:        3144704 kB\nDirty:               252 kB\nWriteback:             0 kB\nAnonPages:        697684 kB\nMapped:           280096 kB\nShmem:              4460 kB\nKReclaimable:     410900 kB\nSlab:             538680 kB\nSReclaimable:     410900 kB\nSUnreclaim:       127780 kB\nKernelStack:        8416 kB\nPageTables:        15540 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     9214288 kB\nCommitted_AS:    2788892 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       37880 kB\nVmallocChunk:          0 kB\nPercpu:            11424 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:    540672 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       68608 kB\nDirectMap2M:     5064704 kB\nDirectMap1G:    16777216 kB\n",
+    "diskstats": "   1       0 ram0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       1 ram1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       2 ram2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       3 ram3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       4 ram4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       5 ram5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       6 ram6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       7 ram7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       8 ram8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1       9 ram9 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      10 ram10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      11 ram11 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      12 ram12 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      13 ram13 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      14 ram14 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   1      15 ram15 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       0 loop0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       1 loop1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       2 loop2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       3 loop3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       4 loop4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       5 loop5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       6 loop6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   7       7 loop7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n   8       0 sda 792 459 322290 245 0 0 0 0 0 184 245 0 0 0 0 0 0\n   8      16 sdb 900 131 37218 788 0 0 0 0 0 22024988 788 0 0 0 0 0 0\n   8      32 sdc 101 6 4784 6 128 130 2056 510 0 20 518 0 0 0 0 1 1\n   8      48 sdd 440422 97237 45327994 1250088 157773 230878 19375776 296242 3 457832 1572844 13536 748 20334344 1560 39009 24952\n"
+  },
+  "node_execution_ms": null,
+  "node_execution_observation": "PENDING_LOG_CORRELATION",
+  "online_calibration": "NOT_THIS_RUN",
+  "runtime_metadata_path": "/home/gz785/code/exp2/results/raw/tdsc-h4-v1-pilot-reused-20260921T090301/sessions/001-G3-r1/runtime-metadata.json",
+  "contract_metadata_path": "/home/gz785/code/exp2/results/raw/tdsc-h4-v1-pilot-reused-20260921T090301/sessions/001-G3-r1/contract-metadata.json"
+}

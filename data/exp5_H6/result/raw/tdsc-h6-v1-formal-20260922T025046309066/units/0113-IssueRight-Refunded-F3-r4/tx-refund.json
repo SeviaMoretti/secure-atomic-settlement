@@ -1,0 +1,160 @@
+{
+  "phase": "refund",
+  "c0": "136474170364623",
+  "c1": "136474223476419",
+  "c_ack": "136474268974414",
+  "c_in": "136480031459755",
+  "c_fin": "136491613532695",
+  "c_done": "136491615493375",
+  "statuses": [
+    {
+      "status": "Ready",
+      "at_ns": "136474269032007"
+    },
+    {
+      "status": "InBlock",
+      "at_ns": "136480031459755"
+    },
+    {
+      "status": "Finalized",
+      "at_ns": "136491613532695"
+    }
+  ],
+  "head_at_start": null,
+  "encode_start": "136474170368879",
+  "encode_end": "136474171572411",
+  "nonce_query_start": "136474171581082",
+  "nonce_query_end": "136474173578743",
+  "sign_start": "136474173588937",
+  "sign_end": "136474223231328",
+  "account": "5F9jtptv8ohyAyYLidAqR5e8rFM3pfqectTb5nrypwuZ4GWt",
+  "nonce": "1",
+  "signed_bytes": "0xf1028400888bc90444140b5f56c9d8e020cb267e1629bfd0d4b8784f503262a92575a166016cd23ce848083a4fc66f3bd5ed8b5c7bf27ea40663f71a0a35142eee4db4e7122d8174f638839792d38f8c452e0e881b42e749e885a169313c13ebef32085a8335010400000e06000dff47f36b73bc0497d9abe96381b514109e16fe6e934060cedf80806f74f89500070010a5d4e80200001900906863b46774a84af8bef34b5377d430f40c87272c6992f0e93d964114903ac5f3ea311c3d",
+  "tx_hash": "0x82707c9865ce81433ab4edfce58dfa1e3ddb2a5fb49bf3a78352ed0bd2c0bd9e",
+  "block_hash": "0xa22ddc84c5c7df504ab9d344660a675a908e57aa406fa48ec315e070c4a39126",
+  "finalized_block_hash": "0xa22ddc84c5c7df504ab9d344660a675a908e57aa406fa48ec315e070c4a39126",
+  "evidence_read_start": "136491613624036",
+  "block_number": 23,
+  "parent_hash": "0xf185da93426a9faf5fa586dbb08a0c7a48ecc8b7335efc436c28259adb6bfb4f",
+  "extrinsic_index": 1,
+  "events": [
+    {
+      "index": 1,
+      "phase": {
+        "applyExtrinsic": 1
+      },
+      "section": "balances",
+      "method": "Withdraw",
+      "data": [
+        "5F9jtptv8ohyAyYLidAqR5e8rFM3pfqectTb5nrypwuZ4GWt",
+        1001122225190
+      ],
+      "topics": []
+    },
+    {
+      "index": 2,
+      "phase": {
+        "applyExtrinsic": 1
+      },
+      "section": "balances",
+      "method": "Unreserved",
+      "data": [
+        "5F9jtptv8ohyAyYLidAqR5e8rFM3pfqectTb5nrypwuZ4GWt",
+        3000000000000
+      ],
+      "topics": []
+    },
+    {
+      "index": 3,
+      "phase": {
+        "applyExtrinsic": 1
+      },
+      "section": "dataAssets",
+      "method": "OrderRefunded",
+      "data": [
+        "0x74a84af8bef34b5377d430f40c87272c6992f0e93d964114903ac5f3ea311c3d",
+        "0x888bc90444140b5f56c9d8e020cb267e1629bfd0d4b8784f503262a92575a166",
+        3000000000000
+      ],
+      "topics": []
+    },
+    {
+      "index": 4,
+      "phase": {
+        "applyExtrinsic": 1
+      },
+      "section": "dataAssets",
+      "method": "PaymentRefunded",
+      "data": [
+        "0x74a84af8bef34b5377d430f40c87272c6992f0e93d964114903ac5f3ea311c3d",
+        "0x0ce4f72589621530ac9c381e26bade9bf40632a0f4034f172822eac0d78192df",
+        3000000000000
+      ],
+      "topics": []
+    },
+    {
+      "index": 5,
+      "phase": {
+        "applyExtrinsic": 1
+      },
+      "section": "contracts",
+      "method": "Called",
+      "data": [
+        {
+          "signed": "5F9jtptv8ohyAyYLidAqR5e8rFM3pfqectTb5nrypwuZ4GWt"
+        },
+        "5CP4KAU7qCTHvonf3Fh7ArQ9evLxMJ1YKvhyfeD85fMn2THA"
+      ],
+      "topics": []
+    },
+    {
+      "index": 6,
+      "phase": {
+        "applyExtrinsic": 1
+      },
+      "section": "balances",
+      "method": "Deposit",
+      "data": [
+        "5F9jtptv8ohyAyYLidAqR5e8rFM3pfqectTb5nrypwuZ4GWt",
+        998418713055
+      ],
+      "topics": []
+    },
+    {
+      "index": 7,
+      "phase": {
+        "applyExtrinsic": 1
+      },
+      "section": "transactionPayment",
+      "method": "TransactionFeePaid",
+      "data": [
+        "5F9jtptv8ohyAyYLidAqR5e8rFM3pfqectTb5nrypwuZ4GWt",
+        2703512135,
+        0
+      ],
+      "topics": []
+    },
+    {
+      "index": 8,
+      "phase": {
+        "applyExtrinsic": 1
+      },
+      "section": "system",
+      "method": "ExtrinsicSuccess",
+      "data": [
+        {
+          "weight": {
+            "refTime": 2703511945,
+            "proofSize": 70352
+          },
+          "class": "Normal",
+          "paysFee": "Yes"
+        }
+      ],
+      "topics": []
+    }
+  ],
+  "fee": 2703512135,
+  "dispatch_error": null,
+  "contract_events": []
+}

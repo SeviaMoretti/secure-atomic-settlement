@@ -1,0 +1,186 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "unit": "tdsc-h4-v1-formal-reused-20260921T133757/009-B1-r3/10-IssueRight-sample-3",
+  "baseline": "B1",
+  "operation": "IssueRight",
+  "session_id": "009-B1-r3",
+  "kind": "sample",
+  "node_mode": "reused",
+  "timing_metrics": [
+    {
+      "phase": "create",
+      "preparation_ms": 47.522429,
+      "encoding_and_inner_signature_ms": 1.439736,
+      "nonce_rpc_ms": 0.525084,
+      "outer_signing_ms": 45.339766,
+      "submission_to_inclusion_ms": 4903.623073,
+      "inclusion_to_finalization_ms": 13169.73455,
+      "evidence_after_inclusion_ms": 25178.487287,
+      "evidence_rpc_ms": 3.093507,
+      "c0_to_inclusion_ms": 4951.145502,
+      "c0_to_finalization_ms": 18120.880052,
+      "last_head_observation_age_ms": 115.453184,
+      "block_number": 96,
+      "completion_blocks": 1
+    },
+    {
+      "phase": "fund",
+      "preparation_ms": 46.811328,
+      "encoding_and_inner_signature_ms": 1.11592,
+      "nonce_rpc_ms": 0.660282,
+      "outer_signing_ms": 44.918758,
+      "submission_to_inclusion_ms": 5952.758439,
+      "inclusion_to_finalization_ms": 13837.528727,
+      "evidence_after_inclusion_ms": 19181.727656,
+      "evidence_rpc_ms": 2.827327,
+      "c0_to_inclusion_ms": 5999.569767,
+      "c0_to_finalization_ms": 19837.098494,
+      "last_head_observation_age_ms": 49.693121,
+      "block_number": 97,
+      "completion_blocks": 1
+    },
+    {
+      "phase": "settle",
+      "preparation_ms": 45.961143,
+      "encoding_and_inner_signature_ms": 0.178809,
+      "nonce_rpc_ms": 0.691864,
+      "outer_signing_ms": 44.856735,
+      "submission_to_inclusion_ms": 5958.472774,
+      "inclusion_to_finalization_ms": 13171.322004,
+      "evidence_after_inclusion_ms": 13180.383389,
+      "evidence_rpc_ms": 3.094732,
+      "c0_to_inclusion_ms": 6004.433917,
+      "c0_to_finalization_ms": 19175.755921,
+      "last_head_observation_age_ms": 50.388061,
+      "block_number": 98,
+      "completion_blocks": 1
+    }
+  ],
+  "order_inclusion_ms": 16955.185916,
+  "order_finalization_ms": 30126.50792,
+  "sum_phase_inclusion_ms": 16955.149186000002,
+  "sum_phase_finalization_ms": 57133.734467,
+  "fixture_ms": 27190.342665,
+  "audit_after_measurement_ms": 39.828174,
+  "payload_audit": {
+    "status": "PASS",
+    "original_signature_verified": true,
+    "decoded": [
+      {
+        "tx_hash": "0xefe99d83ad0fdf3dfb665aa5e76b91a9b20aa06ba61fef5a2dc8b45cc4289e1e",
+        "method": "create_order",
+        "events": [
+          {
+            "method": "OrderCreated",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::OrderCreated",
+            "args": [
+              "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff",
+              "0x69a38cc8661ee9d9813fd73e6c5b3c8fe0161eb258657eabb21b2608d5cd7928",
+              "IssueRight",
+              "0xf4d93ac250694bd1e9fd9f5a7fd4d1ab1689acfd33be883e9053b0e249d160eb"
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0x1d7d0b8679545adbb6bcc3b8fa6a5b806f30fdc5c2ec62f212e6e4ed46cfa640",
+        "method": "fund_order",
+        "events": [
+          {
+            "method": "IssueQuotaReserved",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::IssueQuotaReserved",
+            "args": [
+              "0x520fbcdb9d1ecdabb09ffbc9a3b8249e00f3127672195056028d727e68576749",
+              "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff",
+              1
+            ]
+          },
+          {
+            "method": "OrderFunded",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::OrderFunded",
+            "args": [
+              "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff",
+              "0x64358a0d5dfe18b5ccae1904a7bb27f4cf307447f0eaed8af4a92826cb4c8967",
+              "0xa324ba26371d5b3cdaae389cf8a94e8fdae181bf9327b144e794417eb377f60d",
+              3000000000000,
+              107
+            ]
+          },
+          {
+            "method": "PaymentEscrowed",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::PaymentEscrowed",
+            "args": [
+              "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff",
+              "0xa324ba26371d5b3cdaae389cf8a94e8fdae181bf9327b144e794417eb377f60d",
+              3000000000000
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0x97a3f0d07932ea7d7497ee7eea60f5e648cf7c54e38a235dda49b87de1bbfbad",
+        "method": "settle",
+        "events": [
+          {
+            "method": "IssueQuotaConverted",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::IssueQuotaConverted",
+            "args": [
+              "0x520fbcdb9d1ecdabb09ffbc9a3b8249e00f3127672195056028d727e68576749",
+              "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff"
+            ]
+          },
+          {
+            "method": "PaymentReleased",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::PaymentReleased",
+            "args": [
+              "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff",
+              "0xa324ba26371d5b3cdaae389cf8a94e8fdae181bf9327b144e794417eb377f60d",
+              3000000000000
+            ]
+          },
+          {
+            "method": "OrderSettled",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::OrderSettled",
+            "args": [
+              "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff"
+            ]
+          },
+          {
+            "method": "SettlementFinalized",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::SettlementFinalized",
+            "args": [
+              "0x6eb67ba8b8509d70c5220ba6347ad76ada144fc12d9044520a864896a2de8500",
+              "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff",
+              "0xb148d7c14def3b5064188f82e63940191f8975aaad533f1872ce07af9c997b25"
+            ]
+          }
+        ]
+      }
+    ],
+    "settlements": [
+      {
+        "method": "SettlementFinalized",
+        "qualified_identifier": "market_pure_contract::market_pure_contract::SettlementFinalized",
+        "args": [
+          "0x6eb67ba8b8509d70c5220ba6347ad76ada144fc12d9044520a864896a2de8500",
+          "0x6878bcc8e78d2bade19d37f4f8fd1eea22d5a3a111803cb3506ed250b49c57ff",
+          "0xb148d7c14def3b5064188f82e63940191f8975aaad533f1872ce07af9c997b25"
+        ]
+      }
+    ]
+  },
+  "online_execution": {
+    "status": "PASS",
+    "errors": [],
+    "instrumentation": "off",
+    "log_path": "/home/gz785/code/exp2/logs/tdsc-h4-v1-formal-reused-20260921T133757/009-B1-r3.node.log",
+    "matches": [],
+    "boundary": "live block construction WasmExecutor::call(BlockBuilder_apply_extrinsic), including host/runtime invocation overhead; not replay, not pure Wasm instructions",
+    "clock": "node-local monotonic; never subtracted from client clock"
+  },
+  "instrumentation": "off",
+  "calibration_pair_id": null,
+  "online_calibration": "NOT_THIS_RUN",
+  "paper_final": false
+}

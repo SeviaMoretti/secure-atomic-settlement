@@ -1,0 +1,33 @@
+{
+  "operation": "TransferMeta",
+  "terminal": "Cancelled",
+  "condition": "F1",
+  "seller": "OWNER",
+  "buyer": "BUYER_1",
+  "artifact": "normal",
+  "preparation": [
+    {
+      "method": "relayCreateOrder",
+      "role": "RELAYER",
+      "label": "create"
+    },
+    {
+      "method": "relayCancelOpen",
+      "role": "OWNER",
+      "label": "cancel"
+    }
+  ],
+  "injection": null,
+  "recovery": [
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync1"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync2"
+    }
+  ]
+}

@@ -1,0 +1,804 @@
+{
+  "schema_version": "assetxchain-runtime-noise-v1",
+  "variant": "single_tree",
+  "noise_count": 0,
+  "repetitions": 5,
+  "seed": 20260923,
+  "rpc": "ws://127.0.0.1:9944",
+  "target_operation": "dataAssets.transferCertificate",
+  "noise_operation": "dataAssets.registerAssetCore",
+  "noise_injection": "concurrent pool submissions before target submission",
+  "rows": [
+    {
+      "repetition": 0,
+      "noise_count": 0,
+      "variant": "single_tree",
+      "setup_asset": {
+        "label": "single_tree-noise0-rep0-setup-asset",
+        "tx_hash": "0x1c97af01359766e13252eb742ed2749a38013c21119829e6f1a92f316b690126",
+        "start_block": 1,
+        "included_block": 2,
+        "completion_blocks": 1,
+        "latency_ms": 6028.009,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "AssetRegistered",
+            "data": [
+              "0x0975513f9a8ed6dba02653517ee5c4a099c676069a5f10c1475747e302d0ec4d",
+              "0x00000000",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x03f02a844281dd0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "setup_certificate": {
+        "label": "single_tree-noise0-rep0-setup-certificate",
+        "tx_hash": "0xc9cd13dfb3fa8346a76daa7dc548d723fee8257a34069e839a7055b3f69e13e9",
+        "start_block": 2,
+        "included_block": 3,
+        "completion_blocks": 1,
+        "latency_ms": 6000.484,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateIssued",
+            "data": [
+              "0x0975513f9a8ed6dba02653517ee5c4a099c676069a5f10c1475747e302d0ec4d",
+              "0xc7f7c57e9e1388b79fca6240cb713770b9dac1e864cf393fa427989a5820651e",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x0388f1b4444dfe0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "target": {
+        "label": "single_tree-noise0-rep0-target-transfer-certificate",
+        "tx_hash": "0x7b20aacaf05eaeb310a8865eb7fb5becaf1d0f63b626f2220dfd4ab421041c5f",
+        "start_block": 3,
+        "included_block": 4,
+        "completion_blocks": 1,
+        "latency_ms": 5931.142,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateTransferred",
+            "data": [
+              "0x0975513f9a8ed6dba02653517ee5c4a099c676069a5f10c1475747e302d0ec4d",
+              "0xc7f7c57e9e1388b79fca6240cb713770b9dac1e864cf393fa427989a5820651e",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x90b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0xe2404cd8520101000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "noise_success_count": 0,
+      "target_latency_ms": 5931.142,
+      "target_completion_blocks": 1
+    },
+    {
+      "repetition": 1,
+      "noise_count": 0,
+      "variant": "single_tree",
+      "setup_asset": {
+        "label": "single_tree-noise0-rep1-setup-asset",
+        "tx_hash": "0x7633be576256714756248ad40ddaed4a14b9a2ad494ee82660f141149270c5d0",
+        "start_block": 4,
+        "included_block": 5,
+        "completion_blocks": 1,
+        "latency_ms": 5994.295,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "AssetRegistered",
+            "data": [
+              "0xdb4c0caa88305e362a6f8e82066c8c54c6e9211d61bc17efb4833b47e0b917d6",
+              "0x00000001",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x03f02a844281dd0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "setup_certificate": {
+        "label": "single_tree-noise0-rep1-setup-certificate",
+        "tx_hash": "0xe031943ea3d38c47e127ea040d5e8c98baa45f817f756b2416bb2f2d727c7865",
+        "start_block": 5,
+        "included_block": 6,
+        "completion_blocks": 1,
+        "latency_ms": 5305.643,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateIssued",
+            "data": [
+              "0xdb4c0caa88305e362a6f8e82066c8c54c6e9211d61bc17efb4833b47e0b917d6",
+              "0xdce38915ef7b0bbb1166fa8e7b7e31bdc8733b3c0acd79a4eac791cd936fd23d",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x0388f1b4444dfe0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "target": {
+        "label": "single_tree-noise0-rep1-target-transfer-certificate",
+        "tx_hash": "0xa6901a5b0ee27b87e358adbb4ae133d2011d7e56e5a0ad71d26addf3a69865f4",
+        "start_block": 6,
+        "included_block": 7,
+        "completion_blocks": 1,
+        "latency_ms": 5970.688,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateTransferred",
+            "data": [
+              "0xdb4c0caa88305e362a6f8e82066c8c54c6e9211d61bc17efb4833b47e0b917d6",
+              "0xdce38915ef7b0bbb1166fa8e7b7e31bdc8733b3c0acd79a4eac791cd936fd23d",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x90b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0xe2404cd8520101000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "noise_success_count": 0,
+      "target_latency_ms": 5970.688,
+      "target_completion_blocks": 1
+    },
+    {
+      "repetition": 2,
+      "noise_count": 0,
+      "variant": "single_tree",
+      "setup_asset": {
+        "label": "single_tree-noise0-rep2-setup-asset",
+        "tx_hash": "0x1b1e9a56df82d48d4bb81a8dba4e7da213d0cda75daa3db75f950163069015d8",
+        "start_block": 7,
+        "included_block": 8,
+        "completion_blocks": 1,
+        "latency_ms": 5957.954,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "AssetRegistered",
+            "data": [
+              "0x2aad6311f8252ceb3a7b06cd5be9bb3df3b91d9e368d4242327eb09906d6d9c6",
+              "0x00000002",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x03f02a844281dd0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "setup_certificate": {
+        "label": "single_tree-noise0-rep2-setup-certificate",
+        "tx_hash": "0xa0c118c40d44cbcf1ee7b8dcb7cfd3ce0fd1dd147d06172b7ecb1e510a69afd0",
+        "start_block": 8,
+        "included_block": 9,
+        "completion_blocks": 1,
+        "latency_ms": 5994.216,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateIssued",
+            "data": [
+              "0x2aad6311f8252ceb3a7b06cd5be9bb3df3b91d9e368d4242327eb09906d6d9c6",
+              "0xa78ee50187a6005b6f26ad0b994e408341161ee0423defc409929ead0dbf0dc1",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x0388f1b4444dfe0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "target": {
+        "label": "single_tree-noise0-rep2-target-transfer-certificate",
+        "tx_hash": "0xc12ba2b16b120db3a7b5766238624ed10dd3dc2301962fc7ccef7094755a7602",
+        "start_block": 9,
+        "included_block": 10,
+        "completion_blocks": 1,
+        "latency_ms": 6020.302,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateTransferred",
+            "data": [
+              "0x2aad6311f8252ceb3a7b06cd5be9bb3df3b91d9e368d4242327eb09906d6d9c6",
+              "0xa78ee50187a6005b6f26ad0b994e408341161ee0423defc409929ead0dbf0dc1",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x90b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0xe2404cd8520101000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "noise_success_count": 0,
+      "target_latency_ms": 6020.302,
+      "target_completion_blocks": 1
+    },
+    {
+      "repetition": 3,
+      "noise_count": 0,
+      "variant": "single_tree",
+      "setup_asset": {
+        "label": "single_tree-noise0-rep3-setup-asset",
+        "tx_hash": "0xdda1ab996e28bdb9c41eed2f9429d48887ec804f8f532d5e41862a0626871dd2",
+        "start_block": 10,
+        "included_block": 11,
+        "completion_blocks": 1,
+        "latency_ms": 5038.197,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "AssetRegistered",
+            "data": [
+              "0x065098e40bb4a437b117ad8bf87f0c51187cbd50cc5d7c06718211069b5eaf91",
+              "0x00000003",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x03f02a844281dd0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "setup_certificate": {
+        "label": "single_tree-noise0-rep3-setup-certificate",
+        "tx_hash": "0x725b9db8cf38a51f8db5e4890afe0db4fb5bf691940757307598c426e5469edd",
+        "start_block": 11,
+        "included_block": 12,
+        "completion_blocks": 1,
+        "latency_ms": 5998.846,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateIssued",
+            "data": [
+              "0x065098e40bb4a437b117ad8bf87f0c51187cbd50cc5d7c06718211069b5eaf91",
+              "0xb647926e53133da498c2772956c7f015ae7121b3f2e283e04842fd23e85a148c",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x0388f1b4444dfe0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "target": {
+        "label": "single_tree-noise0-rep3-target-transfer-certificate",
+        "tx_hash": "0xe51ddbc65d7b5896de302ff246937597a94a6b7bf59c27c9d2a8bcd1170e50bf",
+        "start_block": 12,
+        "included_block": 13,
+        "completion_blocks": 1,
+        "latency_ms": 5976.189,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateTransferred",
+            "data": [
+              "0x065098e40bb4a437b117ad8bf87f0c51187cbd50cc5d7c06718211069b5eaf91",
+              "0xb647926e53133da498c2772956c7f015ae7121b3f2e283e04842fd23e85a148c",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x90b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0xe2404cd8520101000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "noise_success_count": 0,
+      "target_latency_ms": 5976.189,
+      "target_completion_blocks": 1
+    },
+    {
+      "repetition": 4,
+      "noise_count": 0,
+      "variant": "single_tree",
+      "setup_asset": {
+        "label": "single_tree-noise0-rep4-setup-asset",
+        "tx_hash": "0x110b5f27b3cb983b5ce6d5c8958b2933d02c6020861f669b1a1013fa132b68e4",
+        "start_block": 13,
+        "included_block": 14,
+        "completion_blocks": 1,
+        "latency_ms": 5992.947,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "AssetRegistered",
+            "data": [
+              "0x0809438baf648cfe4b1d96e32ae8ab46ef845d54387021ee08dbc4981f91d730",
+              "0x00000004",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000042842bab",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x03f02a844281dd0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "setup_certificate": {
+        "label": "single_tree-noise0-rep4-setup-certificate",
+        "tx_hash": "0xabed4f7133ba9417931f167529bf3fb150dda6ba926ccf6bd27f5fd705a597e6",
+        "start_block": 14,
+        "included_block": 15,
+        "completion_blocks": 1,
+        "latency_ms": 6006.295,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateIssued",
+            "data": [
+              "0x0809438baf648cfe4b1d96e32ae8ab46ef845d54387021ee08dbc4981f91d730",
+              "0xf19d2872684ed71092a8bc59002b9e8accacc582ec2a154c3432ab1e81719b27",
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+              "0x00000000000000000000000044b4f236",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0x0388f1b4444dfe0000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "target": {
+        "label": "single_tree-noise0-rep4-target-transfer-certificate",
+        "tx_hash": "0x9f2303dd22ecd093a941abfddf2dda5240a16571862ae5ced6632f1980572e97",
+        "start_block": 15,
+        "included_block": 16,
+        "completion_blocks": 1,
+        "latency_ms": 5966.518,
+        "success": true,
+        "dispatch_error": "",
+        "events": [
+          {
+            "section": "balances",
+            "method": "Withdraw",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "dataAssets",
+            "method": "CertificateTransferred",
+            "data": [
+              "0x0809438baf648cfe4b1d96e32ae8ab46ef845d54387021ee08dbc4981f91d730",
+              "0xf19d2872684ed71092a8bc59002b9e8accacc582ec2a154c3432ab1e81719b27",
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x90b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "transactionPayment",
+            "method": "TransactionFeePaid",
+            "data": [
+              "0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+              "0x00000000000000000000000036131104",
+              "0x00000000000000000000000000000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          },
+          {
+            "section": "system",
+            "method": "ExtrinsicSuccess",
+            "data": [
+              "0xe2404cd8520101000000"
+            ],
+            "phase": "{\"applyExtrinsic\":1}"
+          }
+        ]
+      },
+      "noise_success_count": 0,
+      "target_latency_ms": 5966.518,
+      "target_completion_blocks": 1
+    }
+  ],
+  "noise_rows": []
+}

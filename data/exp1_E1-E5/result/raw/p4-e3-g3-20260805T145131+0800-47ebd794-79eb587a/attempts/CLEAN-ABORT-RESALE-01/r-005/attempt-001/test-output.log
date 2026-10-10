@@ -1,0 +1,145 @@
+stdout:
+
+running 1 test
+test tests::invariant_scenarios::clean_abort_resale_01 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 118 filtered out; finished in 0.03s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+
+stderr:
+warning: use of deprecated constant `pallet::RuntimeEvent::_w`: 
+                 It is deprecated to have `RuntimeEvent` associated type in the pallet config.
+                 Please instead remove it as it is redundant since associated bound gets appended automatically: 
+                 
+                 pub trait Config: frame_system::Config<RuntimeEvent: From<Event<Self>>> { }.
+         
+                 For more info see:
+                     <https://github.com/paritytech/polkadot-sdk/pull/7229>
+  --> pallets/dataassets/src/lib.rs:89:14
+   |
+89 |         type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+   |              ^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated constant `pallet::warnings::ConstantWeight_0::_w`: 
+                 It is deprecated to use hard-coded constant as call weight.
+                 Please instead benchmark all calls or put the pallet into `dev` mode.
+         
+                 For more info see:
+                     <https://github.com/paritytech/substrate/pull/13798>
+   --> pallets/dataassets/src/lib.rs:644:26
+    |
+644 |         #[pallet::weight(0)]
+    |                          ^
+
+warning: use of deprecated constant `pallet::warnings::ConstantWeight_1::_w`: 
+                 It is deprecated to use hard-coded constant as call weight.
+                 Please instead benchmark all calls or put the pallet into `dev` mode.
+         
+                 For more info see:
+                     <https://github.com/paritytech/substrate/pull/13798>
+   --> pallets/dataassets/src/lib.rs:653:26
+    |
+653 |         #[pallet::weight(0)]
+    |                          ^
+
+warning: use of deprecated constant `pallet::warnings::ConstantWeight_2::_w`: 
+                 It is deprecated to use hard-coded constant as call weight.
+                 Please instead benchmark all calls or put the pallet into `dev` mode.
+         
+                 For more info see:
+                     <https://github.com/paritytech/substrate/pull/13798>
+   --> pallets/dataassets/src/lib.rs:669:26
+    |
+669 |         #[pallet::weight(0)]
+    |                          ^
+
+warning: use of deprecated constant `pallet::warnings::ConstantWeight_3::_w`: 
+                 It is deprecated to use hard-coded constant as call weight.
+                 Please instead benchmark all calls or put the pallet into `dev` mode.
+         
+                 For more info see:
+                     <https://github.com/paritytech/substrate/pull/13798>
+   --> pallets/dataassets/src/lib.rs:968:26
+    |
+968 |         #[pallet::weight(10_000)]
+    |                          ^^^^^^
+
+warning: multiple associated functions are never used
+    --> pallets/dataassets/src/lib.rs:4278:12
+     |
+1236 |     impl<T: Config> Pallet<T> {
+     |     ------------------------- associated functions in this implementation
+...
+4278 |         fn next_trade_settlement_nonce() -> u64 {
+     |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+4284 |         fn generate_trade_id(
+     |            ^^^^^^^^^^^^^^^^^
+...
+4296 |         fn record_trade_settlement(
+     |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+4369 |         fn verify_settle_prerequisites(
+     |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+4581 |         fn do_transfer_asset(
+     |            ^^^^^^^^^^^^^^^^^
+...
+4600 |         fn do_transfer_certificate(
+     |            ^^^^^^^^^^^^^^^^^^^^^^^
+...
+4625 |         fn transfer_asset_by_market_state(
+     |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+4681 |         pub(crate) fn transfer_by_market_internal(
+     |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+4691 |         pub(crate) fn settle_asset_trade_by_market_internal(
+     |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+4722 |         pub(crate) fn issue_certificate_by_market_internal(
+     |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+4839 |         pub(crate) fn settle_certificate_trade_internal(
+     |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` on by default
+
+warning: associated functions `transfer_asset_by_market_state` and `transfer_by_market_internal` are never used
+    --> pallets/dataassets/src/lib.rs:4625:12
+     |
+1236 |     impl<T: Config> Pallet<T> {
+     |     ------------------------- associated functions in this implementation
+...
+4625 |         fn transfer_asset_by_market_state(
+     |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+4681 |         pub(crate) fn transfer_by_market_internal(
+     |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` on by default
+
+warning: `pallet-dataassets` (lib) generated 6 warnings
+warning: `pallet-dataassets` (lib test) generated 6 warnings (5 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.38s
+     Running unittests src/lib.rs (target/debug/deps/pallet_dataassets-b4f152e489c8f4b0)
+     Running tests/asset_transfer.rs (target/debug/deps/asset_transfer-024eb8ee92725f49)
+     Running tests/certificate_roots.rs (target/debug/deps/certificate_roots-d0097f88dc5daa8a)
+     Running tests/register_asset.rs (target/debug/deps/register_asset-01dfc5d857182c57)

@@ -1,0 +1,15 @@
+[package]
+name = "assetxchain-trie-latency"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+sp-core = { git = "https://github.com/paritytech/polkadot-sdk.git", rev = "6fd693e6d9cfa46cd2acbcb41cd5b0451a62d67c" }
+sp-trie = { git = "https://github.com/paritytech/polkadot-sdk.git", rev = "6fd693e6d9cfa46cd2acbcb41cd5b0451a62d67c" }
+tokio = { version = "1.49.0", features = ["net"] }
+
+[profile.release]
+opt-level = 3

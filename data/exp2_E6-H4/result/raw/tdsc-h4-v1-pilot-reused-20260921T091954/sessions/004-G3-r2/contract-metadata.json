@@ -1,0 +1,4772 @@
+{
+  "source": {
+    "hash": "0x88ab3d9ea2b423efaece1e661cfa8ecd35448285898d19d3dad252971442f1c4",
+    "language": "ink! 5.1.1",
+    "compiler": "rustc 1.85.0",
+    "build_info": {
+      "build_mode": "Release",
+      "cargo_contract_version": "4.1.1",
+      "rust_toolchain": "stable-x86_64-unknown-linux-gnu",
+      "wasm_opt_settings": {
+        "keep_debug_symbols": false,
+        "optimization_passes": "Z"
+      }
+    }
+  },
+  "contract": {
+    "name": "market_orderbook",
+    "version": "0.1.0",
+    "authors": [
+      "guozheng <your-email@example.com>"
+    ],
+    "license": "MIT"
+  },
+  "image": null,
+  "spec": {
+    "constructors": [
+      {
+        "args": [
+          {
+            "label": "market_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "fee_ratio",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "new",
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink_primitives",
+            "ConstructorResult"
+          ],
+          "type": 35
+        },
+        "selector": "0x9bae9d5e"
+      }
+    ],
+    "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 3
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 6
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 2
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 65
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 64
+      },
+      "maxEventTopics": 4,
+      "staticBufferSize": 16384,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 7
+      }
+    },
+    "events": [
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "operation",
+            "type": {
+              "displayName": [
+                "market_standard",
+                "Operation"
+              ],
+              "type": 11
+            }
+          }
+        ],
+        "docs": [],
+        "label": "IntentRelayed",
+        "module_path": "market_orderbook::market_orderbook",
+        "signature_topic": "0x08a6411d1e3ab48eedda63e864f4295be96ef3e36e6126393a828fa9db8d0387"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "state",
+            "type": {
+              "displayName": [
+                "OrderState"
+              ],
+              "type": 29
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "has_settlement",
+            "type": {
+              "displayName": [
+                "bool"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "label": "ProjectionSynchronized",
+        "module_path": "market_orderbook::market_orderbook",
+        "signature_topic": "0x644f6fb20c78a57d0a639ce91256b9c7a65ddb051ce6deccbca68008ae0d1a9f"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "label": "market_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [],
+        "label": "MarketIdBound",
+        "module_path": "market_orderbook::market_orderbook",
+        "signature_topic": "0x4bac783829cc82add0aa26f964a94fc28678e63d114c85c4d23bb7ce8194446d"
+      }
+    ],
+    "lang_error": {
+      "displayName": [
+        "ink",
+        "LangError"
+      ],
+      "type": 36
+    },
+    "messages": [
+      {
+        "args": [
+          {
+            "label": "market_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "bind_market_id",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 37
+        },
+        "selector": "0xec40f5a4"
+      },
+      {
+        "args": [
+          {
+            "label": "order",
+            "type": {
+              "displayName": [
+                "OrderCommitment"
+              ],
+              "type": 10
+            }
+          },
+          {
+            "label": "price_policy_witness",
+            "type": {
+              "displayName": [
+                "PricePolicyWitness"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "label": "seller_commitment",
+            "type": {
+              "displayName": [
+                "SellerCommitment"
+              ],
+              "type": 17
+            }
+          },
+          {
+            "label": "seller_signature",
+            "type": {
+              "displayName": [
+                "ProtocolSignature"
+              ],
+              "type": 18
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "relay_create_order",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 42
+        },
+        "selector": "0x3217cdcb"
+      },
+      {
+        "args": [
+          {
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "label": "buyer_commitment",
+            "type": {
+              "displayName": [
+                "BuyerCommitment"
+              ],
+              "type": 27
+            }
+          },
+          {
+            "label": "buyer_signature",
+            "type": {
+              "displayName": [
+                "ProtocolSignature"
+              ],
+              "type": 18
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "relay_fund_order",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 44
+        },
+        "selector": "0xa503da50"
+      },
+      {
+        "args": [
+          {
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "relay_settle",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 42
+        },
+        "selector": "0xc822197e"
+      },
+      {
+        "args": [
+          {
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "relay_cancel_open",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 48
+        },
+        "selector": "0x21656db1"
+      },
+      {
+        "args": [
+          {
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "relay_refund_funded",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 50
+        },
+        "selector": "0x6863b467"
+      },
+      {
+        "args": [
+          {
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Rebuilds the local read model from Runtime authority. This method",
+          " performs queries only; replaying it can never trigger settlement."
+        ],
+        "label": "sync_projection",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 53
+        },
+        "selector": "0xa15f8882"
+      },
+      {
+        "args": [
+          {
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_intent",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 55
+        },
+        "selector": "0x8cfde611"
+      },
+      {
+        "args": [
+          {
+            "label": "order_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_projection",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 57
+        },
+        "selector": "0xb1d02136"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_market_id",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 59
+        },
+        "selector": "0x7162ccf2"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "is_market_id_bound",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 60
+        },
+        "selector": "0xeee78a47"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_admin",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 61
+        },
+        "selector": "0x57b8a8a7"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "MarketStandard::is_assetx_market",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 60
+        },
+        "selector": "0x263e5334"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "MarketStandard::get_market_type",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 62
+        },
+        "selector": "0xee7187ef"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "MarketStandard::get_fee_ratio",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 63
+        },
+        "selector": "0xdc93dab1"
+      },
+      {
+        "args": [
+          {
+            "label": "_asset_id",
+            "type": {
+              "displayName": [
+                "Hash32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "MarketStandard::check_admission",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 60
+        },
+        "selector": "0x38d71dd1"
+      }
+    ]
+  },
+  "storage": {
+    "root": {
+      "layout": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "array": {
+                  "layout": {
+                    "leaf": {
+                      "key": "0x00000000",
+                      "ty": 0
+                    }
+                  },
+                  "len": 32,
+                  "offset": "0x00000000"
+                }
+              },
+              "name": "market_id"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 1
+                }
+              },
+              "name": "market_id_bound"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 2
+                }
+              },
+              "name": "fee_ratio"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 3
+                }
+              },
+              "name": "admin"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x5af238b6",
+                                      "ty": 5
+                                    }
+                                  },
+                                  "name": "settlement_protocol_version"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "market_id"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x5af238b6",
+                                      "name": "Operation",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "TransferMeta"
+                                        },
+                                        "1": {
+                                          "fields": [],
+                                          "name": "IssueRight"
+                                        },
+                                        "2": {
+                                          "fields": [],
+                                          "name": "TransferRight"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "operation"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x5af238b6",
+                                      "name": "ObjectType",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "MetaToken"
+                                        },
+                                        "1": {
+                                          "fields": [],
+                                          "name": "RightToken"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "object_type"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "object_id"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x5af238b6",
+                                      "name": "Option",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x5af238b6",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x5af238b6"
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Some"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "parent_asset_id"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "authorization_id"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "seller"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x5af238b6",
+                                      "name": "Option",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x5af238b6",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x5af238b6"
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Some"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "allowed_buyer"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x5af238b6",
+                                      "ty": 6
+                                    }
+                                  },
+                                  "name": "price"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x5af238b6",
+                                      "name": "CurrencyId",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "Native"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "currency"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "policy_hash"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x5af238b6",
+                                      "name": "Option",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x5af238b6",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x5af238b6"
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Some"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "right_parameters_hash"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x5af238b6",
+                                      "ty": 7
+                                    }
+                                  },
+                                  "name": "seller_state_version"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x5af238b6",
+                                      "ty": 7
+                                    }
+                                  },
+                                  "name": "order_nonce"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x5af238b6",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "expiry"
+                                }
+                              ],
+                              "name": "OrderCommitment"
+                            }
+                          },
+                          "name": "order"
+                        },
+                        {
+                          "layout": {
+                            "enum": {
+                              "dispatchKey": "0x5af238b6",
+                              "name": "PricePolicyWitness",
+                              "variants": {
+                                "0": {
+                                  "fields": [],
+                                  "name": "Authorization"
+                                },
+                                "1": {
+                                  "fields": [
+                                    {
+                                      "layout": {
+                                        "struct": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x5af238b6",
+                                                  "ty": 6
+                                                }
+                                              },
+                                              "name": "reference_price"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x5af238b6",
+                                                  "ty": 5
+                                                }
+                                              },
+                                              "name": "floor_ratio_bps"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x5af238b6",
+                                                  "ty": 5
+                                                }
+                                              },
+                                              "name": "signed_market_fee_cap_bps"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x5af238b6",
+                                                  "ty": 5
+                                                }
+                                              },
+                                              "name": "safety_fee_bps"
+                                            }
+                                          ],
+                                          "name": "PricePolicy"
+                                        }
+                                      },
+                                      "name": "0"
+                                    }
+                                  ],
+                                  "name": "SellerSnapshot"
+                                }
+                              }
+                            }
+                          },
+                          "name": "price_policy_witness"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "order_id"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "object_id"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x5af238b6",
+                                      "name": "Operation",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "TransferMeta"
+                                        },
+                                        "1": {
+                                          "fields": [],
+                                          "name": "IssueRight"
+                                        },
+                                        "2": {
+                                          "fields": [],
+                                          "name": "TransferRight"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "operation"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "seller"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x5af238b6",
+                                      "ty": 7
+                                    }
+                                  },
+                                  "name": "state_version"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x5af238b6",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x5af238b6"
+                                    }
+                                  },
+                                  "name": "price_policy_hash"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x5af238b6",
+                                      "name": "Option",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x5af238b6",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x5af238b6"
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Some"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "right_parameters_hash"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x5af238b6",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "expires_at"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x5af238b6",
+                                      "ty": 7
+                                    }
+                                  },
+                                  "name": "seller_nonce"
+                                }
+                              ],
+                              "name": "SellerCommitment"
+                            }
+                          },
+                          "name": "seller_commitment"
+                        },
+                        {
+                          "layout": {
+                            "array": {
+                              "layout": {
+                                "leaf": {
+                                  "key": "0x5af238b6",
+                                  "ty": 0
+                                }
+                              },
+                              "len": 64,
+                              "offset": "0x5af238b6"
+                            }
+                          },
+                          "name": "seller_signature"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x5af238b6",
+                              "ty": 3
+                            }
+                          },
+                          "name": "submitted_by"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x5af238b6",
+                              "ty": 2
+                            }
+                          },
+                          "name": "submitted_at"
+                        }
+                      ],
+                      "name": "MarketIntent"
+                    }
+                  },
+                  "root_key": "0x5af238b6",
+                  "ty": 8
+                }
+              },
+              "name": "intents"
+            },
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x782e85ea",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x782e85ea"
+                                    }
+                                  },
+                                  "name": "order_id"
+                                },
+                                {
+                                  "layout": {
+                                    "struct": {
+                                      "fields": [
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x782e85ea",
+                                              "ty": 5
+                                            }
+                                          },
+                                          "name": "settlement_protocol_version"
+                                        },
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "market_id"
+                                        },
+                                        {
+                                          "layout": {
+                                            "enum": {
+                                              "dispatchKey": "0x782e85ea",
+                                              "name": "Operation",
+                                              "variants": {
+                                                "0": {
+                                                  "fields": [],
+                                                  "name": "TransferMeta"
+                                                },
+                                                "1": {
+                                                  "fields": [],
+                                                  "name": "IssueRight"
+                                                },
+                                                "2": {
+                                                  "fields": [],
+                                                  "name": "TransferRight"
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "name": "operation"
+                                        },
+                                        {
+                                          "layout": {
+                                            "enum": {
+                                              "dispatchKey": "0x782e85ea",
+                                              "name": "ObjectType",
+                                              "variants": {
+                                                "0": {
+                                                  "fields": [],
+                                                  "name": "MetaToken"
+                                                },
+                                                "1": {
+                                                  "fields": [],
+                                                  "name": "RightToken"
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "name": "object_type"
+                                        },
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "object_id"
+                                        },
+                                        {
+                                          "layout": {
+                                            "enum": {
+                                              "dispatchKey": "0x782e85ea",
+                                              "name": "Option",
+                                              "variants": {
+                                                "0": {
+                                                  "fields": [],
+                                                  "name": "None"
+                                                },
+                                                "1": {
+                                                  "fields": [
+                                                    {
+                                                      "layout": {
+                                                        "array": {
+                                                          "layout": {
+                                                            "leaf": {
+                                                              "key": "0x782e85ea",
+                                                              "ty": 0
+                                                            }
+                                                          },
+                                                          "len": 32,
+                                                          "offset": "0x782e85ea"
+                                                        }
+                                                      },
+                                                      "name": "0"
+                                                    }
+                                                  ],
+                                                  "name": "Some"
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "name": "parent_asset_id"
+                                        },
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "authorization_id"
+                                        },
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "seller"
+                                        },
+                                        {
+                                          "layout": {
+                                            "enum": {
+                                              "dispatchKey": "0x782e85ea",
+                                              "name": "Option",
+                                              "variants": {
+                                                "0": {
+                                                  "fields": [],
+                                                  "name": "None"
+                                                },
+                                                "1": {
+                                                  "fields": [
+                                                    {
+                                                      "layout": {
+                                                        "array": {
+                                                          "layout": {
+                                                            "leaf": {
+                                                              "key": "0x782e85ea",
+                                                              "ty": 0
+                                                            }
+                                                          },
+                                                          "len": 32,
+                                                          "offset": "0x782e85ea"
+                                                        }
+                                                      },
+                                                      "name": "0"
+                                                    }
+                                                  ],
+                                                  "name": "Some"
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "name": "allowed_buyer"
+                                        },
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x782e85ea",
+                                              "ty": 6
+                                            }
+                                          },
+                                          "name": "price"
+                                        },
+                                        {
+                                          "layout": {
+                                            "enum": {
+                                              "dispatchKey": "0x782e85ea",
+                                              "name": "CurrencyId",
+                                              "variants": {
+                                                "0": {
+                                                  "fields": [],
+                                                  "name": "Native"
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "name": "currency"
+                                        },
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "policy_hash"
+                                        },
+                                        {
+                                          "layout": {
+                                            "enum": {
+                                              "dispatchKey": "0x782e85ea",
+                                              "name": "Option",
+                                              "variants": {
+                                                "0": {
+                                                  "fields": [],
+                                                  "name": "None"
+                                                },
+                                                "1": {
+                                                  "fields": [
+                                                    {
+                                                      "layout": {
+                                                        "array": {
+                                                          "layout": {
+                                                            "leaf": {
+                                                              "key": "0x782e85ea",
+                                                              "ty": 0
+                                                            }
+                                                          },
+                                                          "len": 32,
+                                                          "offset": "0x782e85ea"
+                                                        }
+                                                      },
+                                                      "name": "0"
+                                                    }
+                                                  ],
+                                                  "name": "Some"
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "name": "right_parameters_hash"
+                                        },
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x782e85ea",
+                                              "ty": 7
+                                            }
+                                          },
+                                          "name": "seller_state_version"
+                                        },
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x782e85ea",
+                                              "ty": 7
+                                            }
+                                          },
+                                          "name": "order_nonce"
+                                        },
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x782e85ea",
+                                              "ty": 2
+                                            }
+                                          },
+                                          "name": "expiry"
+                                        }
+                                      ],
+                                      "name": "OrderCommitment"
+                                    }
+                                  },
+                                  "name": "order_commitment"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "layout": {
+                                        "leaf": {
+                                          "key": "0x782e85ea",
+                                          "ty": 0
+                                        }
+                                      },
+                                      "len": 32,
+                                      "offset": "0x782e85ea"
+                                    }
+                                  },
+                                  "name": "authorization_id"
+                                },
+                                {
+                                  "layout": {
+                                    "struct": {
+                                      "fields": [
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "order_id"
+                                        },
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "object_id"
+                                        },
+                                        {
+                                          "layout": {
+                                            "enum": {
+                                              "dispatchKey": "0x782e85ea",
+                                              "name": "Operation",
+                                              "variants": {
+                                                "0": {
+                                                  "fields": [],
+                                                  "name": "TransferMeta"
+                                                },
+                                                "1": {
+                                                  "fields": [],
+                                                  "name": "IssueRight"
+                                                },
+                                                "2": {
+                                                  "fields": [],
+                                                  "name": "TransferRight"
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "name": "operation"
+                                        },
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "seller"
+                                        },
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x782e85ea",
+                                              "ty": 7
+                                            }
+                                          },
+                                          "name": "state_version"
+                                        },
+                                        {
+                                          "layout": {
+                                            "array": {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 0
+                                                }
+                                              },
+                                              "len": 32,
+                                              "offset": "0x782e85ea"
+                                            }
+                                          },
+                                          "name": "price_policy_hash"
+                                        },
+                                        {
+                                          "layout": {
+                                            "enum": {
+                                              "dispatchKey": "0x782e85ea",
+                                              "name": "Option",
+                                              "variants": {
+                                                "0": {
+                                                  "fields": [],
+                                                  "name": "None"
+                                                },
+                                                "1": {
+                                                  "fields": [
+                                                    {
+                                                      "layout": {
+                                                        "array": {
+                                                          "layout": {
+                                                            "leaf": {
+                                                              "key": "0x782e85ea",
+                                                              "ty": 0
+                                                            }
+                                                          },
+                                                          "len": 32,
+                                                          "offset": "0x782e85ea"
+                                                        }
+                                                      },
+                                                      "name": "0"
+                                                    }
+                                                  ],
+                                                  "name": "Some"
+                                                }
+                                              }
+                                            }
+                                          },
+                                          "name": "right_parameters_hash"
+                                        },
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x782e85ea",
+                                              "ty": 2
+                                            }
+                                          },
+                                          "name": "expires_at"
+                                        },
+                                        {
+                                          "layout": {
+                                            "leaf": {
+                                              "key": "0x782e85ea",
+                                              "ty": 7
+                                            }
+                                          },
+                                          "name": "seller_nonce"
+                                        }
+                                      ],
+                                      "name": "SellerCommitment"
+                                    }
+                                  },
+                                  "name": "seller_commitment"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x782e85ea",
+                                      "name": "Option",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "struct": {
+                                                  "fields": [
+                                                    {
+                                                      "layout": {
+                                                        "array": {
+                                                          "layout": {
+                                                            "leaf": {
+                                                              "key": "0x782e85ea",
+                                                              "ty": 0
+                                                            }
+                                                          },
+                                                          "len": 32,
+                                                          "offset": "0x782e85ea"
+                                                        }
+                                                      },
+                                                      "name": "order_id"
+                                                    },
+                                                    {
+                                                      "layout": {
+                                                        "array": {
+                                                          "layout": {
+                                                            "leaf": {
+                                                              "key": "0x782e85ea",
+                                                              "ty": 0
+                                                            }
+                                                          },
+                                                          "len": 32,
+                                                          "offset": "0x782e85ea"
+                                                        }
+                                                      },
+                                                      "name": "buyer"
+                                                    },
+                                                    {
+                                                      "layout": {
+                                                        "leaf": {
+                                                          "key": "0x782e85ea",
+                                                          "ty": 6
+                                                        }
+                                                      },
+                                                      "name": "price"
+                                                    },
+                                                    {
+                                                      "layout": {
+                                                        "enum": {
+                                                          "dispatchKey": "0x782e85ea",
+                                                          "name": "CurrencyId",
+                                                          "variants": {
+                                                            "0": {
+                                                              "fields": [],
+                                                              "name": "Native"
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                      "name": "currency"
+                                                    },
+                                                    {
+                                                      "layout": {
+                                                        "leaf": {
+                                                          "key": "0x782e85ea",
+                                                          "ty": 2
+                                                        }
+                                                      },
+                                                      "name": "expires_at"
+                                                    },
+                                                    {
+                                                      "layout": {
+                                                        "leaf": {
+                                                          "key": "0x782e85ea",
+                                                          "ty": 7
+                                                        }
+                                                      },
+                                                      "name": "buyer_nonce"
+                                                    }
+                                                  ],
+                                                  "name": "BuyerCommitment"
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Some"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "buyer_commitment"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x782e85ea",
+                                      "name": "CurrencyId",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "Native"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "payment_asset"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x782e85ea",
+                                      "name": "Option",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Some"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "escrow_id"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x782e85ea",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "created_at"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x782e85ea",
+                                      "name": "Option",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 2
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Some"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "funded_at"
+                                },
+                                {
+                                  "layout": {
+                                    "leaf": {
+                                      "key": "0x782e85ea",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "expiry"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x782e85ea",
+                                      "name": "Option",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "None"
+                                        },
+                                        "1": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 2
+                                                }
+                                              },
+                                              "name": "0"
+                                            }
+                                          ],
+                                          "name": "Some"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "grace_deadline"
+                                },
+                                {
+                                  "layout": {
+                                    "enum": {
+                                      "dispatchKey": "0x782e85ea",
+                                      "name": "OrderState",
+                                      "variants": {
+                                        "0": {
+                                          "fields": [],
+                                          "name": "Open"
+                                        },
+                                        "1": {
+                                          "fields": [],
+                                          "name": "Funded"
+                                        },
+                                        "2": {
+                                          "fields": [],
+                                          "name": "Settled"
+                                        },
+                                        "3": {
+                                          "fields": [],
+                                          "name": "Cancelled"
+                                        },
+                                        "4": {
+                                          "fields": [],
+                                          "name": "Expired"
+                                        },
+                                        "5": {
+                                          "fields": [],
+                                          "name": "Refunded"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "name": "state"
+                                }
+                              ],
+                              "name": "RuntimeOrder"
+                            }
+                          },
+                          "name": "order"
+                        },
+                        {
+                          "layout": {
+                            "enum": {
+                              "dispatchKey": "0x782e85ea",
+                              "name": "Option",
+                              "variants": {
+                                "0": {
+                                  "fields": [],
+                                  "name": "None"
+                                },
+                                "1": {
+                                  "fields": [
+                                    {
+                                      "layout": {
+                                        "struct": {
+                                          "fields": [
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "settlement_id"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "order_id"
+                                            },
+                                            {
+                                              "layout": {
+                                                "enum": {
+                                                  "dispatchKey": "0x782e85ea",
+                                                  "name": "Operation",
+                                                  "variants": {
+                                                    "0": {
+                                                      "fields": [],
+                                                      "name": "TransferMeta"
+                                                    },
+                                                    "1": {
+                                                      "fields": [],
+                                                      "name": "IssueRight"
+                                                    },
+                                                    "2": {
+                                                      "fields": [],
+                                                      "name": "TransferRight"
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "name": "operation"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "asset_id"
+                                            },
+                                            {
+                                              "layout": {
+                                                "enum": {
+                                                  "dispatchKey": "0x782e85ea",
+                                                  "name": "Option",
+                                                  "variants": {
+                                                    "0": {
+                                                      "fields": [],
+                                                      "name": "None"
+                                                    },
+                                                    "1": {
+                                                      "fields": [
+                                                        {
+                                                          "layout": {
+                                                            "array": {
+                                                              "layout": {
+                                                                "leaf": {
+                                                                  "key": "0x782e85ea",
+                                                                  "ty": 0
+                                                                }
+                                                              },
+                                                              "len": 32,
+                                                              "offset": "0x782e85ea"
+                                                            }
+                                                          },
+                                                          "name": "0"
+                                                        }
+                                                      ],
+                                                      "name": "Some"
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "name": "right_id"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "authorization_id"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "market_id"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "policy_hash"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "order_commitment_hash"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "seller"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "buyer"
+                                            },
+                                            {
+                                              "layout": {
+                                                "enum": {
+                                                  "dispatchKey": "0x782e85ea",
+                                                  "name": "CurrencyId",
+                                                  "variants": {
+                                                    "0": {
+                                                      "fields": [],
+                                                      "name": "Native"
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "name": "currency"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 6
+                                                }
+                                              },
+                                              "name": "gross_price"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 6
+                                                }
+                                              },
+                                              "name": "seller_amount"
+                                            },
+                                            {
+                                              "layout": {
+                                                "enum": {
+                                                  "dispatchKey": "0x782e85ea",
+                                                  "name": "Option",
+                                                  "variants": {
+                                                    "0": {
+                                                      "fields": [],
+                                                      "name": "None"
+                                                    },
+                                                    "1": {
+                                                      "fields": [
+                                                        {
+                                                          "layout": {
+                                                            "array": {
+                                                              "layout": {
+                                                                "leaf": {
+                                                                  "key": "0x782e85ea",
+                                                                  "ty": 0
+                                                                }
+                                                              },
+                                                              "len": 32,
+                                                              "offset": "0x782e85ea"
+                                                            }
+                                                          },
+                                                          "name": "0"
+                                                        }
+                                                      ],
+                                                      "name": "Some"
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "name": "royalty_recipient"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 6
+                                                }
+                                              },
+                                              "name": "royalty_amount"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "market_fee_recipient"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 6
+                                                }
+                                              },
+                                              "name": "market_fee_amount"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 6
+                                                }
+                                              },
+                                              "name": "safety_fee_amount"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 7
+                                                }
+                                              },
+                                              "name": "pre_state_version"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 7
+                                                }
+                                              },
+                                              "name": "post_state_version"
+                                            },
+                                            {
+                                              "layout": {
+                                                "array": {
+                                                  "layout": {
+                                                    "leaf": {
+                                                      "key": "0x782e85ea",
+                                                      "ty": 0
+                                                    }
+                                                  },
+                                                  "len": 32,
+                                                  "offset": "0x782e85ea"
+                                                }
+                                              },
+                                              "name": "pre_state_commitment"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 2
+                                                }
+                                              },
+                                              "name": "block_number"
+                                            },
+                                            {
+                                              "layout": {
+                                                "leaf": {
+                                                  "key": "0x782e85ea",
+                                                  "ty": 5
+                                                }
+                                              },
+                                              "name": "settlement_protocol_version"
+                                            }
+                                          ],
+                                          "name": "SettlementRecord"
+                                        }
+                                      },
+                                      "name": "0"
+                                    }
+                                  ],
+                                  "name": "Some"
+                                }
+                              }
+                            }
+                          },
+                          "name": "settlement"
+                        }
+                      ],
+                      "name": "OrderProjection"
+                    }
+                  },
+                  "root_key": "0x782e85ea",
+                  "ty": 23
+                }
+              },
+              "name": "projections"
+            }
+          ],
+          "name": "MarketOrderbook"
+        }
+      },
+      "root_key": "0x00000000",
+      "ty": 34
+    }
+  },
+  "types": [
+    {
+      "id": 0,
+      "type": {
+        "def": {
+          "primitive": "u8"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": {
+        "def": {
+          "primitive": "bool"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 4,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "type": {
+        "def": {
+          "array": {
+            "len": 32,
+            "type": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": {
+        "def": {
+          "primitive": "u16"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "K",
+            "type": 4
+          },
+          {
+            "name": "V",
+            "type": 9
+          },
+          {
+            "name": "KeyType",
+            "type": 19
+          }
+        ],
+        "path": [
+          "ink_storage",
+          "lazy",
+          "mapping",
+          "Mapping"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "order",
+                "type": 10,
+                "typeName": "OrderCommitment"
+              },
+              {
+                "name": "price_policy_witness",
+                "type": 15,
+                "typeName": "PricePolicyWitness"
+              },
+              {
+                "name": "seller_commitment",
+                "type": 17,
+                "typeName": "SellerCommitment"
+              },
+              {
+                "name": "seller_signature",
+                "type": 18,
+                "typeName": "ProtocolSignature"
+              },
+              {
+                "name": "submitted_by",
+                "type": 3,
+                "typeName": "AccountId"
+              },
+              {
+                "name": "submitted_at",
+                "type": 2,
+                "typeName": "BlockNumber"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_orderbook",
+          "market_orderbook",
+          "MarketIntent"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "settlement_protocol_version",
+                "type": 5,
+                "typeName": "u16"
+              },
+              {
+                "name": "market_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "operation",
+                "type": 11,
+                "typeName": "Operation"
+              },
+              {
+                "name": "object_type",
+                "type": 12,
+                "typeName": "ObjectType"
+              },
+              {
+                "name": "object_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "parent_asset_id",
+                "type": 13,
+                "typeName": "Option<Hash32>"
+              },
+              {
+                "name": "authorization_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "seller",
+                "type": 4,
+                "typeName": "ProtocolAccountId"
+              },
+              {
+                "name": "allowed_buyer",
+                "type": 13,
+                "typeName": "Option<ProtocolAccountId>"
+              },
+              {
+                "name": "price",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "currency",
+                "type": 14,
+                "typeName": "CurrencyId"
+              },
+              {
+                "name": "policy_hash",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "right_parameters_hash",
+                "type": 13,
+                "typeName": "Option<Hash32>"
+              },
+              {
+                "name": "seller_state_version",
+                "type": 7,
+                "typeName": "u64"
+              },
+              {
+                "name": "order_nonce",
+                "type": 7,
+                "typeName": "u64"
+              },
+              {
+                "name": "expiry",
+                "type": 2,
+                "typeName": "u32"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "OrderCommitment"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "TransferMeta"
+              },
+              {
+                "index": 1,
+                "name": "IssueRight"
+              },
+              {
+                "index": 2,
+                "name": "TransferRight"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "Operation"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "MetaToken"
+              },
+              {
+                "index": 1,
+                "name": "RightToken"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "ObjectType"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Native"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "CurrencyId"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Authorization"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 16,
+                    "typeName": "PricePolicy"
+                  }
+                ],
+                "index": 1,
+                "name": "SellerSnapshot"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "PricePolicyWitness"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "reference_price",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "floor_ratio_bps",
+                "type": 5,
+                "typeName": "u16"
+              },
+              {
+                "name": "signed_market_fee_cap_bps",
+                "type": 5,
+                "typeName": "u16"
+              },
+              {
+                "name": "safety_fee_bps",
+                "type": 5,
+                "typeName": "u16"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "PricePolicy"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "order_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "object_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "operation",
+                "type": 11,
+                "typeName": "Operation"
+              },
+              {
+                "name": "seller",
+                "type": 4,
+                "typeName": "ProtocolAccountId"
+              },
+              {
+                "name": "state_version",
+                "type": 7,
+                "typeName": "u64"
+              },
+              {
+                "name": "price_policy_hash",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "right_parameters_hash",
+                "type": 13,
+                "typeName": "Option<Hash32>"
+              },
+              {
+                "name": "expires_at",
+                "type": 2,
+                "typeName": "u32"
+              },
+              {
+                "name": "seller_nonce",
+                "type": 7,
+                "typeName": "u64"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "SellerCommitment"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "array": {
+            "len": 64,
+            "type": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "L",
+            "type": 20
+          },
+          {
+            "name": "R",
+            "type": 21
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ResolverKey"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "AutoKey"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "ParentKey",
+            "type": 22
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ManualKey"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "type": {
+        "def": {
+          "tuple": []
+        }
+      }
+    },
+    {
+      "id": 23,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "K",
+            "type": 4
+          },
+          {
+            "name": "V",
+            "type": 24
+          },
+          {
+            "name": "KeyType",
+            "type": 32
+          }
+        ],
+        "path": [
+          "ink_storage",
+          "lazy",
+          "mapping",
+          "Mapping"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "order",
+                "type": 25,
+                "typeName": "RuntimeOrder"
+              },
+              {
+                "name": "settlement",
+                "type": 30,
+                "typeName": "Option<SettlementRecord>"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_orderbook",
+          "market_orderbook",
+          "OrderProjection"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "order_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "order_commitment",
+                "type": 10,
+                "typeName": "OrderCommitment"
+              },
+              {
+                "name": "authorization_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "seller_commitment",
+                "type": 17,
+                "typeName": "SellerCommitment"
+              },
+              {
+                "name": "buyer_commitment",
+                "type": 26,
+                "typeName": "Option<BuyerCommitment>"
+              },
+              {
+                "name": "payment_asset",
+                "type": 14,
+                "typeName": "CurrencyId"
+              },
+              {
+                "name": "escrow_id",
+                "type": 13,
+                "typeName": "Option<Hash32>"
+              },
+              {
+                "name": "created_at",
+                "type": 2,
+                "typeName": "u32"
+              },
+              {
+                "name": "funded_at",
+                "type": 28,
+                "typeName": "Option<u32>"
+              },
+              {
+                "name": "expiry",
+                "type": 2,
+                "typeName": "u32"
+              },
+              {
+                "name": "grace_deadline",
+                "type": 28,
+                "typeName": "Option<u32>"
+              },
+              {
+                "name": "state",
+                "type": 29,
+                "typeName": "OrderState"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "RuntimeOrder"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 27
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 27
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "order_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "buyer",
+                "type": 4,
+                "typeName": "ProtocolAccountId"
+              },
+              {
+                "name": "price",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "currency",
+                "type": 14,
+                "typeName": "CurrencyId"
+              },
+              {
+                "name": "expires_at",
+                "type": 2,
+                "typeName": "u32"
+              },
+              {
+                "name": "buyer_nonce",
+                "type": 7,
+                "typeName": "u64"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "BuyerCommitment"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 2
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 2
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Open"
+              },
+              {
+                "index": 1,
+                "name": "Funded"
+              },
+              {
+                "index": 2,
+                "name": "Settled"
+              },
+              {
+                "index": 3,
+                "name": "Cancelled"
+              },
+              {
+                "index": 4,
+                "name": "Expired"
+              },
+              {
+                "index": 5,
+                "name": "Refunded"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "OrderState"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 31
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 31
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "settlement_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "order_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "operation",
+                "type": 11,
+                "typeName": "Operation"
+              },
+              {
+                "name": "asset_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "right_id",
+                "type": 13,
+                "typeName": "Option<Hash32>"
+              },
+              {
+                "name": "authorization_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "market_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "policy_hash",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "order_commitment_hash",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "seller",
+                "type": 4,
+                "typeName": "ProtocolAccountId"
+              },
+              {
+                "name": "buyer",
+                "type": 4,
+                "typeName": "ProtocolAccountId"
+              },
+              {
+                "name": "currency",
+                "type": 14,
+                "typeName": "CurrencyId"
+              },
+              {
+                "name": "gross_price",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "seller_amount",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "royalty_recipient",
+                "type": 13,
+                "typeName": "Option<ProtocolAccountId>"
+              },
+              {
+                "name": "royalty_amount",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "market_fee_recipient",
+                "type": 4,
+                "typeName": "ProtocolAccountId"
+              },
+              {
+                "name": "market_fee_amount",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "safety_fee_amount",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "pre_state_version",
+                "type": 7,
+                "typeName": "u64"
+              },
+              {
+                "name": "post_state_version",
+                "type": 7,
+                "typeName": "u64"
+              },
+              {
+                "name": "pre_state_commitment",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "block_number",
+                "type": 2,
+                "typeName": "u32"
+              },
+              {
+                "name": "settlement_protocol_version",
+                "type": 5,
+                "typeName": "u16"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "SettlementRecord"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "L",
+            "type": 20
+          },
+          {
+            "name": "R",
+            "type": 33
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ResolverKey"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "type": {
+        "def": {
+          "composite": {}
+        },
+        "params": [
+          {
+            "name": "ParentKey",
+            "type": 22
+          }
+        ],
+        "path": [
+          "ink_storage_traits",
+          "impls",
+          "ManualKey"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "market_id",
+                "type": 4,
+                "typeName": "<Hash32 as::ink::storage::traits::AutoStorableHint<::ink::\nstorage::traits::ManualKey<115959916u32, ()>,>>::Type"
+              },
+              {
+                "name": "market_id_bound",
+                "type": 1,
+                "typeName": "<bool as::ink::storage::traits::AutoStorableHint<::ink::storage\n::traits::ManualKey<1800373111u32, ()>,>>::Type"
+              },
+              {
+                "name": "fee_ratio",
+                "type": 2,
+                "typeName": "<u32 as::ink::storage::traits::AutoStorableHint<::ink::storage\n::traits::ManualKey<150460604u32, ()>,>>::Type"
+              },
+              {
+                "name": "admin",
+                "type": 3,
+                "typeName": "<AccountId as::ink::storage::traits::AutoStorableHint<::ink::\nstorage::traits::ManualKey<2608247796u32, ()>,>>::Type"
+              },
+              {
+                "name": "intents",
+                "type": 8,
+                "typeName": "<Mapping<Hash32, MarketIntent> as::ink::storage::traits::\nAutoStorableHint<::ink::storage::traits::ManualKey<3057185370u32,\n()>,>>::Type"
+              },
+              {
+                "name": "projections",
+                "type": 23,
+                "typeName": "<Mapping<Hash32, OrderProjection> as::ink::storage::traits::\nAutoStorableHint<::ink::storage::traits::ManualKey<3934596728u32,\n()>,>>::Type"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_orderbook",
+          "market_orderbook",
+          "MarketOrderbook"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 22
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 22
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "CouldNotReadInput"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 38
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 38
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 22
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 39
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 22
+          },
+          {
+            "name": "E",
+            "type": 39
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 40,
+                    "typeName": "SettlementV2ExtError"
+                  }
+                ],
+                "index": 0,
+                "name": "ChainExtension"
+              },
+              {
+                "index": 1,
+                "name": "MarketMismatch"
+              },
+              {
+                "index": 2,
+                "name": "RuntimeProjectionMismatch"
+              },
+              {
+                "index": 3,
+                "name": "NotAdmin"
+              },
+              {
+                "index": 4,
+                "name": "MarketAlreadyBound"
+              },
+              {
+                "index": 5,
+                "name": "InvalidMarketId"
+              },
+              {
+                "index": 6,
+                "name": "MarketNotBound"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_orderbook",
+          "market_orderbook",
+          "Error"
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 41,
+                    "typeName": "CommonErrorCode"
+                  }
+                ],
+                "index": 0,
+                "name": "Common"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 2,
+                    "typeName": "u32"
+                  }
+                ],
+                "index": 1,
+                "name": "UnknownStatus"
+              },
+              {
+                "index": 2,
+                "name": "Decode"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "SettlementV2ExtError"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "UnsupportedProtocolVersion"
+              },
+              {
+                "index": 2,
+                "name": "MalformedCommitment"
+              },
+              {
+                "index": 3,
+                "name": "DomainMismatch"
+              },
+              {
+                "index": 4,
+                "name": "MarketNotRegistered"
+              },
+              {
+                "index": 5,
+                "name": "MarketRestricted"
+              },
+              {
+                "index": 6,
+                "name": "CapabilityDenied"
+              },
+              {
+                "index": 7,
+                "name": "CapacityExceeded"
+              },
+              {
+                "index": 8,
+                "name": "AuthorizationMissing"
+              },
+              {
+                "index": 9,
+                "name": "AuthorizationExpired"
+              },
+              {
+                "index": 10,
+                "name": "AuthorizationRevoked"
+              },
+              {
+                "index": 11,
+                "name": "QuotaExceeded"
+              },
+              {
+                "index": 12,
+                "name": "InvalidSignature"
+              },
+              {
+                "index": 13,
+                "name": "NonceUsed"
+              },
+              {
+                "index": 14,
+                "name": "StateVersionMismatch"
+              },
+              {
+                "index": 15,
+                "name": "OrderNotFound"
+              },
+              {
+                "index": 16,
+                "name": "OrderNotOpen"
+              },
+              {
+                "index": 17,
+                "name": "OrderNotFunded"
+              },
+              {
+                "index": 18,
+                "name": "OrderExpired"
+              },
+              {
+                "index": 19,
+                "name": "AlreadySettled"
+              },
+              {
+                "index": 20,
+                "name": "TerminalOrder"
+              },
+              {
+                "index": 21,
+                "name": "AssetNotTradable"
+              },
+              {
+                "index": 22,
+                "name": "RightInvalid"
+              },
+              {
+                "index": 23,
+                "name": "OwnershipMismatch"
+              },
+              {
+                "index": 24,
+                "name": "ParentMismatch"
+              },
+              {
+                "index": 25,
+                "name": "MutualExclusionConflict"
+              },
+              {
+                "index": 26,
+                "name": "BelowPriceFloor"
+              },
+              {
+                "index": 27,
+                "name": "FeeOutOfBounds"
+              },
+              {
+                "index": 28,
+                "name": "InsufficientBalance"
+              },
+              {
+                "index": 29,
+                "name": "EscrowMismatch"
+              },
+              {
+                "index": 30,
+                "name": "PayerBuyerMismatch"
+              },
+              {
+                "index": 31,
+                "name": "RefundNotAllowed"
+              },
+              {
+                "index": 32,
+                "name": "GracePeriodActive"
+              },
+              {
+                "index": 33,
+                "name": "RefundBeneficiaryMismatch"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "CommonErrorCode"
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 43
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 43
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 39
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 39
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 44,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 45
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 45
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 46
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 39
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 46
+          },
+          {
+            "name": "E",
+            "type": 39
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "order_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "escrow_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "funded_at",
+                "type": 2,
+                "typeName": "u32"
+              },
+              {
+                "name": "grace_deadline",
+                "type": 2,
+                "typeName": "u32"
+              },
+              {
+                "name": "order_state",
+                "type": 29,
+                "typeName": "OrderState"
+              },
+              {
+                "name": "payment_state",
+                "type": 47,
+                "typeName": "PaymentState"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "FundedV2Receipt"
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "Unfunded"
+              },
+              {
+                "index": 1,
+                "name": "Escrowed"
+              },
+              {
+                "index": 2,
+                "name": "Released"
+              },
+              {
+                "index": 3,
+                "name": "Refunded"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "PaymentState"
+        ]
+      }
+    },
+    {
+      "id": 48,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 49
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 49
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 29
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 39
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 29
+          },
+          {
+            "name": "E",
+            "type": 39
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 50,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 51
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 51
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 51,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 52
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 39
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 52
+          },
+          {
+            "name": "E",
+            "type": 39
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 52,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "order_id",
+                "type": 4,
+                "typeName": "Hash32"
+              },
+              {
+                "name": "buyer",
+                "type": 4,
+                "typeName": "ProtocolAccountId"
+              },
+              {
+                "name": "amount",
+                "type": 6,
+                "typeName": "u128"
+              },
+              {
+                "name": "order_state",
+                "type": 29,
+                "typeName": "OrderState"
+              },
+              {
+                "name": "payment_state",
+                "type": 47,
+                "typeName": "PaymentState"
+              }
+            ]
+          }
+        },
+        "path": [
+          "market_standard",
+          "RefundedV2Receipt"
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 54
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 54
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 54,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 24
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 39
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 24
+          },
+          {
+            "name": "E",
+            "type": 39
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 56
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 56
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 56,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 57,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 58
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 58
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 58,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 24
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 24
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 4
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 4
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 60,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 1
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 1
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 61,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 3
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 3
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 62,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 63,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 2
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 36
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 2
+          },
+          {
+            "name": "E",
+            "type": 36
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 64,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 4,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 65,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "market_standard",
+          "SettlementV2Ext"
+        ]
+      }
+    }
+  ],
+  "version": 5
+}

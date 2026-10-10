@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-s314-run-manifest-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id", "schema_version", "run_id", "baseline_id", "status",
+    "validity_level", "profile_id", "started_at", "finished_at", "timezone",
+    "implementation", "build", "execution", "paths", "config_path",
+    "claim_boundary", "formal_experiment_executed", "e6_executed"
+  ],
+  "properties": {
+    "schema_id": { "const": "assetxchain-exp2-s314-run-manifest" },
+    "schema_version": { "const": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "baseline_id": { "enum": ["B1", "B2", "G3"] },
+    "status": { "enum": ["PASS", "FAIL"] },
+    "validity_level": { "const": "legacy-pilot" },
+    "profile_id": { "const": "phase3-s314-legacy-pilot-v1" },
+    "started_at": { "type": "string", "minLength": 1 },
+    "finished_at": { "type": "string", "minLength": 1 },
+    "timezone": { "const": "Asia/Shanghai" },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["worktree", "branch", "head", "dirty", "dirty_paths"],
+      "properties": {
+        "worktree": { "type": "string", "pattern": "^/home/" },
+        "branch": { "type": "string", "minLength": 1 },
+        "head": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "dirty": { "type": "boolean" },
+        "dirty_paths": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commands", "artifacts"],
+      "properties": {
+        "commands": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256", "bytes"],
+            "properties": {
+              "path": { "type": "string", "pattern": "^/home/" },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "bytes": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_command", "driver_command", "rpc", "reset", "node_exit_code", "rpc_ready"],
+      "properties": {
+        "node_command": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "driver_command": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "rpc": { "type": "string", "pattern": "^ws://127\\.0\\.0\\.1:[0-9]+$" },
+        "reset": { "const": "--dev --tmp" },
+        "node_exit_code": { "type": "integer" },
+        "rpc_ready": { "type": "boolean" }
+      }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["raw_dir", "log_dir", "evidence", "node_log", "driver_log"],
+      "properties": {
+        "raw_dir": { "type": "string", "pattern": "^/home/" },
+        "log_dir": { "type": "string", "pattern": "^/home/" },
+        "evidence": { "type": "string", "pattern": "^/home/" },
+        "node_log": { "type": "string", "pattern": "^/home/" },
+        "driver_log": { "type": "string", "pattern": "^/home/" }
+      }
+    },
+    "config_path": { "const": "configs/phase3/s314-smoke-v1.json" },
+    "claim_boundary": { "const": "build-and-live-smoke-evidence-only; not a paper result" },
+    "formal_experiment_executed": { "const": false },
+    "e6_executed": { "const": false }
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-shared-fixture-vectors-v1",
+  "title": "AssetXChain Phase 3 canonical shared fixture vectors",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "vector_bundle_id",
+    "fixture_profile_id",
+    "source",
+    "generator",
+    "protocol",
+    "accounts",
+    "fixture_inputs",
+    "enums",
+    "field_order",
+    "common_errors",
+    "vectors",
+    "baseline_consumers",
+    "g3_rust_reference"
+  ],
+  "properties": {
+    "schema_id": {"const": "assetxchain-exp2-shared-fixture-vectors"},
+    "schema_version": {"const": 1},
+    "vector_bundle_id": {"const": "assetxchain-paper2-shared-vectors-v1"},
+    "fixture_profile_id": {"const": "assetxchain-paper2-shared-fixture-v1"},
+    "source": {"const": "configs/dev.json#shared_fixture"},
+    "generator": {"const": "scripts/common/generate_shared_fixture.py"},
+    "protocol": {"$ref": "#/$defs/protocol"},
+    "accounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["OWNER", "RIGHT_SELLER", "BUYER_1", "BUYER_2", "MARKET_OK", "MARKET_DENIED", "RELAYER"],
+      "properties": {
+        "OWNER": {"$ref": "#/$defs/account"},
+        "RIGHT_SELLER": {"$ref": "#/$defs/account"},
+        "BUYER_1": {"$ref": "#/$defs/account"},
+        "BUYER_2": {"$ref": "#/$defs/account"},
+        "MARKET_OK": {"$ref": "#/$defs/account"},
+        "MARKET_DENIED": {"$ref": "#/$defs/account"},
+        "RELAYER": {"$ref": "#/$defs/account"}
+      }
+    },
+    "fixture_inputs": {"$ref": "#/$defs/fixtureInputs"},
+    "enums": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["MarketOperation", "ObjectType", "OrderState", "PaymentState", "CurrencyId", "MessageType"],
+      "properties": {
+        "MarketOperation": {"type": "object"},
+        "ObjectType": {"type": "object"},
+        "OrderState": {"type": "object"},
+        "PaymentState": {"type": "object"},
+        "CurrencyId": {"type": "object"},
+        "MessageType": {"type": "object"}
+      }
+    },
+    "field_order": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["OrderCommitment", "SellerCommitment", "BuyerCommitment"],
+      "properties": {
+        "OrderCommitment": {"type": "array", "minItems": 16, "items": {"type": "string"}},
+        "SellerCommitment": {"type": "array", "minItems": 9, "items": {"type": "string"}},
+        "BuyerCommitment": {"type": "array", "minItems": 6, "items": {"type": "string"}}
+      }
+    },
+    "common_errors": {
+      "type": "array",
+      "minItems": 33,
+      "items": {"$ref": "#/$defs/commonError"}
+    },
+    "vectors": {
+      "type": "array",
+      "minItems": 3,
+      "items": {"$ref": "#/$defs/vector"}
+    },
+    "baseline_consumers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["B1", "B2", "G3"],
+      "properties": {
+        "B1": {"$ref": "#/$defs/consumer"},
+        "B2": {"$ref": "#/$defs/consumer"},
+        "G3": {"$ref": "#/$defs/consumer"}
+      }
+    },
+    "g3_rust_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "genesis_hash", "operation", "message_type", "domain_hex"],
+      "properties": {
+        "source": {"type": "string", "minLength": 1},
+        "genesis_hash": {"$ref": "#/$defs/hex32"},
+        "operation": {"const": "TransferRight"},
+        "message_type": {"const": "Order"},
+        "domain_hex": {"$ref": "#/$defs/hex32"}
+      }
+    }
+  },
+  "$defs": {
+    "hex32": {"type": "string", "pattern": "^0x[0-9a-f]{64}$"},
+    "hexBytes": {"type": "string", "pattern": "^0x([0-9a-f]{2})+$"},
+    "plancks": {"type": "string", "pattern": "^(0|[1-9][0-9]*)$"},
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol_label", "settlement_protocol_version", "settlement_domain_id", "encoding", "hash_scheme_id", "signature_scheme_id"],
+      "properties": {
+        "protocol_label": {"const": "assetxchain-paper2-shared-v1"},
+        "settlement_protocol_version": {"const": 1},
+        "settlement_domain_id": {"const": "axc/p2/shared"},
+        "encoding": {"const": "SCALE"},
+        "hash_scheme_id": {"const": "blake2-256"},
+        "signature_scheme_id": {"const": "sr25519-substrate-v1"}
+      }
+    },
+    "account": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_uri", "account_id_hex", "ss58_address"],
+      "properties": {
+        "key_uri": {"type": "string", "pattern": "^//"},
+        "account_id_hex": {"$ref": "#/$defs/hex32"},
+        "ss58_address": {"type": "string", "minLength": 40}
+      }
+    },
+    "fixtureInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seed", "quantity", "unit_plancks", "prices_plancks", "timing_offsets_blocks", "vector_block_context", "fees_bps", "initial_state", "vector_genesis_hash", "derived_ids"],
+      "properties": {
+        "seed": {"const": 20260726},
+        "quantity": {"const": 1},
+        "unit_plancks": {"const": "1000000000000"},
+        "prices_plancks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["TransferMeta", "IssueRight", "TransferRight"],
+          "properties": {
+            "TransferMeta": {"const": "10000000000000"},
+            "IssueRight": {"const": "3000000000000"},
+            "TransferRight": {"const": "4000000000000"}
+          }
+        },
+        "timing_offsets_blocks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_expiry", "funded_grace", "right_validity"],
+          "properties": {
+            "order_expiry": {"const": 20},
+            "funded_grace": {"const": 10},
+            "right_validity": {"const": 100}
+          }
+        },
+        "vector_block_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fixture_anchor_block", "order_created_block", "order_expiry_block", "order_funded_block", "grace_deadline_block", "right_valid_until_block", "scope"],
+          "properties": {
+            "fixture_anchor_block": {"const": 0},
+            "order_created_block": {"const": 0},
+            "order_expiry_block": {"const": 20},
+            "order_funded_block": {"const": 0},
+            "grace_deadline_block": {"const": 10},
+            "right_valid_until_block": {"const": 100},
+            "scope": {"const": "static-codec-vector-only; live adapters apply offsets to captured blocks"}
+          }
+        },
+        "fees_bps": {"type": "object"},
+        "initial_state": {"type": "object"},
+        "vector_genesis_hash": {"$ref": "#/$defs/hex32"},
+        "derived_ids": {"type": "object"}
+      }
+    },
+    "commonError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status_code", "scale_hex"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "status_code": {"type": "integer", "minimum": 1},
+        "scale_hex": {"type": "string", "pattern": "^0x[0-9a-f]{2}$"}
+      }
+    },
+    "commitment": {"type": "object"},
+    "scale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["order_commitment_hex", "seller_commitment_hex", "buyer_commitment_hex", "seller_signing_payload_hex", "buyer_signing_payload_hex"],
+      "properties": {
+        "order_commitment_hex": {"$ref": "#/$defs/hexBytes"},
+        "seller_commitment_hex": {"$ref": "#/$defs/hexBytes"},
+        "buyer_commitment_hex": {"$ref": "#/$defs/hexBytes"},
+        "seller_signing_payload_hex": {"$ref": "#/$defs/hexBytes"},
+        "buyer_signing_payload_hex": {"$ref": "#/$defs/hexBytes"}
+      }
+    },
+    "hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["order_domain", "seller_domain", "buyer_domain", "settlement_domain", "right_domain", "order_commitment_hash", "order_id", "settlement_id", "right_id", "escrow_id", "seller_signing_payload_hash", "buyer_signing_payload_hash"],
+      "properties": {
+        "order_domain": {"$ref": "#/$defs/hex32"},
+        "seller_domain": {"$ref": "#/$defs/hex32"},
+        "buyer_domain": {"$ref": "#/$defs/hex32"},
+        "settlement_domain": {"$ref": "#/$defs/hex32"},
+        "right_domain": {"$ref": "#/$defs/hex32"},
+        "order_commitment_hash": {"$ref": "#/$defs/hex32"},
+        "order_id": {"$ref": "#/$defs/hex32"},
+        "settlement_id": {"$ref": "#/$defs/hex32"},
+        "right_id": {"$ref": "#/$defs/hex32"},
+        "escrow_id": {"$ref": "#/$defs/hex32"},
+        "seller_signing_payload_hash": {"$ref": "#/$defs/hex32"},
+        "buyer_signing_payload_hash": {"$ref": "#/$defs/hex32"}
+      }
+    },
+    "vector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "roles", "order_commitment", "seller_commitment", "buyer_commitment", "scale", "hashes"],
+      "properties": {
+        "operation": {"enum": ["TransferMeta", "IssueRight", "TransferRight"]},
+        "roles": {"type": "object"},
+        "order_commitment": {"$ref": "#/$defs/commitment"},
+        "seller_commitment": {"$ref": "#/$defs/commitment"},
+        "buyer_commitment": {"$ref": "#/$defs/commitment"},
+        "scale": {"$ref": "#/$defs/scale"},
+        "hashes": {"$ref": "#/$defs/hashes"}
+      }
+    },
+    "consumer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["consumer", "shared_input_hash"],
+      "properties": {
+        "consumer": {"const": "scripts/common/shared_fixture_codec.py#baseline_consumer_view"},
+        "shared_input_hash": {"$ref": "#/$defs/hex32"}
+      }
+    }
+  }
+}

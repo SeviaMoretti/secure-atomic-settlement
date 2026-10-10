@@ -1,0 +1,43 @@
+{
+  "operation": "TransferRight",
+  "terminal": "Settled",
+  "condition": "F2",
+  "seller": "RIGHT_SELLER",
+  "buyer": "BUYER_2",
+  "artifact": "normal",
+  "preparation": [
+    {
+      "method": "relayCreateOrder",
+      "role": "RELAYER",
+      "label": "create"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "seed-open"
+    },
+    {
+      "method": "relayFundOrder",
+      "role": "BUYER_2",
+      "label": "fund"
+    },
+    {
+      "method": "relaySettle",
+      "role": "RELAYER",
+      "label": "settle"
+    }
+  ],
+  "injection": null,
+  "recovery": [
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync1"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync2"
+    }
+  ]
+}

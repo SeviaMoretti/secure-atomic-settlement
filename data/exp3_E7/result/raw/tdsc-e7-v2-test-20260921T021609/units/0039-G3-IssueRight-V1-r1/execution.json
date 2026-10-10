@@ -1,0 +1,141 @@
+{
+  "baseline": "G3",
+  "operation": "IssueRight",
+  "variant": "V1",
+  "repetition": 1,
+  "run_id": "tdsc-e7-v2-test-20260921T021609",
+  "episode_id": "tdsc-e7-v2-test-20260921T021609/0039-G3-IssueRight-V1-r1",
+  "session_id": "G3-r1",
+  "output_root": "/home/gz785/code/exp2/results/raw/tdsc-e7-v2-test-20260921T021609/units/0039-G3-IssueRight-V1-r1",
+  "rpc": "ws://127.0.0.1:9944",
+  "artifact_root": "/home/gz785/code/assetxchain-e7v2-g3/target/ink/market_orderbook",
+  "execution_complete": true,
+  "checks": "pending-independent-checker",
+  "fixture": {
+    "schema_id": "assetxchain-exp2-phase4-e0-fixture",
+    "schema_version": 1,
+    "run_id": "tdsc-e7-v2-test-20260921T021609",
+    "baseline_id": "G3",
+    "scenario_id": "NEG-AUTH-REVOKED-01",
+    "repetition": 1,
+    "genesis_hash": "0xa93f862d61e26fcc11b51209a4f97e3b3c9b5b064c73e1c8d0c4b84a6d5e4dca",
+    "fixture_anchor_block": 71,
+    "runtime_version": "assetxchain-runtime-103",
+    "metadata_hash": "0x438ab7620d5a0b9e13d712740b949dc7beef65d4556231976a3cf213f8356d30",
+    "shared_input_hash": "0xc427552f41308fe6e7345a4af448ef3670caba676f1da46e433a1b0aa88e9c13",
+    "contract_address": "5HBMSb3DpYMkNn3iTFKFgrXF7gpPmxSNkXckX9rV7T2YCLHE",
+    "contract_code_hash": "0xf3087cba178e0387fa13b6362ebe6caeff84da0ccbe712afe06ee3abb67b7df4",
+    "asset_id": "0xf23b91f59940c8db9fc4b2cff874da40557fbe42dc92b6d25c0a15fb196492fe",
+    "right_id": "0x23c458df13d0e9f831de70cc8b17e19e6b6df8f5d68ad9effb9f6a5b5238eb56",
+    "authorization_id": "0xa43080b058482f6243b748571754e585d5b7f4bd381cae8bf4d10e9db1922a6d",
+    "market_id": "0x89cf24b87a26e5faa7fb6bff5e43bdafd2b96272943a88c929f14f00557cdf46",
+    "order_id": "0x263fb923d3cf7becdd317e5c33731614c98512f2b6e4f869ff502b032b1516e8",
+    "competing_order_id": null,
+    "competing_right_id": null,
+    "initial_state": {
+      "schema_id": "assetxchain-exp2-normalized-snapshot",
+      "schema_version": 1,
+      "contract_version": "phase3-adapter-contract-v1",
+      "baseline_id": "G3",
+      "authority_source": "runtime",
+      "observed_at": {
+        "block_number": 76,
+        "attempt_sequence": 1
+      },
+      "meta": {
+        "exists": true,
+        "asset_id": "0xf23b91f59940c8db9fc4b2cff874da40557fbe42dc92b6d25c0a15fb196492fe",
+        "owner": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "status": "Tradable",
+        "state_version": 1,
+        "owner_index_matches": true,
+        "active_right_count": 0,
+        "active_order_id": null
+      },
+      "right": {
+        "exists": false,
+        "right_id": null,
+        "holder": null,
+        "status": null,
+        "state_version": null,
+        "parent_asset_id": null,
+        "valid": null,
+        "remaining_uses": null,
+        "holder_index_matches": null,
+        "parent_index_matches": null,
+        "active_order_id": null
+      },
+      "order": {
+        "exists": true,
+        "order_id": "0x263fb923d3cf7becdd317e5c33731614c98512f2b6e4f869ff502b032b1516e8",
+        "operation": "IssueRight",
+        "state": "Open",
+        "seller": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "buyer": null,
+        "expiry": 94,
+        "grace_deadline": null,
+        "active_capacity_occupied": true,
+        "funded_capacity_occupied": false
+      },
+      "authorization": {
+        "exists": true,
+        "authorization_id": "0xa43080b058482f6243b748571754e585d5b7f4bd381cae8bf4d10e9db1922a6d",
+        "status": "Revoked",
+        "policy_hash": "0x021f0e1133291eccccec9f5e5c30a9022eac26e0c7203c05548e5b607908d5f1",
+        "issued_count": 0,
+        "reserved_count": 0,
+        "issued_use_units": 0,
+        "reserved_use_units": 0,
+        "consumed": false,
+        "consumed_order_id": null
+      },
+      "payment": {
+        "state": "Unfunded",
+        "escrow_amount": "0",
+        "buyer_balance": "100000000000000000",
+        "seller_balance": "1267650600224029804444061536721",
+        "royalty_balance": null,
+        "market_balance": "89503048510988838",
+        "safety_balance": null
+      },
+      "evidence": {
+        "settlement_record_count": 0,
+        "settlement_id": null,
+        "record_fields_hash": null,
+        "pre_state_commitment": null
+      },
+      "market": {
+        "exists": true,
+        "market_id": "0x89cf24b87a26e5faa7fb6bff5e43bdafd2b96272943a88c929f14f00557cdf46",
+        "status": "Active",
+        "capabilities": [
+          "TransferMeta",
+          "IssueRight",
+          "TransferRight"
+        ],
+        "active_orders": 1,
+        "funded_orders": 0,
+        "active_exposure_value": "0"
+      },
+      "identity": {
+        "settlement_protocol_version": 1,
+        "settlement_domain_id": "axc/p2/shared",
+        "order_commitment_hash": "0x91f82495117752055606b79aca4c57e055f36c38d20708435d4b216cc311ada7",
+        "seller_nonce": 1,
+        "buyer_nonce": 0,
+        "authorization_nonce": 0,
+        "object_state_version": 1
+      },
+      "state_commitment": "0x19e6c198f15c131099d60f828f3ddf3cb6698403d00b8c9d1ded35a5a874dc36",
+      "projection": {
+        "availability": "unavailable",
+        "authoritative": false,
+        "order_state": null,
+        "settlement_record_count": null
+      }
+    }
+  },
+  "submitted": 1,
+  "per_extrinsic_state_isolation": "NOT_OBSERVED",
+  "state_evidence_scope": "episode-net-effect"
+}

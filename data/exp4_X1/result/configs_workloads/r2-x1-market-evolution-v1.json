@@ -1,0 +1,117 @@
+{
+  "schema_id": "assetxchain-exp2-r2-workload",
+  "schema_version": 1,
+  "metadata": {
+    "config_path": "configs/workloads/r2-x1-market-evolution-v1.json",
+    "workload_id": "r2-x1-market-evolution-v1",
+    "experiment_id": "X1",
+    "title": "Market policy evolution under frozen settlement semantics",
+    "protocol_id": "assetxchain-paper2-shared",
+    "settlement_protocol_version": 1,
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "baseline_ids": ["B1", "B2", "G3"],
+    "seed": 20260807,
+    "evidence_level": "extended-experiment-candidate",
+    "claim_boundary": "evolvability-only; no performance or architecture ranking"
+  },
+  "research_question": "When pricing, fee, or matching policy changes while the shared settlement protocol remains fixed, which deployment units, privileged actions, migrations, recovery blocks, and setup fees change in each architecture?",
+  "independent_variables": {
+    "baseline_id": ["B1", "B2", "G3"],
+    "operation": ["TransferMeta", "IssueRight", "TransferRight"],
+    "policy_variant": [
+      "control-fixed-price-zero-fee-fifo",
+      "pricing-demand-markup-500bps",
+      "fee-market-fee-100bps",
+      "matching-highest-offer-then-arrival"
+    ]
+  },
+  "policy_variants": [
+    {
+      "variant_id": "control-fixed-price-zero-fee-fifo",
+      "changed_dimension": "none",
+      "pricing_rule": "frozen fixture price",
+      "market_fee_bps": 0,
+      "matching_rule": "first eligible order by canonical arrival sequence"
+    },
+    {
+      "variant_id": "pricing-demand-markup-500bps",
+      "changed_dimension": "pricing",
+      "pricing_rule": "gross_price = floor(base_price * 10500 / 10000)",
+      "market_fee_bps": 0,
+      "matching_rule": "first eligible order by canonical arrival sequence"
+    },
+    {
+      "variant_id": "fee-market-fee-100bps",
+      "changed_dimension": "fee",
+      "pricing_rule": "frozen fixture price",
+      "market_fee_bps": 100,
+      "signed_market_fee_cap_bps": 200,
+      "matching_rule": "first eligible order by canonical arrival sequence"
+    },
+    {
+      "variant_id": "matching-highest-offer-then-arrival",
+      "changed_dimension": "matching",
+      "pricing_rule": "buyer offers are base_price, floor(base_price * 10500 / 10000), and floor(base_price * 11000 / 10000)",
+      "market_fee_bps": 0,
+      "matching_rule": "highest canonical gross_price; ties broken by canonical arrival sequence"
+    }
+  ],
+  "dependent_variables": [
+    "changed_deployment_unit_count",
+    "changed_component_ids",
+    "privileged_upgrade_count",
+    "deployment_transaction_count",
+    "migration_step_count",
+    "migration_entry_count",
+    "migration_bytes",
+    "recovery_blocks",
+    "setup_actual_fee",
+    "applicable_i1_i10_violation_count"
+  ],
+  "controls": {
+    "settlement_protocol_version": 1,
+    "canonical_encoding": "SCALE",
+    "hash_scheme_id": "blake2-256",
+    "signature_scheme_id": "sr25519-substrate-v1",
+    "authority_and_atomicity_predicates": "I1-I10 unchanged",
+    "fixture_roles_and_balances": "configs/dev.json#shared_fixture",
+    "operation_input_fields": "shared protocol v1",
+    "policy_dimension_change_rule": "exactly one of pricing, fee, or matching differs from control",
+    "comparison_unit": "same baseline, operation, and policy dimension",
+    "missing_common_capability_policy": "blocked; never synthetic failure"
+  },
+  "repetitions": {
+    "structural_diff_per_clean_variant_commit": 1,
+    "chain_execution_per_baseline_variant_operation": 10
+  },
+  "execution_order": {
+    "randomization": "deterministic permutation within each baseline and operation",
+    "seed": 20260807,
+    "reset": "fresh isolated fixture before each chain repetition",
+    "variant_identity": "independent clean commit and manifest for every non-control baseline variant"
+  },
+  "actor_and_object_derivation": {
+    "market_accounts": "derive and record AccountId32 values from //R2//X1//Market//<slot> under sr25519-substrate-v1",
+    "buyer_accounts": "derive and record AccountId32 values from //R2//X1//Buyer//<slot>; matching uses three distinct buyers",
+    "funding": "OWNER funds derived accounts to the same frozen target balance before the fixture anchor",
+    "object_ids": "derive distinct operation and repetition scoped IDs from the workload seed and record the canonical inputs in preflight"
+  },
+  "expected_result_rules": [
+    "The changed policy must produce the configured canonical order fields without changing settlement protocol v1.",
+    "Every applicable I1-I10 predicate must pass after the policy change.",
+    "All structural and setup counts must be derived from captured diffs, transactions, events, and migration inventories rather than author labels.",
+    "The experiment answers evolvability only; latency or per-order cost must not be used to rank B1, B2, and G3."
+  ],
+  "checker_contract": "configs/r2/checker-contracts-v1.json#X1",
+  "checker_ids": ["R2-COMMON-01", "R2-COMMON-02", "R2-COMMON-03", "R2-COMMON-04", "X1-C01", "X1-C02", "X1-C03", "X1-C04", "X1-C05"],
+  "result_schema": "schemas/r2/extended-experiment-result.schema.json#/$defs/x1_result",
+  "stop_gates": [
+    "dirty or unidentified implementation commit",
+    "E0 is not PASS for a variant commit",
+    "more than one policy dimension changes",
+    "settlement protocol, canonical schema, authority boundary, or I1-I10 semantics change",
+    "any applicable I1-I10 violation",
+    "a structural or setup metric lacks its captured source",
+    "a required common capability is missing"
+  ]
+}

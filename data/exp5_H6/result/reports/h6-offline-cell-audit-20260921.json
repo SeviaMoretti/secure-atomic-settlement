@@ -1,0 +1,2868 @@
+{
+  "schema": "h6-offline-cell-audit-v1",
+  "created_at": "2026-09-21T15:10:06.063Z",
+  "scope": "offline ABI, argument encoding, role authorization, phase dependencies, fault preconditions and recovery cardinality; not on-chain coverage",
+  "cells": [
+    {
+      "operation": "TransferMeta",
+      "terminal": "Settled",
+      "condition": "F0",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Settled",
+      "condition": "F1",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Settled",
+      "condition": "F2",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Settled",
+      "condition": "F3",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Cancelled",
+      "condition": "F0",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "OWNER",
+          "label": "cancel"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "OWNER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Cancelled",
+      "condition": "F1",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "OWNER",
+          "label": "cancel"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "OWNER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Cancelled",
+      "condition": "F2",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "OWNER",
+          "label": "cancel"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "OWNER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Cancelled",
+      "condition": "F3",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "OWNER",
+          "label": "cancel"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "OWNER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Refunded",
+      "condition": "F0",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "waitForGrace": true
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Refunded",
+      "condition": "F1",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "waitForGrace": true
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Refunded",
+      "condition": "F2",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "waitForGrace": true
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferMeta",
+      "terminal": "Refunded",
+      "condition": "F3",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "waitForGrace": true
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Settled",
+      "condition": "F0",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Settled",
+      "condition": "F1",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Settled",
+      "condition": "F2",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Settled",
+      "condition": "F3",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Cancelled",
+      "condition": "F0",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "OWNER",
+          "label": "cancel"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "OWNER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Cancelled",
+      "condition": "F1",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "OWNER",
+          "label": "cancel"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "OWNER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Cancelled",
+      "condition": "F2",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "OWNER",
+          "label": "cancel"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "OWNER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Cancelled",
+      "condition": "F3",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "OWNER",
+          "label": "cancel"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "OWNER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Refunded",
+      "condition": "F0",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "waitForGrace": true
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Refunded",
+      "condition": "F1",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "waitForGrace": true
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Refunded",
+      "condition": "F2",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "waitForGrace": true
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "IssueRight",
+      "terminal": "Refunded",
+      "condition": "F3",
+      "seller": "OWNER",
+      "buyer": "BUYER_1",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_1",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "waitForGrace": true
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_1",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_1",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Settled",
+      "condition": "F0",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_2",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_2",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Settled",
+      "condition": "F1",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_2",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_2",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Settled",
+      "condition": "F2",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_2",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_2",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Settled",
+      "condition": "F3",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_2",
+          "label": "fund"
+        },
+        {
+          "method": "relaySettle",
+          "role": "RELAYER",
+          "label": "settle"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_2",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_settle",
+          "role": "RELAYER",
+          "label": "settle",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Cancelled",
+      "condition": "F0",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "RIGHT_SELLER",
+          "label": "cancel"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "RIGHT_SELLER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Cancelled",
+      "condition": "F1",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "RIGHT_SELLER",
+          "label": "cancel"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "RIGHT_SELLER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Cancelled",
+      "condition": "F2",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "RIGHT_SELLER",
+          "label": "cancel"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "RIGHT_SELLER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Cancelled",
+      "condition": "F3",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayCancelOpen",
+          "role": "RIGHT_SELLER",
+          "label": "cancel"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_cancel_open",
+          "role": "RIGHT_SELLER",
+          "label": "cancel",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Refunded",
+      "condition": "F0",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_2",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_2",
+          "label": "refund",
+          "waitForGrace": true
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_2",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_2",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Refunded",
+      "condition": "F1",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_2",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_2",
+          "label": "refund",
+          "waitForGrace": true
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_2",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_2",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Refunded",
+      "condition": "F2",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "normal",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-open"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_2",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_2",
+          "label": "refund",
+          "waitForGrace": true
+        }
+      ],
+      "injection": null,
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-open",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_2",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_2",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "operation": "TransferRight",
+      "terminal": "Refunded",
+      "condition": "F3",
+      "seller": "RIGHT_SELLER",
+      "buyer": "BUYER_2",
+      "artifact": "fault",
+      "preparation": [
+        {
+          "method": "relayCreateOrder",
+          "role": "RELAYER",
+          "label": "create"
+        },
+        {
+          "method": "relayFundOrder",
+          "role": "BUYER_2",
+          "label": "fund"
+        },
+        {
+          "method": "relayRefundFunded",
+          "role": "BUYER_2",
+          "label": "refund",
+          "waitForGrace": true
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "seed-terminal"
+        }
+      ],
+      "injection": {
+        "method": "h6CorruptProjection",
+        "role": "MARKET_OK",
+        "label": "inject"
+      },
+      "recovery": [
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync1"
+        },
+        {
+          "method": "syncProjection",
+          "role": "RELAYER",
+          "label": "sync2"
+        }
+      ],
+      "status": "PASS",
+      "calls": [
+        {
+          "method": "relay_create_order",
+          "role": "RELAYER",
+          "label": "create",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_fund_order",
+          "role": "BUYER_2",
+          "label": "fund",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "relay_refund_funded",
+          "role": "BUYER_2",
+          "label": "refund",
+          "wait_for_real_grace": true
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "seed-terminal",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "h6_corrupt_projection",
+          "role": "MARKET_OK",
+          "label": "inject",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync1",
+          "wait_for_real_grace": false
+        },
+        {
+          "method": "sync_projection",
+          "role": "RELAYER",
+          "label": "sync2",
+          "wait_for_real_grace": false
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "passed": 36,
+  "failed": 0
+}

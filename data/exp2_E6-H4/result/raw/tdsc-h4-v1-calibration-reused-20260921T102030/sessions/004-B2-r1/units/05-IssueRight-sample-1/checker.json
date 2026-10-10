@@ -1,0 +1,302 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "unit": "tdsc-h4-v1-calibration-reused-20260921T102030/004-B2-r1/05-IssueRight-sample-1",
+  "baseline": "B2",
+  "operation": "IssueRight",
+  "session_id": "004-B2-r1",
+  "kind": "sample",
+  "node_mode": "reused",
+  "timing_metrics": [
+    {
+      "phase": "create",
+      "preparation_ms": 45.211637,
+      "encoding_and_inner_signature_ms": 1.14395,
+      "nonce_rpc_ms": 0.512985,
+      "outer_signing_ms": 43.384769,
+      "submission_to_inclusion_ms": 5920.599869,
+      "inclusion_to_finalization_ms": 13235.607558,
+      "evidence_after_inclusion_ms": 25240.710063,
+      "evidence_rpc_ms": 4.592075,
+      "c0_to_inclusion_ms": 5965.811506,
+      "c0_to_finalization_ms": 19201.419064,
+      "last_head_observation_age_ms": 83.516626,
+      "block_number": 41,
+      "completion_blocks": 1
+    },
+    {
+      "phase": "fund",
+      "preparation_ms": 47.301937,
+      "encoding_and_inner_signature_ms": 1.200359,
+      "nonce_rpc_ms": 0.73422,
+      "outer_signing_ms": 45.247784,
+      "submission_to_inclusion_ms": 5416.274261,
+      "inclusion_to_finalization_ms": 13107.48432,
+      "evidence_after_inclusion_ms": 19781.931822,
+      "evidence_rpc_ms": 4.812378,
+      "c0_to_inclusion_ms": 5463.576198,
+      "c0_to_finalization_ms": 18571.060518,
+      "last_head_observation_age_ms": 44.49441,
+      "block_number": 42,
+      "completion_blocks": 1
+    },
+    {
+      "phase": "settle",
+      "preparation_ms": 43.549758,
+      "encoding_and_inner_signature_ms": 0.245701,
+      "nonce_rpc_ms": 0.725674,
+      "outer_signing_ms": 42.465244,
+      "submission_to_inclusion_ms": 5956.344053,
+      "inclusion_to_finalization_ms": 13772.552109,
+      "evidence_after_inclusion_ms": 13786.417163,
+      "evidence_rpc_ms": 4.395206,
+      "c0_to_inclusion_ms": 5999.893811,
+      "c0_to_finalization_ms": 19772.44592,
+      "last_head_observation_age_ms": 48.118919,
+      "block_number": 43,
+      "completion_blocks": 1
+    }
+  ],
+  "order_inclusion_ms": 17429.337482,
+  "order_finalization_ms": 31201.889591,
+  "sum_phase_inclusion_ms": 17429.281515,
+  "sum_phase_finalization_ms": 57544.925502,
+  "fixture_ms": 22077.879188,
+  "audit_after_measurement_ms": 43.438817,
+  "payload_audit": {
+    "status": "PASS",
+    "original_signature_verified": true,
+    "decoded": [
+      {
+        "tx_hash": "0x408e1c52136d7319223cf4f81fd13a34df6d176770959290bd3c0ae795261055",
+        "method": "createOrder",
+        "events": [
+          {
+            "method": "OrderCreated",
+            "args": [
+              "0x7fb77c5d0b841d47d704045d00fccc17d4aa179d6f2401a9ebd3739302330f66",
+              "0x38cdb9c1de1db372609a0b5cc7270ae726772c97d7019c8cb7fe76809e44b305",
+              "IssueRight",
+              "0xca47ea688fe588c39ca457c93dae4c525b5a88e845479cc5d703056a9467478e"
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0x2ff24f04409a2a12e5d2e0a68830d74bcbeb7839727ab47355ae63840516cd16",
+        "method": "fundOrder",
+        "events": [
+          {
+            "method": "IssueQuotaReserved",
+            "args": [
+              "0x71ca18904b832479bcb1d3d50e700055d63ef04da83b0e3595f4ac7e6e349f4a",
+              "0x7fb77c5d0b841d47d704045d00fccc17d4aa179d6f2401a9ebd3739302330f66",
+              1,
+              1
+            ]
+          },
+          {
+            "method": "OrderFunded",
+            "args": [
+              "0x7fb77c5d0b841d47d704045d00fccc17d4aa179d6f2401a9ebd3739302330f66",
+              "0xe4141b0cb6062fd44f37b3cf6cc2874b61a0ad8e2ce7c31b216b765f1c93e111",
+              "0x2b361df28a1e45f80c73f0e64743a2caf8eb8c3515837e7274a5029f4eb388d6",
+              3000000000000,
+              52
+            ]
+          },
+          {
+            "method": "PaymentEscrowed",
+            "args": [
+              "0x7fb77c5d0b841d47d704045d00fccc17d4aa179d6f2401a9ebd3739302330f66",
+              "0x2b361df28a1e45f80c73f0e64743a2caf8eb8c3515837e7274a5029f4eb388d6",
+              3000000000000
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0xe75dd4d9733b3a9a30599b8231b7b41013b40537f697edf44e9a0ca94db72a1f",
+        "method": "settle",
+        "events": [
+          {
+            "method": "IssueQuotaConverted",
+            "args": [
+              "0x71ca18904b832479bcb1d3d50e700055d63ef04da83b0e3595f4ac7e6e349f4a",
+              "0x7fb77c5d0b841d47d704045d00fccc17d4aa179d6f2401a9ebd3739302330f66"
+            ]
+          },
+          {
+            "method": "PaymentReleased",
+            "args": [
+              "0x7fb77c5d0b841d47d704045d00fccc17d4aa179d6f2401a9ebd3739302330f66",
+              "0x2b361df28a1e45f80c73f0e64743a2caf8eb8c3515837e7274a5029f4eb388d6",
+              3000000000000
+            ]
+          },
+          {
+            "method": "SettlementFinalized",
+            "args": [
+              "0x45db9fcddad939fb0ef749bbb9a5c7961435ecd3775051502af73b57ba4b033b",
+              "0x7fb77c5d0b841d47d704045d00fccc17d4aa179d6f2401a9ebd3739302330f66",
+              "0xf24d94e6630df53051edcb99d9884c4dd9a55c335587b7b751544a3b09979387"
+            ]
+          }
+        ]
+      }
+    ],
+    "settlements": [
+      {
+        "method": "SettlementFinalized",
+        "args": [
+          "0x45db9fcddad939fb0ef749bbb9a5c7961435ecd3775051502af73b57ba4b033b",
+          "0x7fb77c5d0b841d47d704045d00fccc17d4aa179d6f2401a9ebd3739302330f66",
+          "0xf24d94e6630df53051edcb99d9884c4dd9a55c335587b7b751544a3b09979387"
+        ]
+      }
+    ]
+  },
+  "online_execution": {
+    "status": "PASS",
+    "errors": [],
+    "instrumentation": "on",
+    "log_path": "/home/gz785/code/exp2/logs/tdsc-h4-v1-calibration-reused-20260921T102030/004-B2-r1.node.log",
+    "matches": [
+      {
+        "phase": "create",
+        "tx_hash": "0x408e1c52136d7319223cf4f81fd13a34df6d176770959290bd3c0ae795261055",
+        "block_hash": "0xcd228b8a406cd91f34fcbeca52a5d8296927e2814ac98aa140297b06ea79434f",
+        "extrinsic_index": 1,
+        "matched_spans": [
+          {
+            "schema": "h4-host-call-v1",
+            "sequence": 188,
+            "method": "BlockBuilder_apply_extrinsic",
+            "context": "Onchain",
+            "payload_hash": "0x408e1c52136d7319223cf4f81fd13a34df6d176770959290bd3c0ae795261055",
+            "block_number": 41,
+            "extrinsic_index": 1,
+            "parent_hash": "0x38e2f0355d97d9697b5e51818bb1304b50a6b23dcec2f9e6bb7eb33ce0cecd7a",
+            "start_ns": 240888966150,
+            "end_ns": 240889307361,
+            "duration_ns": 341211,
+            "host_call_ok": true,
+            "native": false,
+            "log_line": 425
+          }
+        ],
+        "all_same_payload_attempts": [
+          {
+            "schema": "h4-host-call-v1",
+            "sequence": 188,
+            "method": "BlockBuilder_apply_extrinsic",
+            "context": "Onchain",
+            "payload_hash": "0x408e1c52136d7319223cf4f81fd13a34df6d176770959290bd3c0ae795261055",
+            "block_number": 41,
+            "extrinsic_index": 1,
+            "parent_hash": "0x38e2f0355d97d9697b5e51818bb1304b50a6b23dcec2f9e6bb7eb33ce0cecd7a",
+            "start_ns": 240888966150,
+            "end_ns": 240889307361,
+            "duration_ns": 341211,
+            "host_call_ok": true,
+            "native": false,
+            "log_line": 425
+          }
+        ],
+        "runtime_call_ms": 0.341211
+      },
+      {
+        "phase": "fund",
+        "tx_hash": "0x2ff24f04409a2a12e5d2e0a68830d74bcbeb7839727ab47355ae63840516cd16",
+        "block_hash": "0x875173380c0d2606ec0bae3b679578654a656fcc3121e2cfa70dbc869242f906",
+        "extrinsic_index": 1,
+        "matched_spans": [
+          {
+            "schema": "h4-host-call-v1",
+            "sequence": 192,
+            "method": "BlockBuilder_apply_extrinsic",
+            "context": "Onchain",
+            "payload_hash": "0x2ff24f04409a2a12e5d2e0a68830d74bcbeb7839727ab47355ae63840516cd16",
+            "block_number": 42,
+            "extrinsic_index": 1,
+            "parent_hash": "0xcd228b8a406cd91f34fcbeca52a5d8296927e2814ac98aa140297b06ea79434f",
+            "start_ns": 246353048358,
+            "end_ns": 246353432815,
+            "duration_ns": 384457,
+            "host_call_ok": true,
+            "native": false,
+            "log_line": 434
+          }
+        ],
+        "all_same_payload_attempts": [
+          {
+            "schema": "h4-host-call-v1",
+            "sequence": 192,
+            "method": "BlockBuilder_apply_extrinsic",
+            "context": "Onchain",
+            "payload_hash": "0x2ff24f04409a2a12e5d2e0a68830d74bcbeb7839727ab47355ae63840516cd16",
+            "block_number": 42,
+            "extrinsic_index": 1,
+            "parent_hash": "0xcd228b8a406cd91f34fcbeca52a5d8296927e2814ac98aa140297b06ea79434f",
+            "start_ns": 246353048358,
+            "end_ns": 246353432815,
+            "duration_ns": 384457,
+            "host_call_ok": true,
+            "native": false,
+            "log_line": 434
+          }
+        ],
+        "runtime_call_ms": 0.384457
+      },
+      {
+        "phase": "settle",
+        "tx_hash": "0xe75dd4d9733b3a9a30599b8231b7b41013b40537f697edf44e9a0ca94db72a1f",
+        "block_hash": "0xab8b6beefcf989a315eedb0cadf2e4addf55853158eeaf6ab8d321ad6a416ad7",
+        "extrinsic_index": 1,
+        "matched_spans": [
+          {
+            "schema": "h4-host-call-v1",
+            "sequence": 196,
+            "method": "BlockBuilder_apply_extrinsic",
+            "context": "Onchain",
+            "payload_hash": "0xe75dd4d9733b3a9a30599b8231b7b41013b40537f697edf44e9a0ca94db72a1f",
+            "block_number": 43,
+            "extrinsic_index": 1,
+            "parent_hash": "0x875173380c0d2606ec0bae3b679578654a656fcc3121e2cfa70dbc869242f906",
+            "start_ns": 252352254648,
+            "end_ns": 252352671280,
+            "duration_ns": 416632,
+            "host_call_ok": true,
+            "native": false,
+            "log_line": 444
+          }
+        ],
+        "all_same_payload_attempts": [
+          {
+            "schema": "h4-host-call-v1",
+            "sequence": 196,
+            "method": "BlockBuilder_apply_extrinsic",
+            "context": "Onchain",
+            "payload_hash": "0xe75dd4d9733b3a9a30599b8231b7b41013b40537f697edf44e9a0ca94db72a1f",
+            "block_number": 43,
+            "extrinsic_index": 1,
+            "parent_hash": "0x875173380c0d2606ec0bae3b679578654a656fcc3121e2cfa70dbc869242f906",
+            "start_ns": 252352254648,
+            "end_ns": 252352671280,
+            "duration_ns": 416632,
+            "host_call_ok": true,
+            "native": false,
+            "log_line": 444
+          }
+        ],
+        "runtime_call_ms": 0.416632
+      }
+    ],
+    "boundary": "live block construction WasmExecutor::call(BlockBuilder_apply_extrinsic), including host/runtime invocation overhead; not replay, not pure Wasm instructions",
+    "clock": "node-local monotonic; never subtracted from client clock"
+  },
+  "instrumentation": "on",
+  "calibration_pair_id": "B2-r1",
+  "online_calibration": "PAIRED",
+  "paper_final": false
+}

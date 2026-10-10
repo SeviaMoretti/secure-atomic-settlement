@@ -1,0 +1,147 @@
+{
+  "schema_id": "assetxchain-exp2-phase3-common-contract",
+  "schema_version": 1,
+  "contract_version": "phase3-adapter-contract-v1",
+  "protocol": {
+    "protocol_id": "assetxchain-paper2-shared",
+    "settlement_protocol_version": 1,
+    "settlement_domain_id": "axc/p2/shared",
+    "encoding": "SCALE",
+    "hash_scheme_id": "blake2-256",
+    "signature_scheme_id": "sr25519-substrate-v1"
+  },
+  "baseline_order": [
+    "B1",
+    "B2",
+    "G3"
+  ],
+  "phase_contract": {
+    "allowed_phases": [
+      "setup",
+      "create_order",
+      "fund_order",
+      "settle",
+      "cancel_open",
+      "expire_open",
+      "refund_funded",
+      "query"
+    ],
+    "allowed_operations": [
+      "TransferMeta",
+      "IssueRight",
+      "TransferRight"
+    ],
+    "setup_requires_pre_snapshot": false,
+    "all_other_phases_require_pre_snapshot": true,
+    "every_phase_requires_post_snapshot": true,
+    "mutation_phases": [
+      "setup",
+      "create_order",
+      "fund_order",
+      "settle",
+      "cancel_open",
+      "expire_open",
+      "refund_funded"
+    ],
+    "query_phase_is_read_only": true
+  },
+  "schemas": {
+    "baseline_manifest": "schemas/phase3/baseline-manifest.schema.json",
+    "phase_invocation": "schemas/phase3/phase-invocation.schema.json",
+    "normalized_snapshot": "schemas/phase3/normalized-snapshot.schema.json",
+    "normalized_result": "schemas/phase3/normalized-result.schema.json",
+    "shared_fixture_vectors": "schemas/phase3/shared-fixture-vectors.schema.json"
+  },
+  "query_packages": [
+    "Q_META",
+    "Q_RIGHT",
+    "Q_ORDER",
+    "Q_AUTH",
+    "Q_PAY",
+    "Q_EVID",
+    "Q_EVENT",
+    "Q_MARKET",
+    "Q_ID",
+    "Q_ALL"
+  ],
+  "metric_packages": [
+    "M_ACCEPT",
+    "M_REJECT_CLEAN",
+    "M_AUDIT",
+    "M_ONCE",
+    "M_NO_SETTLEMENT",
+    "M_ROLLBACK"
+  ],
+  "common_error_codes": [
+    "UnsupportedProtocolVersion",
+    "MalformedCommitment",
+    "DomainMismatch",
+    "MarketNotRegistered",
+    "MarketRestricted",
+    "CapabilityDenied",
+    "CapacityExceeded",
+    "AuthorizationMissing",
+    "AuthorizationExpired",
+    "AuthorizationRevoked",
+    "QuotaExceeded",
+    "InvalidSignature",
+    "NonceUsed",
+    "StateVersionMismatch",
+    "OrderNotFound",
+    "OrderNotOpen",
+    "OrderNotFunded",
+    "OrderExpired",
+    "AlreadySettled",
+    "TerminalOrder",
+    "AssetNotTradable",
+    "RightInvalid",
+    "OwnershipMismatch",
+    "ParentMismatch",
+    "MutualExclusionConflict",
+    "BelowPriceFloor",
+    "FeeOutOfBounds",
+    "InsufficientBalance",
+    "EscrowMismatch",
+    "PayerBuyerMismatch",
+    "RefundNotAllowed",
+    "GracePeriodActive",
+    "RefundBeneficiaryMismatch"
+  ],
+  "fixture_contract": {
+    "source": "configs/dev.json#shared_fixture",
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "vector_bundle_id": "assetxchain-paper2-shared-vectors-v1",
+    "vector_bundle": "fixtures/phase3/assetxchain-paper2-shared-fixture-v1.json",
+    "generator": "scripts/common/generate_shared_fixture.py",
+    "consumer": "scripts/common/shared_fixture_codec.py#baseline_consumer_view",
+    "unit_plancks": "1000000000000",
+    "quantity": 1,
+    "prices_plancks": {
+      "TransferMeta": "10000000000000",
+      "IssueRight": "3000000000000",
+      "TransferRight": "4000000000000"
+    },
+    "timing_offsets_blocks": {
+      "order_expiry": 20,
+      "funded_grace": 10,
+      "right_validity": 100
+    },
+    "seed": 20260726
+  },
+  "not_applicable_policy": {
+    "marker": "N/A",
+    "numeric_zero_is_forbidden": true,
+    "common_core_may_not_be_not_applicable": true,
+    "missing_common_core_policy": "Blocked/Missing"
+  },
+  "implementation_boundary": {
+    "s3_1_defines_contract_only": true,
+    "s3_2_shared_codec_vectors_implemented": true,
+    "concrete_baseline_adapters_implemented": true,
+    "b1_b2_business_logic_implemented": true,
+    "unified_driver_implemented": true,
+    "unified_driver_entrypoint": "scripts/common/phase3_driver.py#Phase3ScenarioDriver",
+    "formal_experiment_authorized": false,
+    "allowed_validity_level": "legacy-pilot"
+  }
+}

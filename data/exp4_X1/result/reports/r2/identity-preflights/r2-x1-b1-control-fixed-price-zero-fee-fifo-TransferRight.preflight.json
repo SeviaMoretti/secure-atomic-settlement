@@ -1,0 +1,47 @@
+{
+  "schema_id": "assetxchain-exp2-r2-x1-preflight",
+  "schema_version": 1,
+  "status": "PLANNED",
+  "run_id": "r2-x1-b1-20260808T103237+0800-8514bf07-94ff7fd3",
+  "created_at": "2026-08-08T10:32:37+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseline_id": "B1",
+  "variant_id": "control-fixed-price-zero-fee-fifo",
+  "operation": "TransferRight",
+  "control_commit": "8514bf0720ec9b5ed3c8d3ec1501264ae7bf1642",
+  "variant_commit": "8514bf0720ec9b5ed3c8d3ec1501264ae7bf1642",
+  "worktree": "/home/gz785/code/assetxchain-b1",
+  "dirty": false,
+  "e0_status": "PASS",
+  "settlement_protocol_version": 1,
+  "seed": 20260807,
+  "inputs": {
+    "workload": {
+      "path": "configs/workloads/r2-x1-market-evolution-v1.json",
+      "sha256": "94ff7fd3736e376572a4791b773be98e941e9d24fe49b0d3b47018b8623c4d5f"
+    },
+    "result_schema": {
+      "path": "schemas/r2/extended-experiment-result.schema.json",
+      "sha256": "f64d1ffe911855e52ee006cf3c2346810240a878bc6be87767a4dcee6cc9d651"
+    },
+    "checker_contract": {
+      "path": "configs/r2/checker-contracts-v1.json",
+      "sha256": "400501d87961da6f8c0d1b06292c79dd429d94cdbad3fac902a291432500e47d"
+    },
+    "fixture": {
+      "path": "fixtures/phase3/assetxchain-paper2-shared-fixture-v1.json",
+      "sha256": "ab087bf95e68fa5c20bc73db77381645a510f35706f453b005e7c97901e75e16"
+    },
+    "e0_manifest": {
+      "path": "/home/gz785/code/exp2/reports/r2/e0/b1-control-fixed-price-zero-fee-fifo.json",
+      "sha256": "29ce1aa9c74db5e7c5e74d7adf70c58d0431d7749675a8c8603613c9797b9da4"
+    }
+  },
+  "structural": {
+    "changed_dimension": "none",
+    "changed_files": [],
+    "diff_inventory_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "repetitions": 10,
+  "claim_boundary": "evolvability-only; no performance or architecture ranking"
+}

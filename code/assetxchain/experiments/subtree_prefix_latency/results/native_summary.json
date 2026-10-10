@@ -1,0 +1,676 @@
+{
+  "schema_version": "subtree-prefix-native-v1",
+  "source": "results/native_full.csv",
+  "config": {
+    "records": 4096,
+    "rights_per_asset": 4,
+    "seed": 20260923,
+    "batches": 80,
+    "batch_size": 256,
+    "modes": [
+      "single_prefix",
+      "dual_prefix",
+      "single_hash",
+      "dual_hash"
+    ],
+    "workloads": [
+      "meta",
+      "right",
+      "both"
+    ],
+    "metrics": [
+      "proof",
+      "lookup"
+    ]
+  },
+  "groups": {
+    "meta/proof": {
+      "single_prefix": {
+        "mean_ns_per_tx": 7794.5599609375,
+        "median_ns_per_tx": 7692.83984375,
+        "p95_ns_per_tx": 8846.84375,
+        "stdev_ns_per_tx": 556.1470760850793,
+        "min_ns_per_tx": 6759.8984375,
+        "max_ns_per_tx": 10546.26953125,
+        "mean_proof_nodes": 8.65625,
+        "mean_proof_bytes": 2702.9375
+      },
+      "dual_prefix": {
+        "mean_ns_per_tx": 4563.141552734375,
+        "median_ns_per_tx": 4411.119140625,
+        "p95_ns_per_tx": 5514.41796875,
+        "stdev_ns_per_tx": 536.5650935122981,
+        "min_ns_per_tx": 3891.98046875,
+        "max_ns_per_tx": 6748.69921875,
+        "mean_proof_nodes": 4.65625,
+        "mean_proof_bytes": 1401.9375
+      },
+      "single_hash": {
+        "mean_ns_per_tx": 8327.441064453125,
+        "median_ns_per_tx": 8233.18359375,
+        "p95_ns_per_tx": 9357.95703125,
+        "stdev_ns_per_tx": 570.3381888157057,
+        "min_ns_per_tx": 7302.44921875,
+        "max_ns_per_tx": 10491.90234375,
+        "mean_proof_nodes": 8.65625,
+        "mean_proof_bytes": 2999.9375
+      },
+      "dual_hash": {
+        "mean_ns_per_tx": 4415.32099609375,
+        "median_ns_per_tx": 4332.4140625,
+        "p95_ns_per_tx": 4957.94921875,
+        "stdev_ns_per_tx": 440.6291490322626,
+        "min_ns_per_tx": 3858.390625,
+        "max_ns_per_tx": 7228.33203125,
+        "mean_proof_nodes": 4.65625,
+        "mean_proof_bytes": 1401.9375
+      },
+      "comparison_prefix": {
+        "single_mean_ns_per_tx": 7794.5599609375,
+        "dual_mean_ns_per_tx": 4563.141552734375,
+        "speedup_single_over_dual": 1.7081565125383322,
+        "mean_difference_single_minus_dual_ns": 3231.418408203125,
+        "cycle_differences_single_minus_dual_ns": [
+          3062.7880859375,
+          3176.404296875,
+          2755.375,
+          3237.4150390625,
+          3697.6044921875,
+          3112.6220703125,
+          3143.9951171875,
+          3095.42578125,
+          3234.7529296875,
+          2593.8984375,
+          3586.7783203125,
+          3646.6923828125,
+          3184.74609375,
+          2941.6181640625,
+          3703.43359375,
+          3252.595703125,
+          3034.86328125,
+          3474.798828125,
+          3154.4599609375,
+          3538.1005859375
+        ],
+        "bootstrap_95ci_ns": [
+          3102.366552734375,
+          3358.761865234375
+        ],
+        "one_sided_permutation_p_dual_faster": 4.999750012499375e-05
+      },
+      "comparison_hash": {
+        "single_mean_ns_per_tx": 8327.441064453125,
+        "dual_mean_ns_per_tx": 4415.32099609375,
+        "speedup_single_over_dual": 1.8860329909921478,
+        "mean_difference_single_minus_dual_ns": 3912.120068359375,
+        "cycle_differences_single_minus_dual_ns": [
+          4020.6279296875,
+          4050.5283203125,
+          4033.78125,
+          4026.3330078125,
+          3947.5654296875,
+          3634.703125,
+          3947.9150390625,
+          3946.400390625,
+          3832.5078125,
+          3791.30078125,
+          4445.5888671875,
+          3937.02734375,
+          3302.7216796875,
+          3788.5849609375,
+          3770.7919921875,
+          4315.931640625,
+          4096.9130859375,
+          4050.3857421875,
+          3208.2197265625,
+          4094.5732421875
+        ],
+        "bootstrap_95ci_ns": [
+          3781.71953125,
+          4030.060400390625
+        ],
+        "one_sided_permutation_p_dual_faster": 4.999750012499375e-05
+      }
+    },
+    "meta/lookup": {
+      "single_prefix": {
+        "mean_ns_per_tx": 1209.04365234375,
+        "median_ns_per_tx": 1142.859375,
+        "p95_ns_per_tx": 1540.62890625,
+        "stdev_ns_per_tx": 218.7935072312702,
+        "min_ns_per_tx": 1043.953125,
+        "max_ns_per_tx": 2455.1171875,
+        "mean_proof_nodes": 8.65625,
+        "mean_proof_bytes": 2702.9375
+      },
+      "dual_prefix": {
+        "mean_ns_per_tx": 670.907568359375,
+        "median_ns_per_tx": 646.8203125,
+        "p95_ns_per_tx": 830.50390625,
+        "stdev_ns_per_tx": 89.05839911935766,
+        "min_ns_per_tx": 564.38671875,
+        "max_ns_per_tx": 1102.390625,
+        "mean_proof_nodes": 4.65625,
+        "mean_proof_bytes": 1401.9375
+      },
+      "single_hash": {
+        "mean_ns_per_tx": 1190.502734375,
+        "median_ns_per_tx": 1155.748046875,
+        "p95_ns_per_tx": 1530.9140625,
+        "stdev_ns_per_tx": 154.62297638168272,
+        "min_ns_per_tx": 1002.96484375,
+        "max_ns_per_tx": 2067.21484375,
+        "mean_proof_nodes": 8.65625,
+        "mean_proof_bytes": 2999.9375
+      },
+      "dual_hash": {
+        "mean_ns_per_tx": 679.017431640625,
+        "median_ns_per_tx": 657.8203125,
+        "p95_ns_per_tx": 830.25390625,
+        "stdev_ns_per_tx": 84.96286322235537,
+        "min_ns_per_tx": 570.984375,
+        "max_ns_per_tx": 1038.9296875,
+        "mean_proof_nodes": 4.65625,
+        "mean_proof_bytes": 1401.9375
+      },
+      "comparison_prefix": {
+        "single_mean_ns_per_tx": 1209.04365234375,
+        "dual_mean_ns_per_tx": 670.907568359375,
+        "speedup_single_over_dual": 1.8021016744531935,
+        "mean_difference_single_minus_dual_ns": 538.136083984375,
+        "cycle_differences_single_minus_dual_ns": [
+          583.2685546875,
+          483.595703125,
+          811.396484375,
+          468.115234375,
+          552.37109375,
+          527.990234375,
+          463.470703125,
+          549.3701171875,
+          697.0673828125,
+          451.9619140625,
+          608.416015625,
+          588.4453125,
+          481.8291015625,
+          547.3310546875,
+          546.6728515625,
+          455.84375,
+          512.4619140625,
+          569.84375,
+          440.92578125,
+          422.3447265625
+        ],
+        "bootstrap_95ci_ns": [
+          501.95322265625,
+          581.503173828125
+        ],
+        "one_sided_permutation_p_dual_faster": 4.999750012499375e-05
+      },
+      "comparison_hash": {
+        "single_mean_ns_per_tx": 1190.502734375,
+        "dual_mean_ns_per_tx": 679.017431640625,
+        "speedup_single_over_dual": 1.753272712746913,
+        "mean_difference_single_minus_dual_ns": 511.485302734375,
+        "cycle_differences_single_minus_dual_ns": [
+          382.900390625,
+          580.8203125,
+          544.03125,
+          502.3388671875,
+          528.044921875,
+          518.4306640625,
+          478.908203125,
+          473.0029296875,
+          532.5771484375,
+          476.8212890625,
+          468.484375,
+          496.93359375,
+          492.671875,
+          721.8603515625,
+          458.873046875,
+          567.0615234375,
+          529.9169921875,
+          462.5625,
+          466.0927734375,
+          547.373046875
+        ],
+        "bootstrap_95ci_ns": [
+          485.139501953125,
+          541.815625
+        ],
+        "one_sided_permutation_p_dual_faster": 4.999750012499375e-05
+      }
+    },
+    "right/proof": {
+      "single_prefix": {
+        "mean_ns_per_tx": 5522.05361328125,
+        "median_ns_per_tx": 5174.55859375,
+        "p95_ns_per_tx": 7454.97265625,
+        "stdev_ns_per_tx": 1212.089308550967,
+        "min_ns_per_tx": 4233.0859375,
+        "max_ns_per_tx": 11983.01953125,
+        "mean_proof_nodes": 5.90625,
+        "mean_proof_bytes": 1525.25
+      },
+      "dual_prefix": {
+        "mean_ns_per_tx": 5447.4955078125,
+        "median_ns_per_tx": 5061.818359375,
+        "p95_ns_per_tx": 6710.06640625,
+        "stdev_ns_per_tx": 1210.822514034151,
+        "min_ns_per_tx": 4321.52734375,
+        "max_ns_per_tx": 12537.7578125,
+        "mean_proof_nodes": 5.90625,
+        "mean_proof_bytes": 1525.25
+      },
+      "single_hash": {
+        "mean_ns_per_tx": 5027.591259765625,
+        "median_ns_per_tx": 4714.525390625,
+        "p95_ns_per_tx": 6233.7109375,
+        "stdev_ns_per_tx": 1257.6860552121857,
+        "min_ns_per_tx": 3964.12890625,
+        "max_ns_per_tx": 12443.73046875,
+        "mean_proof_nodes": 5.125,
+        "mean_proof_bytes": 1637.71875
+      },
+      "dual_hash": {
+        "mean_ns_per_tx": 5090.369873046875,
+        "median_ns_per_tx": 4686.7890625,
+        "p95_ns_per_tx": 5881.40234375,
+        "stdev_ns_per_tx": 1921.2624563976794,
+        "min_ns_per_tx": 4034.80859375,
+        "max_ns_per_tx": 19533.86328125,
+        "mean_proof_nodes": 5.125,
+        "mean_proof_bytes": 1637.71875
+      },
+      "comparison_prefix": {
+        "single_mean_ns_per_tx": 5522.05361328125,
+        "dual_mean_ns_per_tx": 5447.4955078125,
+        "speedup_single_over_dual": 1.0136866758975427,
+        "mean_difference_single_minus_dual_ns": 74.55810546875,
+        "cycle_differences_single_minus_dual_ns": [
+          403.685546875,
+          -688.9892578125,
+          116.0625,
+          1239.357421875,
+          301.26953125,
+          -152.091796875,
+          -330.7578125,
+          -170.6708984375,
+          147.4521484375,
+          -62.466796875,
+          572.9765625,
+          -717.3291015625,
+          190.443359375,
+          858.9794921875,
+          900.021484375,
+          -495.0517578125,
+          -283.0400390625,
+          -61.251953125,
+          -409.970703125,
+          132.5341796875
+        ],
+        "bootstrap_95ci_ns": [
+          -150.233154296875,
+          308.1546875
+        ],
+        "one_sided_permutation_p_dual_faster": 0.27348632568371584
+      },
+      "comparison_hash": {
+        "single_mean_ns_per_tx": 5027.591259765625,
+        "dual_mean_ns_per_tx": 5090.369873046875,
+        "speedup_single_over_dual": 0.9876671804118483,
+        "mean_difference_single_minus_dual_ns": -62.77861328125,
+        "cycle_differences_single_minus_dual_ns": [
+          -540.95703125,
+          482.0556640625,
+          177.57421875,
+          -349.4111328125,
+          102.67578125,
+          -365.4970703125,
+          5.61328125,
+          453.4521484375,
+          372.2939453125,
+          33.9365234375,
+          113.0810546875,
+          -104.697265625,
+          -306.9443359375,
+          1.5927734375,
+          -149.23828125,
+          -15.919921875,
+          -99.0185546875,
+          149.5830078125,
+          -1006.8818359375,
+          -208.865234375
+        ],
+        "bootstrap_95ci_ns": [
+          -217.838134765625,
+          79.833056640625
+        ],
+        "one_sided_permutation_p_dual_faster": 0.7734613269336533
+      }
+    },
+    "right/lookup": {
+      "single_prefix": {
+        "mean_ns_per_tx": 809.673681640625,
+        "median_ns_per_tx": 766.521484375,
+        "p95_ns_per_tx": 1012.5390625,
+        "stdev_ns_per_tx": 163.2016462334195,
+        "min_ns_per_tx": 686.85546875,
+        "max_ns_per_tx": 1689.28515625,
+        "mean_proof_nodes": 5.90625,
+        "mean_proof_bytes": 1525.25
+      },
+      "dual_prefix": {
+        "mean_ns_per_tx": 801.16630859375,
+        "median_ns_per_tx": 757.892578125,
+        "p95_ns_per_tx": 1042.1875,
+        "stdev_ns_per_tx": 132.0802961135131,
+        "min_ns_per_tx": 686.67578125,
+        "max_ns_per_tx": 1387.3125,
+        "mean_proof_nodes": 5.90625,
+        "mean_proof_bytes": 1525.25
+      },
+      "single_hash": {
+        "mean_ns_per_tx": 719.2587890625,
+        "median_ns_per_tx": 681.650390625,
+        "p95_ns_per_tx": 940.28125,
+        "stdev_ns_per_tx": 138.00005081993208,
+        "min_ns_per_tx": 612.83984375,
+        "max_ns_per_tx": 1368.8203125,
+        "mean_proof_nodes": 5.125,
+        "mean_proof_bytes": 1637.71875
+      },
+      "dual_hash": {
+        "mean_ns_per_tx": 707.292724609375,
+        "median_ns_per_tx": 662.5703125,
+        "p95_ns_per_tx": 875.5859375,
+        "stdev_ns_per_tx": 126.66412356335206,
+        "min_ns_per_tx": 608.5859375,
+        "max_ns_per_tx": 1534.265625,
+        "mean_proof_nodes": 5.125,
+        "mean_proof_bytes": 1637.71875
+      },
+      "comparison_prefix": {
+        "single_mean_ns_per_tx": 809.673681640625,
+        "dual_mean_ns_per_tx": 801.16630859375,
+        "speedup_single_over_dual": 1.0106187354056457,
+        "mean_difference_single_minus_dual_ns": 8.507373046875,
+        "cycle_differences_single_minus_dual_ns": [
+          -8.2412109375,
+          -231.107421875,
+          19.2294921875,
+          7.591796875,
+          38.9599609375,
+          407.8818359375,
+          -82.974609375,
+          23.3701171875,
+          -75.203125,
+          4.8212890625,
+          63.9443359375,
+          9.5390625,
+          19.55859375,
+          -5.412109375,
+          35.529296875,
+          -36.5546875,
+          -11.31640625,
+          22.03125,
+          -0.4150390625,
+          -31.0849609375
+        ],
+        "bootstrap_95ci_ns": [
+          -35.44033203125,
+          62.085009765625
+        ],
+        "one_sided_permutation_p_dual_faster": 0.38433078346082694
+      },
+      "comparison_hash": {
+        "single_mean_ns_per_tx": 719.2587890625,
+        "dual_mean_ns_per_tx": 707.292724609375,
+        "speedup_single_over_dual": 1.0169181217857621,
+        "mean_difference_single_minus_dual_ns": 11.966064453125,
+        "cycle_differences_single_minus_dual_ns": [
+          -0.29296875,
+          75.515625,
+          30.521484375,
+          -6.7958984375,
+          50.25,
+          -18.69140625,
+          -6.71875,
+          57.8369140625,
+          -41.4501953125,
+          -84.65625,
+          50.4150390625,
+          24.0205078125,
+          27.6982421875,
+          -14.89453125,
+          68.2861328125,
+          28.1728515625,
+          -17.1708984375,
+          9.8232421875,
+          -11.6259765625,
+          19.078125
+        ],
+        "bootstrap_95ci_ns": [
+          -5.0060546875,
+          28.4490234375
+        ],
+        "one_sided_permutation_p_dual_faster": 0.09459527023648817
+      }
+    },
+    "both/proof": {
+      "single_prefix": {
+        "mean_ns_per_tx": 11348.182763671875,
+        "median_ns_per_tx": 11086.609375,
+        "p95_ns_per_tx": 12865.42578125,
+        "stdev_ns_per_tx": 1039.3486479790085,
+        "min_ns_per_tx": 10266.140625,
+        "max_ns_per_tx": 16874.19140625,
+        "mean_proof_nodes": 13.46875,
+        "mean_proof_bytes": 3650.40625
+      },
+      "dual_prefix": {
+        "mean_ns_per_tx": 9556.39306640625,
+        "median_ns_per_tx": 9127.6875,
+        "p95_ns_per_tx": 11074.015625,
+        "stdev_ns_per_tx": 1544.2113101391612,
+        "min_ns_per_tx": 8277.1015625,
+        "max_ns_per_tx": 18544.34765625,
+        "mean_proof_nodes": 10.5625,
+        "mean_proof_bytes": 2927.1875
+      },
+      "single_hash": {
+        "mean_ns_per_tx": 11732.19609375,
+        "median_ns_per_tx": 11322.599609375,
+        "p95_ns_per_tx": 13381.4296875,
+        "stdev_ns_per_tx": 1630.6694997634909,
+        "min_ns_per_tx": 10439.703125,
+        "max_ns_per_tx": 23134.26953125,
+        "mean_proof_nodes": 12.78125,
+        "mean_proof_bytes": 4106.65625
+      },
+      "dual_hash": {
+        "mean_ns_per_tx": 9149.87880859375,
+        "median_ns_per_tx": 8778.9765625,
+        "p95_ns_per_tx": 10944.58984375,
+        "stdev_ns_per_tx": 1535.946389531903,
+        "min_ns_per_tx": 7814.94921875,
+        "max_ns_per_tx": 19253.3515625,
+        "mean_proof_nodes": 9.78125,
+        "mean_proof_bytes": 3039.65625
+      },
+      "comparison_prefix": {
+        "single_mean_ns_per_tx": 11348.182763671875,
+        "dual_mean_ns_per_tx": 9556.39306640625,
+        "speedup_single_over_dual": 1.1874964418912752,
+        "mean_difference_single_minus_dual_ns": 1791.789697265625,
+        "cycle_differences_single_minus_dual_ns": [
+          1498.8916015625,
+          1536.6669921875,
+          1319.1083984375,
+          1761.740234375,
+          3462.533203125,
+          3070.32421875,
+          1512.5869140625,
+          2035.689453125,
+          670.6865234375,
+          -1980.984375,
+          2001.2724609375,
+          2419.4189453125,
+          1733.3720703125,
+          2040.318359375,
+          3202.1748046875,
+          1701.9794921875,
+          2437.5078125,
+          1308.3974609375,
+          1880.166015625,
+          2223.943359375
+        ],
+        "bootstrap_95ci_ns": [
+          1265.248046875,
+          2229.4193359375
+        ],
+        "one_sided_permutation_p_dual_faster": 4.999750012499375e-05
+      },
+      "comparison_hash": {
+        "single_mean_ns_per_tx": 11732.19609375,
+        "dual_mean_ns_per_tx": 9149.87880859375,
+        "speedup_single_over_dual": 1.282224206372098,
+        "mean_difference_single_minus_dual_ns": 2582.31728515625,
+        "cycle_differences_single_minus_dual_ns": [
+          2642.171875,
+          2645.400390625,
+          2649.748046875,
+          2684.5078125,
+          2676.9599609375,
+          2838.814453125,
+          1958.9560546875,
+          3180.5986328125,
+          2191.220703125,
+          3569.7890625,
+          2140.974609375,
+          3214.4951171875,
+          2873.45703125,
+          2434.7255859375,
+          2850.666015625,
+          2007.080078125,
+          2941.4599609375,
+          923.748046875,
+          1896.2421875,
+          3325.330078125
+        ],
+        "bootstrap_95ci_ns": [
+          2309.701611328125,
+          2831.32578125
+        ],
+        "one_sided_permutation_p_dual_faster": 4.999750012499375e-05
+      }
+    },
+    "both/lookup": {
+      "single_prefix": {
+        "mean_ns_per_tx": 1895.399951171875,
+        "median_ns_per_tx": 1832.927734375,
+        "p95_ns_per_tx": 2272.6015625,
+        "stdev_ns_per_tx": 230.4495365682911,
+        "min_ns_per_tx": 1637.53125,
+        "max_ns_per_tx": 3048.75390625,
+        "mean_proof_nodes": 13.46875,
+        "mean_proof_bytes": 3650.40625
+      },
+      "dual_prefix": {
+        "mean_ns_per_tx": 1475.48974609375,
+        "median_ns_per_tx": 1389.73046875,
+        "p95_ns_per_tx": 2008.91015625,
+        "stdev_ns_per_tx": 253.94344901811726,
+        "min_ns_per_tx": 1223.85546875,
+        "max_ns_per_tx": 2960.28125,
+        "mean_proof_nodes": 10.5625,
+        "mean_proof_bytes": 2927.1875
+      },
+      "single_hash": {
+        "mean_ns_per_tx": 1866.045556640625,
+        "median_ns_per_tx": 1787.634765625,
+        "p95_ns_per_tx": 2343.1171875,
+        "stdev_ns_per_tx": 212.50189017170837,
+        "min_ns_per_tx": 1625.203125,
+        "max_ns_per_tx": 2765.89453125,
+        "mean_proof_nodes": 12.78125,
+        "mean_proof_bytes": 4106.65625
+      },
+      "dual_hash": {
+        "mean_ns_per_tx": 1394.092626953125,
+        "median_ns_per_tx": 1356.16015625,
+        "p95_ns_per_tx": 1683.10546875,
+        "stdev_ns_per_tx": 166.20744327525497,
+        "min_ns_per_tx": 1159.875,
+        "max_ns_per_tx": 1971.640625,
+        "mean_proof_nodes": 9.78125,
+        "mean_proof_bytes": 3039.65625
+      },
+      "comparison_prefix": {
+        "single_mean_ns_per_tx": 1895.399951171875,
+        "dual_mean_ns_per_tx": 1475.48974609375,
+        "speedup_single_over_dual": 1.28459039189517,
+        "mean_difference_single_minus_dual_ns": 419.910205078125,
+        "cycle_differences_single_minus_dual_ns": [
+          524.5654296875,
+          684.865234375,
+          440.84375,
+          684.9404296875,
+          445.8310546875,
+          467.1435546875,
+          333.0380859375,
+          430.876953125,
+          364.5302734375,
+          463.671875,
+          292.5107421875,
+          337.943359375,
+          415.01953125,
+          375.6728515625,
+          396.0625,
+          414.42578125,
+          464.27734375,
+          236.951171875,
+          519.8955078125,
+          105.138671875
+        ],
+        "bootstrap_95ci_ns": [
+          362.75263671875,
+          475.428759765625
+        ],
+        "one_sided_permutation_p_dual_faster": 4.999750012499375e-05
+      },
+      "comparison_hash": {
+        "single_mean_ns_per_tx": 1866.045556640625,
+        "dual_mean_ns_per_tx": 1394.092626953125,
+        "speedup_single_over_dual": 1.3385377130348806,
+        "mean_difference_single_minus_dual_ns": 471.9529296875,
+        "cycle_differences_single_minus_dual_ns": [
+          376.5087890625,
+          540.720703125,
+          397.4658203125,
+          386.55859375,
+          379.9716796875,
+          547.5478515625,
+          556.1435546875,
+          672.44140625,
+          382.1376953125,
+          436.3134765625,
+          529.8017578125,
+          453.7841796875,
+          491.4580078125,
+          447.859375,
+          482.0830078125,
+          431.7080078125,
+          447.71875,
+          545.044921875,
+          409.0712890625,
+          524.7197265625
+        ],
+        "bootstrap_95ci_ns": [
+          440.36650390625,
+          506.536376953125
+        ],
+        "one_sided_permutation_p_dual_faster": 4.999750012499375e-05
+      }
+    }
+  }
+}

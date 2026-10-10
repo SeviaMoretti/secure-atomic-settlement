@@ -1,0 +1,33 @@
+{
+  "schema_id": "assetxchain-exp2-s314-smoke-config",
+  "schema_version": 1,
+  "profile_id": "phase3-s314-legacy-pilot-v1",
+  "validity_level": "legacy-pilot",
+  "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+  "shared_input_hash": "0xc427552f41308fe6e7345a4af448ef3670caba676f1da46e433a1b0aa88e9c13",
+  "seed": 20260726,
+  "quantity": 1,
+  "prices_plancks": {
+    "TransferMeta": "10000000000000",
+    "IssueRight": "3000000000000",
+    "TransferRight": "4000000000000"
+  },
+  "timing_offsets_blocks": {
+    "order_expiry": 20,
+    "funded_grace": 10,
+    "right_validity": 100
+  },
+  "experiment_families": ["E0"],
+  "scenario_ids": [
+    "LEG-META-01",
+    "LEG-ISSUE-01",
+    "LEG-RESALE-01",
+    "NEG-PAYER-01",
+    "CLEAN-FUND-01",
+    "DUP-SETTLE-01"
+  ],
+  "baseline_ids": ["B1", "B2", "G3"],
+  "claim_boundary": "build-and-live-smoke-evidence-only; not a paper result",
+  "formal_experiment_authorized": false,
+  "e6_authorized": false
+}

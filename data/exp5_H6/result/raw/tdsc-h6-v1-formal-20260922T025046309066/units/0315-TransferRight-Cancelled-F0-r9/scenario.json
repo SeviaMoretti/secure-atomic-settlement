@@ -1,0 +1,38 @@
+{
+  "operation": "TransferRight",
+  "terminal": "Cancelled",
+  "condition": "F0",
+  "seller": "RIGHT_SELLER",
+  "buyer": "BUYER_2",
+  "artifact": "normal",
+  "preparation": [
+    {
+      "method": "relayCreateOrder",
+      "role": "RELAYER",
+      "label": "create"
+    },
+    {
+      "method": "relayCancelOpen",
+      "role": "RIGHT_SELLER",
+      "label": "cancel"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "seed-terminal"
+    }
+  ],
+  "injection": null,
+  "recovery": [
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync1"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync2"
+    }
+  ]
+}

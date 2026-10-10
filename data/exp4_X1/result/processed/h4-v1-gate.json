@@ -1,0 +1,83 @@
+{
+  "pilot_ready": true,
+  "calibration_ready": true,
+  "created_at": "2026-09-21T10:20:30.409866+08:00",
+  "freeze": {
+    "path": "/home/gz785/code/exp2/build/h4-v1-freeze-20260921-b/freeze.json",
+    "sha256": "18a7576bf9fdaa48f7a1e27cffb0ef62d0cf2b44df70b2004569eafbff4cf870"
+  },
+  "pilot_reports": [
+    {
+      "run_id": "tdsc-h4-v1-pilot-reused-20260921T091954",
+      "node_mode": "reused",
+      "manifest": {
+        "path": "/home/gz785/code/exp2/results/raw/tdsc-h4-v1-pilot-reused-20260921T091954/manifest.terminal.json",
+        "sha256": "e9f861b1c78dad31c738221fe463bac47fca7166ae7ade7fc6bdd2e00563fcd8"
+      },
+      "samples": 18,
+      "warmups": 18,
+      "status": "PASS",
+      "online_matched_transactions": 54
+    },
+    {
+      "run_id": "tdsc-h4-v1-pilot-fresh-20260921T095856",
+      "node_mode": "fresh",
+      "manifest": {
+        "path": "/home/gz785/code/exp2/results/raw/tdsc-h4-v1-pilot-fresh-20260921T095856/manifest.terminal.json",
+        "sha256": "2238c01c0c5fedcf45137a6cc6c8d3393fea8dbf7b32ec5dab845ea28f4a34bb"
+      },
+      "samples": 18,
+      "warmups": 0,
+      "status": "PASS",
+      "online_matched_transactions": 27
+    }
+  ],
+  "negative_selftests": [
+    {
+      "case": "missing finalization",
+      "status": "PASS"
+    },
+    {
+      "case": "backward clock",
+      "status": "PASS"
+    },
+    {
+      "case": "wrong finalized block",
+      "status": "PASS"
+    },
+    {
+      "case": "missing inclusion callback",
+      "status": "PASS"
+    },
+    {
+      "case": "wrong transaction identity",
+      "status": "PASS"
+    },
+    {
+      "case": "wrong settlement record",
+      "status": "PASS"
+    },
+    {
+      "case": "missing live execution span",
+      "status": "PASS"
+    }
+  ],
+  "e7_correctness": {
+    "path": "/home/gz785/code/exp2/reports/e7-v2-formal-independent-recheck-20260921.json",
+    "sha256": "c65ed69fbde9171eff9536115e41b1bb5f1124b989be7b266c92657a9fab1842"
+  },
+  "formal_main_samples": 270,
+  "formal_main_warmups": 90,
+  "calibration_samples": 90,
+  "calibration_warmups": 90,
+  "scope": "client callbacks and host Runtime API execution; separate clocks; no pure-network claim",
+  "calibration_manifest": {
+    "path": "/home/gz785/code/exp2/results/raw/tdsc-h4-v1-calibration-reused-20260921T102030/manifest.terminal.json",
+    "sha256": "1a8ab289b0f1e0078ff11d27f6d02f2c52ed209c15f970509a14dfa24bf55623"
+  },
+  "calibration_summary": {
+    "path": "/home/gz785/code/exp2/results/processed/tdsc-h4-v1-calibration-reused-20260921T102030-calibration.json",
+    "sha256": "a579a7a43f623c2eac67245988d24eafaf865c6faeac5e65d157e9d9e69b9d96"
+  },
+  "calibration_pairs": 45
+}

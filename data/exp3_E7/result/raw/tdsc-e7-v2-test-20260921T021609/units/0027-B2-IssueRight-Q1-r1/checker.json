@@ -1,0 +1,108 @@
+{
+  "net_effect_status": "PASS",
+  "errors": [],
+  "episode_id": "tdsc-e7-v2-test-20260921T021609/0027-B2-IssueRight-Q1-r1",
+  "replay_no_write_checks": [
+    {
+      "status": "PASS",
+      "errors": [],
+      "rows": [
+        {
+          "tx_hash": "0x043fa46b90c759777d57ffcb235b05cda37d04ab9c4a59d129be9de905bf8b6e",
+          "extrinsic_index": 2,
+          "business_reads": 12,
+          "business_write_calls": 0
+        }
+      ],
+      "scope": "no-business-write-calls-in-block-replay"
+    }
+  ],
+  "payload_audit": {
+    "status": "PASS",
+    "original_signature_verified": true,
+    "decoded": [
+      {
+        "tx_hash": "0x043fa46b90c759777d57ffcb235b05cda37d04ab9c4a59d129be9de905bf8b6e",
+        "method": "fundOrder",
+        "events": []
+      },
+      {
+        "tx_hash": "0xfb677513e46bd4871fc23af1d036b44e815dbc1b657e3d2a638226bbb47e7754",
+        "method": "fundOrder",
+        "events": [
+          {
+            "method": "IssueQuotaReserved",
+            "args": [
+              "0xa0e66ffb5be007d7de06e1f0eb7eb798ff9cd87980ccb7e9519d66898ddf4897",
+              "0x436733b4334dd4f8b2940e5f5d234d2602eb24f85549e62ba872cf79614659e3",
+              1,
+              1
+            ]
+          },
+          {
+            "method": "OrderFunded",
+            "args": [
+              "0x436733b4334dd4f8b2940e5f5d234d2602eb24f85549e62ba872cf79614659e3",
+              "0x0ac3b8fe376d7db1435fc93d05e73f009f6fcc52df26bbba4d1c3a127346ec59",
+              "0x8c1e2ccfd02ab50be4f5042b577fa4766b49ef991425ab6e06aa25059f30bd2e",
+              3000000000000,
+              88
+            ]
+          },
+          {
+            "method": "PaymentEscrowed",
+            "args": [
+              "0x436733b4334dd4f8b2940e5f5d234d2602eb24f85549e62ba872cf79614659e3",
+              "0x8c1e2ccfd02ab50be4f5042b577fa4766b49ef991425ab6e06aa25059f30bd2e",
+              3000000000000
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0xbf187f8623f608850c2b70c77ea8999451dbab725b67f04f4cc1639740659758",
+        "method": "settle",
+        "events": [
+          {
+            "method": "IssueQuotaConverted",
+            "args": [
+              "0xa0e66ffb5be007d7de06e1f0eb7eb798ff9cd87980ccb7e9519d66898ddf4897",
+              "0x436733b4334dd4f8b2940e5f5d234d2602eb24f85549e62ba872cf79614659e3"
+            ]
+          },
+          {
+            "method": "PaymentReleased",
+            "args": [
+              "0x436733b4334dd4f8b2940e5f5d234d2602eb24f85549e62ba872cf79614659e3",
+              "0x8c1e2ccfd02ab50be4f5042b577fa4766b49ef991425ab6e06aa25059f30bd2e",
+              3000000000000
+            ]
+          },
+          {
+            "method": "SettlementFinalized",
+            "args": [
+              "0xc40021083e9a110e8f9226e6ba2a79737edff06b5f871cee83b0a94d51f7bdb9",
+              "0x436733b4334dd4f8b2940e5f5d234d2602eb24f85549e62ba872cf79614659e3",
+              "0x464a380d1aa7a4d9257f4a608a1774e7d09a8a2c0665cf1fb8e3a0bdc9376320"
+            ]
+          }
+        ]
+      }
+    ],
+    "settlements": [
+      {
+        "method": "SettlementFinalized",
+        "args": [
+          "0xc40021083e9a110e8f9226e6ba2a79737edff06b5f871cee83b0a94d51f7bdb9",
+          "0x436733b4334dd4f8b2940e5f5d234d2602eb24f85549e62ba872cf79614659e3",
+          "0x464a380d1aa7a4d9257f4a608a1774e7d09a8a2c0665cf1fb8e3a0bdc9376320"
+        ]
+      }
+    ]
+  },
+  "formal_ready": false,
+  "remaining_gates": [
+    "fresh/reused bridge coverage",
+    "frozen source and artifact gate"
+  ]
+}

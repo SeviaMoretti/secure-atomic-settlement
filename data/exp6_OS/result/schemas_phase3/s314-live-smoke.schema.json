@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-s314-live-smoke-v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_id", "schema_version", "run", "environment", "shared_input",
+    "transactions", "events", "operations", "rejection", "duplicate",
+    "audit", "architecture_cost", "accounts", "status"
+  ],
+  "$defs": {
+    "hex32": { "type": "string", "pattern": "^0x[0-9a-f]{64}$" },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["availability", "value", "unit"],
+      "properties": {
+        "availability": { "enum": ["measured", "not-collected", "N/A"] },
+        "value": { "type": ["string", "null"], "pattern": "^[0-9]+$" },
+        "unit": { "type": "string", "minLength": 1 }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "scenario_id", "order_id", "expiry", "created_block", "expiry_offset",
+        "state", "settlement_record_count", "evidence_field_count", "audit"
+      ],
+      "properties": {
+        "scenario_id": { "enum": ["LEG-META-01", "LEG-ISSUE-01", "LEG-RESALE-01"] },
+        "order_id": { "$ref": "#/$defs/hex32" },
+        "expiry": { "type": "integer", "minimum": 1 },
+        "created_block": { "type": "integer", "minimum": 1 },
+        "expiry_offset": { "const": 20 },
+        "state": { "const": "Settled" },
+        "settlement_record_count": { "const": 1 },
+        "evidence_field_count": { "const": 24 },
+        "audit": { "type": "object" }
+      }
+    }
+  },
+  "properties": {
+    "schema_id": { "const": "assetxchain-exp2-s314-live-smoke" },
+    "schema_version": { "const": 1 },
+    "run": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "run_id", "baseline_id", "validity_level", "started_at", "finished_at",
+        "timezone", "implementation_commit", "git_dirty", "fixture_profile_id",
+        "shared_input_hash", "seed", "claim_boundary"
+      ],
+      "properties": {
+        "run_id": { "type": "string", "minLength": 1 },
+        "baseline_id": { "enum": ["B1", "B2", "G3"] },
+        "validity_level": { "const": "legacy-pilot" },
+        "timezone": { "const": "Asia/Shanghai" },
+        "implementation_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "git_dirty": { "type": "boolean" },
+        "fixture_profile_id": { "const": "assetxchain-paper2-shared-fixture-v1" },
+        "shared_input_hash": { "$ref": "#/$defs/hex32" },
+        "seed": { "const": 20260726 },
+        "claim_boundary": { "const": "build-and-live-smoke-evidence-only; not a paper result" }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rpc", "chain", "runtime", "genesis_hash", "metadata_hash", "deterministic_reset"],
+      "properties": {
+        "rpc": { "type": "string", "pattern": "^ws://127\\.0\\.0\\.1:[0-9]+$" },
+        "chain": { "type": "string", "minLength": 1 },
+        "runtime": { "type": "string", "minLength": 1 },
+        "genesis_hash": { "$ref": "#/$defs/hex32" },
+        "metadata_hash": { "$ref": "#/$defs/hex32" },
+        "deterministic_reset": { "const": "--dev --tmp" }
+      }
+    },
+    "shared_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quantity", "prices_plancks", "timing_offsets_blocks", "experiment_families", "scenario_ids"],
+      "properties": {
+        "quantity": { "const": 1 },
+        "prices_plancks": {
+          "const": {
+            "TransferMeta": "10000000000000",
+            "IssueRight": "3000000000000",
+            "TransferRight": "4000000000000"
+          }
+        },
+        "timing_offsets_blocks": {
+          "const": { "order_expiry": 20, "funded_grace": 10, "right_validity": 100 }
+        },
+        "experiment_families": { "const": ["E0"] },
+        "scenario_ids": {
+          "const": [
+            "LEG-META-01", "LEG-ISSUE-01", "LEG-RESALE-01",
+            "NEG-PAYER-01", "CLEAN-FUND-01", "DUP-SETTLE-01"
+          ]
+        }
+      }
+    },
+    "transactions": { "type": "array", "minItems": 1 },
+    "events": { "type": "object" },
+    "operations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["TransferMeta", "IssueRight", "TransferRight"],
+      "properties": {
+        "TransferMeta": { "$ref": "#/$defs/operation" },
+        "IssueRight": { "$ref": "#/$defs/operation" },
+        "TransferRight": { "$ref": "#/$defs/operation" }
+      }
+    },
+    "rejection": {
+      "type": "object",
+      "required": [
+        "scenario_id", "cleanliness_scenario_id", "common_error_code",
+        "native_error", "authoritative_state_unchanged", "success_event_count"
+      ],
+      "properties": {
+        "scenario_id": { "const": "NEG-PAYER-01" },
+        "cleanliness_scenario_id": { "const": "CLEAN-FUND-01" },
+        "common_error_code": { "const": "PayerBuyerMismatch" },
+        "authoritative_state_unchanged": { "const": true },
+        "success_event_count": { "const": 0 }
+      }
+    },
+    "duplicate": {
+      "type": "object",
+      "required": [
+        "scenario_id", "common_error_code", "accepted_attempt_count",
+        "settlement_record_count", "second_success_event_count", "authoritative_state_unchanged"
+      ],
+      "properties": {
+        "scenario_id": { "const": "DUP-SETTLE-01" },
+        "common_error_code": { "const": "AlreadySettled" },
+        "accepted_attempt_count": { "const": 1 },
+        "settlement_record_count": { "const": 1 },
+        "second_success_event_count": { "const": 0 },
+        "authoritative_state_unchanged": { "const": true }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "required": [
+        "authoritative_source", "contract_projection_used_for_authority",
+        "settled_operation_count", "settlement_record_count", "all_record_field_counts",
+        "amount_reconciliation_passed", "owner_holder_reconciliation_passed",
+        "issue_quota_reconciliation_passed"
+      ],
+      "properties": {
+        "authoritative_source": { "enum": ["contract", "runtime"] },
+        "contract_projection_used_for_authority": { "const": false },
+        "settled_operation_count": { "const": 3 },
+        "settlement_record_count": { "const": 3 },
+        "all_record_field_counts": { "const": [24, 24, 24] },
+        "amount_reconciliation_passed": { "const": true },
+        "owner_holder_reconciliation_passed": { "const": true },
+        "issue_quota_reconciliation_passed": { "const": true }
+      }
+    },
+    "architecture_cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_gas_or_ref_time", "contract_storage_writes", "runtime_dispatch_count",
+        "runtime_storage_writes", "typed_ce_call_count", "projection_storage_writes"
+      ],
+      "properties": {
+        "contract_gas_or_ref_time": { "$ref": "#/$defs/metric" },
+        "contract_storage_writes": { "$ref": "#/$defs/metric" },
+        "runtime_dispatch_count": { "$ref": "#/$defs/metric" },
+        "runtime_storage_writes": { "$ref": "#/$defs/metric" },
+        "typed_ce_call_count": { "$ref": "#/$defs/metric" },
+        "projection_storage_writes": { "$ref": "#/$defs/metric" }
+      }
+    },
+    "accounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["OWNER", "RIGHT_SELLER", "BUYER_1", "BUYER_2", "MARKET_OK", "MARKET_DENIED", "RELAYER"],
+      "properties": {
+        "OWNER": { "type": "string" },
+        "RIGHT_SELLER": { "type": "string" },
+        "BUYER_1": { "type": "string" },
+        "BUYER_2": { "type": "string" },
+        "MARKET_OK": { "type": "string" },
+        "MARKET_DENIED": { "type": "string" },
+        "RELAYER": { "type": "string" }
+      }
+    },
+    "status": { "const": "PASS" }
+  }
+}

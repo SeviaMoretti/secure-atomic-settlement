@@ -1,0 +1,29 @@
+{
+  "schema": "runtime-noise-controlled-v2",
+  "levels": [
+    0,
+    512
+  ],
+  "repetitions": 1,
+  "probe_count_per_cell": 1,
+  "seed_base": 20260923,
+  "noise_phase_ms": 200,
+  "target_phase_ms": 4000,
+  "classification": "exploratory live-chain; finite paired fresh-chain repetitions",
+  "host": "Linux localhost 6.18.33.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun 18 21:54:43 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+  "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           39 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  20\nOn-line CPU(s) list:                     0-19\nVendor ID:                               GenuineIntel\nModel name:                              13th Gen Intel(R) Core(TM) i7-13650HX\nCPU family:                              6\nModel:                                   183\nThread(s) per core:                      2\nCore(s) per socket:                      10\nSocket(s):                               1\nStepping:                                1\nBogoMIPS:                                5606.40\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves avx_vnni vnmi umip waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize ibt flush_l1d arch_capabilities\nVirtualization:                          VT-x\nHypervisor vendor:                       Microsoft\nVirtualization type:                     full\nL1d cache:                               480 KiB (10 instances)\nL1i cache:                               320 KiB (10 instances)\nL2 cache:                                12.5 MiB (10 instances)\nL3 cache:                                24 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-19\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Mitigation; Clear Register File\nVulnerability Retbleed:                  Mitigation; Enhanced IBRS\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected",
+  "rustc": "rustc 1.96.1 (31fca3adb 2026-06-26)",
+  "nodejs": "v24.15.0",
+  "commit": "cf3859eeadfc7286a1f0656a148a9fa245f82605",
+  "git_status": "?? experiments/",
+  "source_sha256": {
+    "condition_v2.js": "a9765b2df164d081c157ed94a209d28708d558c11047b551055f9e8d627775eb",
+    "run_controlled.py": "86b5e32b8e8b764816f88e4fc77d3b7b941f5de368a27d654b0f6dce1299bc99"
+  },
+  "binary_sha256": {
+    "dual_prefix": "ae4153a63ecb19775666d5bcef5e4446e948d19393f25c94281db017a87efdd5",
+    "single_tree": "913f6114b6b6fca13e2eb9f9abaab28fdd8283d606c78578e0f7b9f92ce903ed"
+  },
+  "single_patch": "diff --git a/pallets/dataassets/src/lib.rs b/pallets/dataassets/src/lib.rs\nindex 47eebc7..7c25069 100644\n--- a/pallets/dataassets/src/lib.rs\n+++ b/pallets/dataassets/src/lib.rs\n@@ -741,7 +741,9 @@ pub mod pallet {\n         }\n \n         fn certificate_trie_info() -> sp_core::storage::ChildInfo {\n-            sp_core::storage::ChildInfo::new_default(CERTIFICATE_TRIE_ID)\n+            // Noise experiment single-tree variant: metadata and rights share\n+            // the same child trie. The key construction remains unchanged.\n+            sp_core::storage::ChildInfo::new_default(ASSET_TRIE_ID)\n         }\n \n         fn make_asset_key(asset_id: &[u8; 32]) -> Vec<u8> {",
+  "jobs": []
+}

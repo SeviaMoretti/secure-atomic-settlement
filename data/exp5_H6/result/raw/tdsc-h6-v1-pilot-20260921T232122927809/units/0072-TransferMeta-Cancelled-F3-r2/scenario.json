@@ -1,0 +1,42 @@
+{
+  "operation": "TransferMeta",
+  "terminal": "Cancelled",
+  "condition": "F3",
+  "seller": "OWNER",
+  "buyer": "BUYER_1",
+  "artifact": "fault",
+  "preparation": [
+    {
+      "method": "relayCreateOrder",
+      "role": "RELAYER",
+      "label": "create"
+    },
+    {
+      "method": "relayCancelOpen",
+      "role": "OWNER",
+      "label": "cancel"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "seed-terminal"
+    }
+  ],
+  "injection": {
+    "method": "h6CorruptProjection",
+    "role": "MARKET_OK",
+    "label": "inject"
+  },
+  "recovery": [
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync1"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync2"
+    }
+  ]
+}

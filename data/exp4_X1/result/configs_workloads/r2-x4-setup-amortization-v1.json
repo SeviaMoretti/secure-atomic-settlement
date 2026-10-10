@@ -1,0 +1,118 @@
+{
+  "schema_id": "assetxchain-exp2-r2-workload",
+  "schema_version": 1,
+  "metadata": {
+    "config_path": "configs/workloads/r2-x4-setup-amortization-v1.json",
+    "workload_id": "r2-x4-setup-amortization-v1",
+    "experiment_id": "X4",
+    "title": "Setup, steady-state, and amortized cost",
+    "protocol_id": "assetxchain-paper2-shared",
+    "settlement_protocol_version": 1,
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "baseline_ids": ["B1", "B2", "G3"],
+    "seed": 20260807,
+    "evidence_level": "extended-experiment-candidate",
+    "claim_boundary": "measured setup, per-order, and amortized costs at registered order counts; no extrapolation beyond the grid"
+  },
+  "research_question": "How much of each architecture's measured cost arises before order processing, how much arises per complete order, and how does the measured setup cost amortize over 1, 10, or 100 orders?",
+  "independent_variables": {
+    "baseline_id": ["B1", "B2", "G3"],
+    "operation": ["TransferMeta", "IssueRight", "TransferRight"],
+    "orders_per_setup": [1, 10, 100]
+  },
+  "setup_categories": [
+    "deployment",
+    "market_registration",
+    "capability_authorization",
+    "object_authorization",
+    "projection_establishment"
+  ],
+  "applicability_rules": {
+    "deployment": {
+      "B1": "contract instantiation transactions",
+      "B2": "Runtime code activation transaction",
+      "G3": "Runtime code activation plus market contract instantiation transactions"
+    },
+    "market_registration": {
+      "B1": "authoritative contract registration call",
+      "B2": "Runtime market registration dispatch",
+      "G3": "Runtime market registration dispatch"
+    },
+    "capability_authorization": {
+      "B1": "authoritative contract capability call",
+      "B2": "Runtime capability authorization dispatch",
+      "G3": "Runtime capability authorization dispatch"
+    },
+    "object_authorization": {
+      "B1": "authoritative contract object authorization call",
+      "B2": "Runtime object authorization dispatch",
+      "G3": "Runtime object authorization dispatch"
+    },
+    "projection_establishment": {
+      "B1": "N/A: no separate non-authoritative market projection",
+      "B2": "N/A: no market contract projection",
+      "G3": "market contract projection initialization"
+    }
+  },
+  "dependent_variables": [
+    "latency_ms",
+    "completion_blocks",
+    "actual_weight_ref_time",
+    "actual_weight_proof_size",
+    "actual_fee",
+    "storage_writes",
+    "events_count",
+    "contract_gas_or_ref_time"
+  ],
+  "controls": {
+    "settlement_protocol_version": 1,
+    "fixture_roles_prices_fees_and_timing": "configs/dev.json#shared_fixture",
+    "same_inputs_for_all_baselines": true,
+    "complete_order_definition": "create_order + fund_order + settle",
+    "reset": "fresh isolated measured namespace for each repetition",
+    "setup_reuse_rule": "one measured setup is reused by exactly orders_per_setup complete orders and by no other cell",
+    "order_fixture_rule": "each measured order uses a distinct seed-derived object, authorization nonce, order ID, and buyer slot while reusing only the cell's measured setup",
+    "missing_common_capability_policy": "blocked; never synthetic failure",
+    "architecture_specific_not_applicable_policy": "N/A with null value and reason; never zero"
+  },
+  "repetitions": {
+    "latency_per_baseline_operation_orders_per_setup_cell": 30,
+    "deterministic_cost_per_baseline_operation_orders_per_setup_cell": 10,
+    "collection_rule": "all 30 measured repetitions retain latency; the first 10 seed-ordered repetitions must retain weight, fee, writes, events, and contract-specific cost where applicable"
+  },
+  "warmup_policy": {
+    "warmup_complete_orders": 2,
+    "namespace": "isolated warmup namespace that is never reused by measured setup or order samples",
+    "timing": "immediately before the measured repetitions of each baseline and operation",
+    "retention": "retain every warmup setup and order record with sample_role=warmup",
+    "summary_policy": "exclude warmup records from measured setup, per-order, and amortized summaries; never delete them"
+  },
+  "metric_scopes": ["setup_component", "per_order", "amortized"],
+  "amortization_rule": {
+    "formula": "amortized_metric = (sum(applicable measured setup_component metrics) + sum(measured per_order metrics)) / orders_per_setup",
+    "per_order_formula": "steady_state_per_order_metric = sum(measured per_order metrics) / orders_per_setup",
+    "precision": "retain integer numerator and denominator in raw data; decimal rendering is derived only in processed output",
+    "scope": "calculate separately for latency_ms, completion_blocks, actual_weight_ref_time, actual_weight_proof_size, actual_fee, storage_writes, events_count, and applicable contract_gas_or_ref_time"
+  },
+  "expected_result_rules": [
+    "Warmup, setup_component, per_order, and amortized records are separately labeled and never pooled as one distribution.",
+    "Every applicable setup component is measured independently; an architecture-specific absent boundary is N/A with null, not zero.",
+    "Each cell has at least 30 measured latency repetitions and at least 10 measured deterministic-cost repetitions.",
+    "Each amortized value is reproduced exactly from its captured setup and order numerator and orders_per_setup denominator.",
+    "Results are interpreted only at orders_per_setup values 1, 10, and 100; no universal scaling claim is allowed."
+  ],
+  "checker_contract": "configs/r2/checker-contracts-v1.json#X4",
+  "checker_ids": ["R2-COMMON-01", "R2-COMMON-02", "R2-COMMON-03", "R2-COMMON-04", "X4-C01", "X4-C02", "X4-C03", "X4-C04", "X4-C05", "X4-C06"],
+  "result_schema": "schemas/r2/extended-experiment-result.schema.json#/$defs/x4_result",
+  "stop_gates": [
+    "dirty or unidentified implementation commit",
+    "E0 or the frozen I1-I10 prerequisite gate is not PASS",
+    "warmup records are deleted, relabeled, or share the measured namespace",
+    "setup and per-order samples are mixed or one setup is reused outside its cell",
+    "an applicable setup component or required metric is missing",
+    "N/A is encoded as zero",
+    "latency or deterministic repetition minimum is not met",
+    "an amortized value does not reproduce from its frozen numerator and denominator",
+    "a required common capability is missing"
+  ]
+}

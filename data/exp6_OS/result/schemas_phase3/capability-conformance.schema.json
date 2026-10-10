@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-phase3-capability-conformance-v1",
+  "title": "AssetXChain Phase 3 capability and semantic conformance gate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "gate_version",
+    "validity_level",
+    "sources",
+    "label_policy",
+    "common_capabilities",
+    "architecture_capabilities",
+    "deferred_capabilities",
+    "scenarios",
+    "normalized_contract",
+    "fixture",
+    "baselines",
+    "literature_auxiliaries"
+  ],
+  "$defs": {
+    "string_array": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "architecture_labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["Native", "Adapted", "N/A"],
+      "properties": {
+        "Native": {"$ref": "#/$defs/string_array"},
+        "Adapted": {"$ref": "#/$defs/string_array"},
+        "N/A": {"$ref": "#/$defs/string_array"}
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest",
+        "adapter_module",
+        "adapter_class",
+        "scenario_source",
+        "protocol_error_source",
+        "native_error_source",
+        "authority_source",
+        "projection_mode",
+        "applicable_architecture_metrics"
+      ],
+      "properties": {
+        "manifest": {"type": "string", "minLength": 1},
+        "adapter_module": {"type": "string", "minLength": 1},
+        "adapter_class": {"type": "string", "minLength": 1},
+        "scenario_source": {"type": "string", "minLength": 1},
+        "protocol_error_source": {"type": "string", "minLength": 1},
+        "native_error_source": {"type": ["string", "null"]},
+        "authority_source": {"enum": ["contract", "runtime"]},
+        "projection_mode": {"enum": ["N/A", "recoverable-contract-projection"]},
+        "applicable_architecture_metrics": {"$ref": "#/$defs/string_array"}
+      }
+    },
+    "literature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "status",
+        "review",
+        "decision_marker",
+        "declared_common_subset",
+        "must_not_alias"
+      ],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "status": {"const": "excluded"},
+        "review": {"type": "string", "minLength": 1},
+        "decision_marker": {"type": "string", "minLength": 1},
+        "declared_common_subset": {"$ref": "#/$defs/string_array"},
+        "must_not_alias": {"enum": ["B1", "B2"]}
+      }
+    }
+  },
+  "properties": {
+    "schema_id": {"const": "assetxchain-exp2-phase3-capability-conformance"},
+    "schema_version": {"const": 1},
+    "gate_version": {"const": "phase3-capability-conformance-v1"},
+    "validity_level": {"const": "legacy-pilot"},
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capability_matrix",
+        "scenario_matrix",
+        "traceability_matrix",
+        "common_contract",
+        "fixture_bundle",
+        "invocation_schema",
+        "snapshot_schema",
+        "result_schema"
+      ],
+      "properties": {
+        "capability_matrix": {"type": "string", "minLength": 1},
+        "scenario_matrix": {"type": "string", "minLength": 1},
+        "traceability_matrix": {"type": "string", "minLength": 1},
+        "common_contract": {"type": "string", "minLength": 1},
+        "fixture_bundle": {"type": "string", "minLength": 1},
+        "invocation_schema": {"type": "string", "minLength": 1},
+        "snapshot_schema": {"type": "string", "minLength": 1},
+        "result_schema": {"type": "string", "minLength": 1}
+      }
+    },
+    "label_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matrix_labels", "blocking_label", "missing_common_core"],
+      "properties": {
+        "matrix_labels": {"$ref": "#/$defs/string_array"},
+        "blocking_label": {"const": "Blocked"},
+        "missing_common_core": {"const": "Blocked/Missing"}
+      }
+    },
+    "common_capabilities": {"$ref": "#/$defs/string_array"},
+    "architecture_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["B1", "B2", "G3", "L1", "L2"],
+      "properties": {
+        "B1": {"$ref": "#/$defs/architecture_labels"},
+        "B2": {"$ref": "#/$defs/architecture_labels"},
+        "G3": {"$ref": "#/$defs/architecture_labels"},
+        "L1": {"$ref": "#/$defs/architecture_labels"},
+        "L2": {"$ref": "#/$defs/architecture_labels"}
+      }
+    },
+    "deferred_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["Deferred", "N/A"],
+      "properties": {
+        "Deferred": {"$ref": "#/$defs/string_array"},
+        "N/A": {"$ref": "#/$defs/string_array"}
+      }
+    },
+    "scenarios": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["LEG", "NEG", "CLEAN", "DUP", "RACE"],
+      "properties": {
+        "LEG": {"$ref": "#/$defs/string_array"},
+        "NEG": {"$ref": "#/$defs/string_array"},
+        "CLEAN": {"$ref": "#/$defs/string_array"},
+        "DUP": {"$ref": "#/$defs/string_array"},
+        "RACE": {"$ref": "#/$defs/string_array"}
+      }
+    },
+    "normalized_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phases",
+        "invocation_required",
+        "snapshot_required",
+        "result_required",
+        "common_cost_fields",
+        "architecture_cost_fields"
+      ],
+      "properties": {
+        "phases": {"$ref": "#/$defs/string_array"},
+        "invocation_required": {"$ref": "#/$defs/string_array"},
+        "snapshot_required": {"$ref": "#/$defs/string_array"},
+        "result_required": {"$ref": "#/$defs/string_array"},
+        "common_cost_fields": {"$ref": "#/$defs/string_array"},
+        "architecture_cost_fields": {"$ref": "#/$defs/string_array"}
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected_operation_count", "expected_error_count", "expected_consumer_hash"],
+      "properties": {
+        "expected_operation_count": {"const": 3},
+        "expected_error_count": {"const": 33},
+        "expected_consumer_hash": {"type": "string", "pattern": "^0x[0-9a-f]{64}$"}
+      }
+    },
+    "baselines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["B1", "B2", "G3"],
+      "properties": {
+        "B1": {"$ref": "#/$defs/baseline"},
+        "B2": {"$ref": "#/$defs/baseline"},
+        "G3": {"$ref": "#/$defs/baseline"}
+      }
+    },
+    "literature_auxiliaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["L1", "L2"],
+      "properties": {
+        "L1": {"$ref": "#/$defs/literature"},
+        "L2": {"$ref": "#/$defs/literature"}
+      }
+    }
+  }
+}

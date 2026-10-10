@@ -1,0 +1,134 @@
+{
+  "schema_id": "assetxchain-exp2-paper-final",
+  "schema_version": 1,
+  "final_id": "p4-paper-final-20260806T161158+0800",
+  "created_at": "2026-08-06T16:11:58+08:00",
+  "step": "S4.12",
+  "status": "approved",
+  "validity_level": "paper-final",
+  "promotion_rule": "Independent S4.12 index promotion; source artifacts remain immutable and are not promoted in place.",
+  "candidate": {
+    "candidate_id": "p4-paper-candidate-20260806T004403+0800",
+    "path": "/home/gz785/code/exp2/results/candidates/p4-paper-candidate-20260806T004403+0800/candidate.manifest.json",
+    "sha256": "40c349d225241d08509f5ff9bf688c65da257a853b01eb02aab374499309cca2",
+    "candidate_gate": "PASS",
+    "phase3_gate": "PASS",
+    "ready_for_phase4": true
+  },
+  "frozen_identity": {
+    "formal_base_commit": "393bc52af495ccd72ff883059d7715cbb153f964",
+    "protocol_id": "assetxchain-paper2-shared",
+    "protocol_version": 1,
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "workload_id": "formal-cost-medium-v1",
+    "workload_sha256": "b140542f79f3cf999d5669fdd0b13c8fad25ba313308d9bb633acdb41bf2583a",
+    "seed": 20260726,
+    "repetitions": 10,
+    "baseline_commits": {
+      "B1": "8514bf0720ec9b5ed3c8d3ec1501264ae7bf1642",
+      "B2": "dc10ea68ffddacf93e6d57d91c9acfa35a4b1bfa",
+      "G3": "47ebd794c4ef1264bb8265c49d8e92c5b44e6323"
+    },
+    "all_worktrees_clean": true
+  },
+  "correctness_evidence": {
+    "families": ["E1", "E2", "E3", "E4", "E5"],
+    "scenario_catalog": 42,
+    "covered_scenarios": 42,
+    "completed_units": 705,
+    "completed_attempts": 1110,
+    "successful_settlement_records": 75,
+    "settlement_record_fields": 24,
+    "required_invariants": ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I10"],
+    "invariant_violations": 0,
+    "expected_outcome_mismatches": 0,
+    "false_accepts": 0,
+    "false_rejects": 0,
+    "duplicates": 0,
+    "dirty_state": 0,
+    "event_mismatches": 0,
+    "timeouts": 0,
+    "source_seal_count": 15
+  },
+  "cost_evidence": {
+    "claim_boundary": "Descriptive fixed-medium-load formal cost only; no inferential significance or scalability claim.",
+    "warm_up_policy": "none; all R=10 fresh-chain cold-start observations retained",
+    "scenarios": ["LEG-META-01", "LEG-ISSUE-01", "LEG-RESALE-01"],
+    "runs": {
+      "B1": {
+        "run_id": "p4-e6-b1-20260806T095057+0800-8514bf07-b140542f",
+        "units": 30,
+        "attempts": 90,
+        "anomaly_count": 0,
+        "preflight_sha256": "51bfaacb157afd944d6a81a6149f4969afb765a87e5616a1201d50470a6da7ca",
+        "seal_sha256": "87dd64d1e8b8900446838da40d79daa3eea0246b0ebb5690cee122536a2c7f9b",
+        "checker_sha256": "57419ce19c76d2edcca53d6a3c3dbf39578ae4c076297bad44aec238fe801b98"
+      },
+      "B2": {
+        "run_id": "p4-e6-b2-20260806T111142+0800-dc10ea68-b140542f",
+        "units": 30,
+        "attempts": 90,
+        "anomaly_count": 0,
+        "preflight_sha256": "c78270056957b90824c1de75fc76cb431e37b93e55711529a3f5fd06bf08825d",
+        "seal_sha256": "1371a439b61e8dd8574022b65aeb79b0fe732edc6138b0d4b57d762bc05c8411",
+        "checker_sha256": "65f0e7610e4091a29127a9bd2a6e9ac452588f363f8a3c98fa95e937c8195705"
+      },
+      "G3": {
+        "run_id": "p4-e6-g3-20260806T111142+0800-47ebd794-b140542f",
+        "units": 30,
+        "attempts": 90,
+        "anomaly_count": 0,
+        "preflight_sha256": "56dd9668d5b96c468cc69bd76f7d5a0c2572abb5d50cda49b739df7d6c4f6caa",
+        "seal_sha256": "86fe4b89bc5fc49626c245863ad5f9e3b4dc5512452584248b41285f8c18d517",
+        "checker_sha256": "c8d70065585dc911f819bc6719e8c5d6feee49675271b3babe2503d0bfaae855"
+      }
+    }
+  },
+  "processed_evidence": {
+    "main_root": "/home/gz785/code/exp2/results/processed/p4-e6-main-p4-paper-candidate-20260806T004403+0800",
+    "main_hashes": {
+      "comparison.json": "c794b531a4c868ee41e502e1891685f68045d4500dd27f9e5a3c511ba118cd23",
+      "comparison.csv": "80911a86faf62905645153d999fc0ad8036c2ba813e7d7bcc8daaf691d8adbb7"
+    },
+    "attempts_hashes": {
+      "B1": "7d6fa38cdb3548b9db3d21445e2a07968301861120a33a5a5b5d780a996ec7b1",
+      "B2": "eaed22bc9cc9ac01ddce3c64171f5dceb86dfa328a0fceb62e2fdcfa09686170",
+      "G3": "44281aa285c63b25a0b0520262eed22893038ed0393411c91d84ecd3f54e53d7"
+    }
+  },
+  "s4_11_evidence": {
+    "generator_sha256": "9b98aba1f64ab0fc689a6168ada1b6c14bcead89779e5ab8fa83e0980e271d7e",
+    "table_root": "/home/gz785/code/exp2/results/processed/p4-s4.11-p4-paper-candidate-20260806T004403+0800",
+    "table_hashes": {
+      "correctness_runs.csv": "fdff6bc3f4f8dba00cc6cbe13bce0ea8e70d572f509fe267df9f939a1d65448a",
+      "correctness_gate.csv": "df7f99a967252edf48c2ea52da0c722bea0065afea5ef93087058f030777d107",
+      "e6_cost_table.csv": "e308786b08bcf42337d3259adb69c38a7682ea617cd51b492d920669f6f7a66d",
+      "e6_order_call_counts.csv": "915fa72d09a3e6ae5a58b381bd28559776c002999dd991672ccc8d880a7a4ec1",
+      "tables_and_figures.md": "340383eec7ef2d859aeefd337c324466df31f1cea8ae220332d4ec1d972d567c",
+      "derivation.json": "25d6cc924000be557e720dfc04dbfef851d870d8ba63357d3134adef374d3b24"
+    },
+    "figure_root": "/home/gz785/code/exp2/results/figures/p4-s4.11-p4-paper-candidate-20260806T004403+0800",
+    "figure_hashes": {
+      "s4_11_latency_median_ms.svg": "42bddd9ec7a78fdf5ca70632e9174c66c82bfcdec59a300155747a5253808d56",
+      "s4_11_partial_fee_median_plancks.svg": "8094736fed3601ae45b96beb06a55004191cf980cc5831c2995d1c59f117c976",
+      "s4_11_weight_ref_time_median.svg": "ed47fa7794cae4b70de2097d61ba387f57cda6de533f44e954f279e7a0633c78"
+    },
+    "isolated_rebuild": "PASS; core outputs byte-identical and normalized derivation identical",
+    "numeric_audit": "PASS; 270 attempts reproduce 126 table rows and all three SVG geometries"
+  },
+  "scope_boundary": {
+    "main_baselines": ["B1", "B2", "G3"],
+    "excluded_baselines": ["L1", "L2"],
+    "legacy_pilot_excluded": true,
+    "invalidated_runs": ["p4-e6-b2-20260806T095057+0800-dc10ea68-b140542f"],
+    "deferred": ["I11", "complete proof", "TEE security", "long-term custody", "dispute", "IPFS/storage availability", "legal ownership"]
+  },
+  "review": {
+    "raw_to_figure_chain": "PASS",
+    "metadata_repetitions_scenarios": "PASS",
+    "e1_e6_gates_and_i1_i10": "PASS",
+    "active_runner_node_rpc_listener": false,
+    "source_artifacts_modified": false,
+    "paper_final_authorized": true
+  }
+}

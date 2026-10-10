@@ -1,0 +1,82 @@
+{
+  "net_effect_status": "PASS",
+  "errors": [],
+  "episode_id": "tdsc-e7-v2-test-20260921T021609/0041-G3-IssueRight-V3-r1",
+  "replay_no_write_checks": [
+    {
+      "status": "PASS",
+      "errors": [],
+      "rows": [
+        {
+          "tx_hash": "0xdf3ebbec567e0f01a5811e7177039aad8bcdabcf5a18ffc5313ca00f709b1e84",
+          "extrinsic_index": 2,
+          "business_reads": 2,
+          "business_write_calls": 0
+        },
+        {
+          "tx_hash": "0x63609a8e7dc7e366064c1ae5db6bd2360328109019e617a19cc50d835a8dff84",
+          "extrinsic_index": 3,
+          "business_reads": 2,
+          "business_write_calls": 0
+        },
+        {
+          "tx_hash": "0x029009cc0460f65691e212e7567a2d9043ed79ea9b64e6601476cc2b5f462cb2",
+          "extrinsic_index": 4,
+          "business_reads": 2,
+          "business_write_calls": 0
+        }
+      ],
+      "scope": "no-business-write-calls-in-block-replay"
+    }
+  ],
+  "payload_audit": {
+    "status": "PASS",
+    "original_signature_verified": true,
+    "decoded": [
+      {
+        "tx_hash": "0xf2bb39b88dd0af63dccdd5337f8c8bb74d38b258469cc4551560f054535891ce",
+        "method": "e7_attack_settle",
+        "events": [
+          {
+            "method": "SettlementFinalized",
+            "args": [
+              "0xb57702b9b584928fcd8aacaac84e4ac9e09600585325e8232d4866a28318250a",
+              "0xf49b7da37b016c827ac5e2305f838a168a8df48a782509d40b8091325efc1875",
+              "0xdbd96569eec528c71d42b6f8dae44b7b4d8e42b1a4e74395cbad567bdf69e9fc"
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0xdf3ebbec567e0f01a5811e7177039aad8bcdabcf5a18ffc5313ca00f709b1e84",
+        "method": "e7_attack_settle",
+        "events": []
+      },
+      {
+        "tx_hash": "0x63609a8e7dc7e366064c1ae5db6bd2360328109019e617a19cc50d835a8dff84",
+        "method": "e7_attack_settle",
+        "events": []
+      },
+      {
+        "tx_hash": "0x029009cc0460f65691e212e7567a2d9043ed79ea9b64e6601476cc2b5f462cb2",
+        "method": "e7_attack_settle",
+        "events": []
+      }
+    ],
+    "settlements": [
+      {
+        "method": "SettlementFinalized",
+        "args": [
+          "0xb57702b9b584928fcd8aacaac84e4ac9e09600585325e8232d4866a28318250a",
+          "0xf49b7da37b016c827ac5e2305f838a168a8df48a782509d40b8091325efc1875",
+          "0xdbd96569eec528c71d42b6f8dae44b7b4d8e42b1a4e74395cbad567bdf69e9fc"
+        ]
+      }
+    ]
+  },
+  "formal_ready": false,
+  "remaining_gates": [
+    "fresh/reused bridge coverage",
+    "frozen source and artifact gate"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_id": "assetxchain-tdsc-e7-workload",
+  "schema_version": 1,
+  "workload_id": "tdsc-e7-composite-attacks-v1",
+  "protocol_id": "assetxchain-paper2-shared",
+  "settlement_protocol_version": 1,
+  "seed": 2026091907,
+  "pilot_repetitions": 2,
+  "formal_repetitions": 5,
+  "baselines": ["B1", "B2", "G3"],
+  "operations": ["TransferMeta", "IssueRight", "TransferRight"],
+  "variants": ["V0", "V1", "V2", "V3", "V4"],
+  "quota_variant": "Q1",
+  "malicious_market_variant": {
+    "id": "registered-market-relay-without-client-precheck-v1",
+    "entry": "relay_create_order/relay_fund_order/relay_settle",
+    "cache_status": "Tradable",
+    "local_precheck": false,
+    "authority": "Runtime or baseline settlement authority",
+    "contract_variant_artifact": "pending-S1-contract-variant-build"
+  },
+  "concurrency": 4,
+  "required_invariants": ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I10"],
+  "deferred_invariants": ["I11"],
+  "claim_boundary": "tested E7 matrix only; no universal attack-resistance claim",
+  "source_final_manifest": "/home/gz785/code/exp2/results/final/p4-paper-final-20260807T124151+0800/final.manifest.json",
+  "source_final_manifest_sha256": "48098917d631a3c49ee5eb4a4fd58acb885ca63be99b300ff838ea00ad227ae0"
+}

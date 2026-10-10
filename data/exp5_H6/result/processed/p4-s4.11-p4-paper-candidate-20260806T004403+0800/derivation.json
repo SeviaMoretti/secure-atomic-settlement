@@ -1,0 +1,48 @@
+{
+  "schema_id": "assetxchain-exp2-s411-artifacts",
+  "schema_version": 1,
+  "step": "S4.11",
+  "candidate_id": "p4-paper-candidate-20260806T004403+0800",
+  "candidate_manifest": "/home/gz785/code/exp2/results/candidates/p4-paper-candidate-20260806T004403+0800/candidate.manifest.json",
+  "candidate_manifest_sha256": "40c349d225241d08509f5ff9bf688c65da257a853b01eb02aab374499309cca2",
+  "correctness_source": "immutable S4.8 candidate manifest correctness_runs and candidate_gate",
+  "cost_sources": {
+    "B1": {
+      "path": "/home/gz785/code/exp2/results/processed/p4-e6-b1-20260806T095057+0800-8514bf07-b140542f/attempts.jsonl",
+      "sha256": "7d6fa38cdb3548b9db3d21445e2a07968301861120a33a5a5b5d780a996ec7b1"
+    },
+    "B2": {
+      "path": "/home/gz785/code/exp2/results/processed/p4-e6-b2-20260806T111142+0800-dc10ea68-b140542f/attempts.jsonl",
+      "sha256": "eaed22bc9cc9ac01ddce3c64171f5dceb86dfa328a0fceb62e2fdcfa09686170"
+    },
+    "G3": {
+      "path": "/home/gz785/code/exp2/results/processed/p4-e6-g3-20260806T111142+0800-47ebd794-b140542f/attempts.jsonl",
+      "sha256": "44281aa285c63b25a0b0520262eed22893038ed0393411c91d84ecd3f54e53d7"
+    }
+  },
+  "baselines": [
+    "B1",
+    "B2",
+    "G3"
+  ],
+  "excluded_baselines": [
+    "L1",
+    "L2"
+  ],
+  "repetitions": 10,
+  "statistics": [
+    "n",
+    "median",
+    "mean",
+    "sample_stdev",
+    "p10",
+    "p90"
+  ],
+  "anomaly_policy": "retain all samples; canonical E6 validators reported anomaly_count=0",
+  "setup_calls": "N/A: no setup-call field in processed E6 schema",
+  "claim_boundary": "descriptive fixed-medium-load formal-cost-candidate; not-paper-final",
+  "outputs": {
+    "table_root": "/home/gz785/code/exp2/results/processed/p4-s4.11-p4-paper-candidate-20260806T004403+0800",
+    "figure_root": "/home/gz785/code/exp2/results/figures/p4-s4.11-p4-paper-candidate-20260806T004403+0800"
+  }
+}

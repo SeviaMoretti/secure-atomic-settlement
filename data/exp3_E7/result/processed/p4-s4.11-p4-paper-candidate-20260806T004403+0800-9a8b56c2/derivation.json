@@ -1,0 +1,59 @@
+{
+  "schema_id": "assetxchain-exp2-s411-artifacts",
+  "schema_version": 2,
+  "step": "S4.11",
+  "candidate_id": "p4-paper-candidate-20260806T004403+0800",
+  "candidate_manifest": "/home/gz785/code/exp2/results/candidates/p4-paper-candidate-20260806T004403+0800/candidate.manifest.json",
+  "candidate_manifest_sha256": "40c349d225241d08509f5ff9bf688c65da257a853b01eb02aab374499309cca2",
+  "correctness_source": "immutable S4.8 candidate manifest correctness_runs and candidate_gate",
+  "cost_sources": {
+    "B1": {
+      "path": "/home/gz785/code/exp2/results/processed/p4-e6-b1-20260807T032215+0800-8514bf07-9a8b56c2/attempts.jsonl",
+      "sha256": "fba9c202ece8afd94e630d24e3a1da90719275ca4e2621b16d0af97f3987b5de"
+    },
+    "B2": {
+      "path": "/home/gz785/code/exp2/results/processed/p4-e6-b2-20260807T032218+0800-dc10ea68-9a8b56c2/attempts.jsonl",
+      "sha256": "f489278a042627950f4dd5ae4063bbc46dc473b8c340b637b6b6812b8ec5a475"
+    },
+    "G3": {
+      "path": "/home/gz785/code/exp2/results/processed/p4-e6-g3-20260807T032220+0800-47ebd794-9a8b56c2/attempts.jsonl",
+      "sha256": "dde02af420b9b96e3106277f3d64d2e58a59b6e9e551fb80539075103ce32449"
+    }
+  },
+  "baselines": [
+    "B1",
+    "B2",
+    "G3"
+  ],
+  "excluded_baselines": [
+    "L1",
+    "L2"
+  ],
+  "workload": {
+    "path": "/home/gz785/code/exp2/configs/workloads/formal_cost_v2.json",
+    "sha256": "9a8b56c26c449b97560857c29fb7adde208f4ebd4878eabc29d7de2973283530"
+  },
+  "repetitions": 10,
+  "statistics": [
+    "n",
+    "median",
+    "mean",
+    "sample_stdev",
+    "p10",
+    "p90"
+  ],
+  "primary_cost_aggregation": "sum create_order, fund_order, and settle within each repetition before descriptive statistics",
+  "phase_detail": "reported separately in e6_phase_cost_table.csv",
+  "corrected_metric_semantics": {
+    "weight_ref_time": "terminal system dispatch_info.weight.refTime",
+    "weight_proof_size": "terminal system dispatch_info.weight.proofSize",
+    "partial_fee": "transactionPayment.TransactionFeePaid.actual_fee"
+  },
+  "anomaly_policy": "retain all samples; canonical E6 validators reported anomaly_count=0",
+  "setup_calls": "N/A: no setup-call field in processed E6 schema",
+  "claim_boundary": "paper-final correctness only; descriptive fixed-medium-load corrected formal-cost-candidate; corrected cost not-paper-final",
+  "outputs": {
+    "table_root": "/home/gz785/code/exp2/results/processed/p4-s4.11-p4-paper-candidate-20260806T004403+0800-9a8b56c2",
+    "figure_root": "/home/gz785/code/exp2/results/figures/p4-s4.11-p4-paper-candidate-20260806T004403+0800-9a8b56c2"
+  }
+}

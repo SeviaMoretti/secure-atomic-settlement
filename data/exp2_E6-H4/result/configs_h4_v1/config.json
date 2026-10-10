@@ -1,0 +1,47 @@
+{
+  "schema": "h4-v1",
+  "seed": 2026091904,
+  "baselines": [
+    "B1",
+    "B2",
+    "G3"
+  ],
+  "operations": [
+    "TransferMeta",
+    "IssueRight",
+    "TransferRight"
+  ],
+  "pilot_repetitions_per_mode": 2,
+  "pilot_modes": [
+    "fresh",
+    "reused"
+  ],
+  "formal_rounds": 10,
+  "samples_per_operation_per_session": 3,
+  "warmups_per_operation_per_reused_session": 1,
+  "measurement": "client-monotonic-create-fund-settle-inclusion-and-finality",
+  "timer_version": "h4-timed-transport-v1",
+  "node_execution_ms": "live BlockBuilder_apply_extrinsic host Runtime-call interval; instrumentation-on only",
+  "online_instrumentation_calibration": {
+    "samples": 90,
+    "rounds": 5,
+    "sessions": 30,
+    "warmup_orders": 90,
+    "paired_fixture": true,
+    "toggle": "H4_EXECUTION_TIMING",
+    "order": "seeded alternating on/off pairs",
+    "threshold": "report paired shifts and 95% intervals; >5% median order shift flagged material, never claim zero overhead"
+  },
+  "heavy_trace": false,
+  "market_policy": "isolated market instance per order; deployed before c0; node/API reused in session",
+  "finality_barrier": "none between create/fund/settle; wait after settle inclusion only",
+  "formal_samples": 270,
+  "formal_warmups": 90,
+  "order_timeout_seconds": 600,
+  "session_timeout_seconds": 7200,
+  "rpc": "ws://127.0.0.1:9944",
+  "validity_level": "paper-candidate",
+  "pilot_instrumentation": "round1 on,round2 off in each node mode",
+  "primary_instrumentation": "off",
+  "total_formal_orders_including_warmups": 540
+}

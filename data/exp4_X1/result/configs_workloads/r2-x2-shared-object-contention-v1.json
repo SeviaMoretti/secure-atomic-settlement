@@ -1,0 +1,124 @@
+{
+  "schema_id": "assetxchain-exp2-r2-workload",
+  "schema_version": 1,
+  "metadata": {
+    "config_path": "configs/workloads/r2-x2-shared-object-contention-v1.json",
+    "workload_id": "r2-x2-shared-object-contention-v1",
+    "experiment_id": "X2",
+    "title": "Multi-market shared-object contention",
+    "protocol_id": "assetxchain-paper2-shared",
+    "settlement_protocol_version": 1,
+    "fixture_profile_id": "assetxchain-paper2-shared-fixture-v1",
+    "baseline_ids": ["B1", "B2", "G3"],
+    "seed": 20260807,
+    "evidence_level": "extended-experiment-candidate",
+    "claim_boundary": "shared-authority contention and exactly-once behavior; no universal scalability claim"
+  },
+  "research_question": "As authorized market count and per-market concurrency increase, does competition for one shared MetaToken, one last issuance quota, or one RightToken remain constrained by a single authoritative pre-state without duplicate settlement or loser-state pollution?",
+  "independent_variables": {
+    "baseline_id": ["B1", "B2", "G3"],
+    "scenario_id": ["X2-META-SALE", "X2-RIGHT-LAST-QUOTA", "X2-RIGHT-RESALE"],
+    "market_count": [1, 2, 4, 8],
+    "concurrency_per_market": [1, 2, 4, 8]
+  },
+  "cell_definition": {
+    "full_cartesian_product": true,
+    "contender_count_formula": "market_count * concurrency_per_market",
+    "market_assignment": "each market contributes exactly concurrency_per_market contenders",
+    "buyer_assignment": "buyer_slot = ((market_slot - 1) * concurrency_per_market + local_contender_slot) mod available_buyer_pool",
+    "submission_order": "deterministic seed-derived permutation; actual outcome is reconstructed by included block, extrinsic index, and event index"
+  },
+  "actor_derivation": {
+    "market_accounts": "derive and record 8 AccountId32 values from //R2//X2//Market//<1..8> under sr25519-substrate-v1",
+    "buyer_accounts": "derive and record 64 AccountId32 values from //R2//X2//Buyer//<1..64>",
+    "funding": "OWNER funds every active derived account to the frozen target balance before the fixture anchor",
+    "authorization": "all active market slots receive identical operation capability and object-level authorization before contention begins"
+  },
+  "scenarios": [
+    {
+      "scenario_id": "X2-META-SALE",
+      "operation": "TransferMeta",
+      "shared_resource": "one tradable MetaToken with no active RightToken",
+      "competition_boundary": "authorized markets submit complete create/fund/settle sequences for the same MetaToken",
+      "expected_terminal_rule": "at most one Settled order and one final buyer owner"
+    },
+    {
+      "scenario_id": "X2-RIGHT-LAST-QUOTA",
+      "operation": "IssueRight",
+      "shared_resource": "one IssueRightAuthorization with available_count=1 and available_units sufficient for exactly one order",
+      "competition_boundary": "all contender orders are Open before concurrent fund_order submissions; only the uniquely Funded order may settle",
+      "expected_terminal_rule": "at most one issued RightToken; issued + reserved never exceeds the authorization maximum"
+    },
+    {
+      "scenario_id": "X2-RIGHT-RESALE",
+      "operation": "TransferRight",
+      "shared_resource": "one active transferable RightToken with no use reservation or dispute",
+      "competition_boundary": "authorized markets submit complete create/fund/settle sequences for the same RightToken",
+      "expected_terminal_rule": "at most one Settled order and one final buyer holder"
+    }
+  ],
+  "dependent_variables": [
+    "successful_settlement_count",
+    "duplicate_settlement_count",
+    "loser_dirty_state_count",
+    "settlement_record_count",
+    "unique_settlement_record_count",
+    "completion_block",
+    "completion_blocks",
+    "actual_weight_ref_time",
+    "actual_weight_proof_size",
+    "actual_fee",
+    "storage_writes",
+    "events_count"
+  ],
+  "controls": {
+    "settlement_protocol_version": 1,
+    "canonical_encoding": "SCALE",
+    "fixture_roles_prices_fees_and_timing": "configs/dev.json#shared_fixture",
+    "object_and_authorization_pre_state": "identical normalized fixture per scenario cell",
+    "same_inputs_for_all_baselines": true,
+    "reset": "fresh isolated fixture before each repetition",
+    "missing_common_capability_policy": "blocked; never N/A or synthetic failure",
+    "architecture_specific_metric_policy": "N/A only when the metric boundary is structurally absent; never encode N/A as zero"
+  },
+  "repetitions": {
+    "per_baseline_scenario_market_count_concurrency_cell": 10
+  },
+  "attempt_evidence_required": [
+    "submission_sequence",
+    "included_block",
+    "extrinsic_index",
+    "event_index",
+    "actual_authoritative_pre_state",
+    "actual_authoritative_post_state",
+    "protocol_outcome",
+    "common_error_code",
+    "actual_weight_ref_time",
+    "actual_weight_proof_size",
+    "actual_fee",
+    "storage_writes",
+    "event_names"
+  ],
+  "expected_result_rules": [
+    "A competition group may have zero or one successful settlement but never more than one.",
+    "If a successful settlement exists, exactly one matching SettlementRecord and exactly one normalized success event must exist; otherwise both counts are zero.",
+    "Every losing attempt must add no business-state mutation, SettlementRecord, or success event relative to its actual included-order pre-state after dispatch fee normalization.",
+    "For last-quota contention, issued + reserved must never exceed the authorization maximum and at most one RightToken may be created.",
+    "A timeout never counts as an expected rejection and invalidates the cell."
+  ],
+  "checker_contract": "configs/r2/checker-contracts-v1.json#X2",
+  "checker_ids": ["R2-COMMON-01", "R2-COMMON-02", "R2-COMMON-03", "R2-COMMON-04", "X2-C01", "X2-C02", "X2-C03", "X2-C04", "X2-C05", "X2-C06"],
+  "result_schema": "schemas/r2/extended-experiment-result.schema.json#/$defs/x2_result",
+  "stop_gates": [
+    "dirty or unidentified implementation commit",
+    "E0 or the frozen I1-I10 prerequisite gate is not PASS",
+    "workload, fixture, checker, or schema changes after preflight",
+    "missing included block, extrinsic index, event index, or actual pre-state for any live attempt",
+    "more than one successful settlement in a competition group",
+    "duplicate SettlementRecord or success event",
+    "any loser-state pollution",
+    "issued + reserved exceeds the authorization maximum",
+    "a required common capability is missing",
+    "any timeout"
+  ]
+}

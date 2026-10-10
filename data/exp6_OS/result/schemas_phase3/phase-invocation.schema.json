@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-phase-invocation-v1",
+  "title": "AssetXChain common baseline phase invocation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "contract_version",
+    "run_id",
+    "baseline_id",
+    "scenario_id",
+    "attempt_id",
+    "repetition",
+    "phase",
+    "operation",
+    "actor_role",
+    "expected_outcome",
+    "expected_error_code",
+    "payload"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "assetxchain-exp2-phase-invocation"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "contract_version": {
+      "const": "phase3-adapter-contract-v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseline_id": {
+      "enum": [
+        "B1",
+        "B2",
+        "G3"
+      ]
+    },
+    "scenario_id": {
+      "type": "string",
+      "pattern": "^(LEG|NEG|CLEAN|DUP|RACE)-[A-Z0-9-]+-[0-9]{2}$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repetition": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "phase": {
+      "enum": [
+        "setup",
+        "create_order",
+        "fund_order",
+        "settle",
+        "cancel_open",
+        "expire_open",
+        "refund_funded",
+        "query"
+      ]
+    },
+    "operation": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "TransferMeta",
+        "IssueRight",
+        "TransferRight",
+        null
+      ]
+    },
+    "actor_role": {
+      "enum": [
+        "OWNER",
+        "RIGHT_SELLER",
+        "BUYER_1",
+        "BUYER_2",
+        "MARKET_OK",
+        "MARKET_DENIED",
+        "RELAYER"
+      ]
+    },
+    "expected_outcome": {
+      "enum": [
+        "accept",
+        "reject"
+      ]
+    },
+    "expected_error_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payload": {
+      "type": "object"
+    }
+  }
+}

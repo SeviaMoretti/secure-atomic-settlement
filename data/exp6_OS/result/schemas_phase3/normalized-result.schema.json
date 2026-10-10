@@ -1,0 +1,480 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-normalized-result-v1",
+  "title": "AssetXChain normalized phase result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "contract_version",
+    "run",
+    "request",
+    "outcome",
+    "snapshots",
+    "events",
+    "settlement",
+    "correctness",
+    "cost",
+    "architecture_cost",
+    "claim_boundary"
+  ],
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "availability",
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "availability": {
+          "enum": [
+            "measured",
+            "not-collected",
+            "N/A"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]+(\\.[0-9]+)?$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "nullable_hex32": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^0x[0-9a-f]{64}$"
+    },
+    "nonnegative": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "properties": {
+    "schema_id": {
+      "const": "assetxchain-exp2-normalized-result"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "contract_version": {
+      "const": "phase3-adapter-contract-v1"
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "timestamp",
+        "timezone",
+        "baseline_id",
+        "baseline_name",
+        "baseline_profile_version",
+        "settlement_protocol_version",
+        "validity_level",
+        "implementation_commit",
+        "git_dirty",
+        "config_path",
+        "workload_id",
+        "seed",
+        "repetition"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timezone": {
+          "const": "Asia/Shanghai"
+        },
+        "baseline_id": {
+          "enum": [
+            "B1",
+            "B2",
+            "G3"
+          ]
+        },
+        "baseline_name": {
+          "enum": [
+            "Contract-only",
+            "Runtime-only",
+            "AssetXChain-CRS"
+          ]
+        },
+        "baseline_profile_version": {
+          "const": "1"
+        },
+        "settlement_protocol_version": {
+          "const": 1
+        },
+        "validity_level": {
+          "enum": [
+            "legacy-pilot",
+            "paper-candidate",
+            "paper-final"
+          ]
+        },
+        "implementation_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "git_dirty": {
+          "type": "boolean"
+        },
+        "config_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workload_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "repetition": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario_id",
+        "attempt_id",
+        "phase",
+        "operation",
+        "expected_outcome",
+        "expected_error_code"
+      ],
+      "properties": {
+        "scenario_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase": {
+          "enum": [
+            "setup",
+            "create_order",
+            "fund_order",
+            "settle",
+            "cancel_open",
+            "expire_open",
+            "refund_funded",
+            "query"
+          ]
+        },
+        "operation": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "TransferMeta",
+            "IssueRight",
+            "TransferRight",
+            null
+          ]
+        },
+        "expected_outcome": {
+          "enum": [
+            "accept",
+            "reject"
+          ]
+        },
+        "expected_error_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dispatch_success",
+        "protocol_outcome",
+        "common_error_code",
+        "native_error",
+        "included_block",
+        "completion_block",
+        "completion_blocks"
+      ],
+      "properties": {
+        "dispatch_success": {
+          "type": "boolean"
+        },
+        "protocol_outcome": {
+          "enum": [
+            "accepted",
+            "rejected",
+            "timeout"
+          ]
+        },
+        "common_error_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "native_error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "included_block": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "completion_block": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "completion_blocks": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "snapshots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pre",
+        "post"
+      ],
+      "properties": {
+        "pre": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "post": {
+          "type": "object"
+        }
+      }
+    },
+    "events": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_names",
+        "success_event_count",
+        "post_state_commitment"
+      ],
+      "properties": {
+        "event_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "success_event_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "post_state_commitment": {
+          "$ref": "#/$defs/nullable_hex32"
+        }
+      }
+    },
+    "settlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "settlement_id",
+        "settlement_record_count",
+        "refund_recipient",
+        "refund_amount"
+      ],
+      "properties": {
+        "settlement_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "settlement_record_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "refund_recipient": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "refund_amount": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]+$"
+        }
+      }
+    },
+    "correctness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_outcome_match",
+        "invariant_violation_count",
+        "false_accept_count",
+        "false_reject_count",
+        "duplicate_settlement_count",
+        "dirty_order_count",
+        "dirty_authorization_count",
+        "event_mismatch_count",
+        "timeout_count",
+        "critical_state_diff_count",
+        "unexpected_balance_delta_count",
+        "unexpected_index_delta_count"
+      ],
+      "properties": {
+        "expected_outcome_match": {
+          "type": "boolean"
+        },
+        "invariant_violation_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "false_accept_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "false_reject_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "duplicate_settlement_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "dirty_order_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "dirty_authorization_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "event_mismatch_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "timeout_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "critical_state_diff_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "unexpected_balance_delta_count": {
+          "$ref": "#/$defs/nonnegative"
+        },
+        "unexpected_index_delta_count": {
+          "$ref": "#/$defs/nonnegative"
+        }
+      }
+    },
+    "cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "latency_ms",
+        "completion_blocks",
+        "partial_fee",
+        "weight_ref_time",
+        "weight_proof_size",
+        "storage_writes",
+        "events_count",
+        "rpc_response_ms",
+        "phase_call_count"
+      ],
+      "properties": {
+        "latency_ms": {
+          "$ref": "#/$defs/metric"
+        },
+        "completion_blocks": {
+          "$ref": "#/$defs/metric"
+        },
+        "partial_fee": {
+          "$ref": "#/$defs/metric"
+        },
+        "weight_ref_time": {
+          "$ref": "#/$defs/metric"
+        },
+        "weight_proof_size": {
+          "$ref": "#/$defs/metric"
+        },
+        "storage_writes": {
+          "$ref": "#/$defs/metric"
+        },
+        "events_count": {
+          "$ref": "#/$defs/metric"
+        },
+        "rpc_response_ms": {
+          "$ref": "#/$defs/metric"
+        },
+        "phase_call_count": {
+          "$ref": "#/$defs/metric"
+        }
+      }
+    },
+    "architecture_cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_gas_or_ref_time",
+        "contract_storage_writes",
+        "runtime_dispatch_count",
+        "runtime_storage_writes",
+        "typed_ce_call_count",
+        "projection_storage_writes"
+      ],
+      "properties": {
+        "contract_gas_or_ref_time": {
+          "$ref": "#/$defs/metric"
+        },
+        "contract_storage_writes": {
+          "$ref": "#/$defs/metric"
+        },
+        "runtime_dispatch_count": {
+          "$ref": "#/$defs/metric"
+        },
+        "runtime_storage_writes": {
+          "$ref": "#/$defs/metric"
+        },
+        "typed_ce_call_count": {
+          "$ref": "#/$defs/metric"
+        },
+        "projection_storage_writes": {
+          "$ref": "#/$defs/metric"
+        }
+      }
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

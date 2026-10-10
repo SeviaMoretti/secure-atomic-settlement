@@ -1,0 +1,47 @@
+{
+  "operation": "IssueRight",
+  "terminal": "Settled",
+  "condition": "F3",
+  "seller": "OWNER",
+  "buyer": "BUYER_1",
+  "artifact": "fault",
+  "preparation": [
+    {
+      "method": "relayCreateOrder",
+      "role": "RELAYER",
+      "label": "create"
+    },
+    {
+      "method": "relayFundOrder",
+      "role": "BUYER_1",
+      "label": "fund"
+    },
+    {
+      "method": "relaySettle",
+      "role": "RELAYER",
+      "label": "settle"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "seed-terminal"
+    }
+  ],
+  "injection": {
+    "method": "h6CorruptProjection",
+    "role": "MARKET_OK",
+    "label": "inject"
+  },
+  "recovery": [
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync1"
+    },
+    {
+      "method": "syncProjection",
+      "role": "RELAYER",
+      "label": "sync2"
+    }
+  ]
+}

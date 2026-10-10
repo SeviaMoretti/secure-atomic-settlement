@@ -1,0 +1,127 @@
+{
+  "schema": "h6-check-v1",
+  "status": "PASS",
+  "errors": [],
+  "metrics": [
+    {
+      "phase": "sync1",
+      "submission_to_inclusion_ms": 3451.60055,
+      "submission_to_finalization_ms": 17214.047524,
+      "finalized_readback_ms": 77.123181,
+      "recovery_visible_ms": 17292.503743,
+      "actual_fee": "2242694209",
+      "post_dispatch_weight": {
+        "refTime": 2242694019,
+        "proofSize": 95245
+      },
+      "projection_insert_calls_source_derived": 1,
+      "contract_storage_items_delta": 0,
+      "contract_storage_bytes_delta": 0,
+      "storage_deposit_events": []
+    },
+    {
+      "phase": "sync2",
+      "submission_to_inclusion_ms": 4109.512393,
+      "submission_to_finalization_ms": 17204.244365,
+      "finalized_readback_ms": 68.635509,
+      "recovery_visible_ms": 17274.615871,
+      "actual_fee": "2242694209",
+      "post_dispatch_weight": {
+        "refTime": 2242694019,
+        "proofSize": 95245
+      },
+      "projection_insert_calls_source_derived": 1,
+      "contract_storage_items_delta": 0,
+      "contract_storage_bytes_delta": 0,
+      "storage_deposit_events": []
+    }
+  ],
+  "environmental_effects": [
+    {
+      "phase": "sync1",
+      "balance_event_reconciliation": {
+        "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY": {
+          "free": 15000000000000,
+          "reserved": 0,
+          "nonce": 0
+        },
+        "5HNoPLZyyZY7xYdM6He4ARdSW5oawoiMvBrCe7VE5BHbcpwX": {
+          "free": -2242694209,
+          "reserved": 0,
+          "nonce": 1
+        }
+      },
+      "contract_info_before": {
+        "trieId": "0xd7aa9bf25d942023206e3a95362ea1bb3d983bfe2609f5b3ee0df7f660bd1462",
+        "codeHash": "0xd74e2f9bac5002180aa8074fed1f586e134331e67fb2050e0389f044cefbe97c",
+        "storageBytes": 1154,
+        "storageItems": 3,
+        "storageByteDeposit": 69240000000000,
+        "storageItemDeposit": 450000000000,
+        "storageBaseDeposit": 469026000000000,
+        "delegateDependencies": {}
+      },
+      "contract_info_after": {
+        "trieId": "0xd7aa9bf25d942023206e3a95362ea1bb3d983bfe2609f5b3ee0df7f660bd1462",
+        "codeHash": "0xd74e2f9bac5002180aa8074fed1f586e134331e67fb2050e0389f044cefbe97c",
+        "storageBytes": 1154,
+        "storageItems": 3,
+        "storageByteDeposit": 69240000000000,
+        "storageItemDeposit": 450000000000,
+        "storageBaseDeposit": 469026000000000,
+        "delegateDependencies": {}
+      }
+    },
+    {
+      "phase": "sync2",
+      "balance_event_reconciliation": {
+        "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY": {
+          "free": 15000000000000,
+          "reserved": 0,
+          "nonce": 0
+        },
+        "5HNoPLZyyZY7xYdM6He4ARdSW5oawoiMvBrCe7VE5BHbcpwX": {
+          "free": -2242694209,
+          "reserved": 0,
+          "nonce": 1
+        }
+      },
+      "contract_info_before": {
+        "trieId": "0xd7aa9bf25d942023206e3a95362ea1bb3d983bfe2609f5b3ee0df7f660bd1462",
+        "codeHash": "0xd74e2f9bac5002180aa8074fed1f586e134331e67fb2050e0389f044cefbe97c",
+        "storageBytes": 1154,
+        "storageItems": 3,
+        "storageByteDeposit": 69240000000000,
+        "storageItemDeposit": 450000000000,
+        "storageBaseDeposit": 469026000000000,
+        "delegateDependencies": {}
+      },
+      "contract_info_after": {
+        "trieId": "0xd7aa9bf25d942023206e3a95362ea1bb3d983bfe2609f5b3ee0df7f660bd1462",
+        "codeHash": "0xd74e2f9bac5002180aa8074fed1f586e134331e67fb2050e0389f044cefbe97c",
+        "storageBytes": 1154,
+        "storageItems": 3,
+        "storageByteDeposit": 69240000000000,
+        "storageItemDeposit": 450000000000,
+        "storageBaseDeposit": 469026000000000,
+        "delegateDependencies": {}
+      }
+    },
+    {
+      "phase": "inject",
+      "balance_event_reconciliation": {
+        "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY": {
+          "free": 15000000000000,
+          "reserved": 0,
+          "nonce": 0
+        },
+        "5EXE39UPpvzETEtTikXL3saJc4RHvyn4pQ1y7HLKgorgEc1b": {
+          "free": -1986598583,
+          "reserved": 0,
+          "nonce": 1
+        }
+      }
+    }
+  ],
+  "scope": "complete order/settlement SCALE equality; all authority pallet storage plus target child-trie objects; fees/balances/nonces reconciled from events; I11 excluded"
+}

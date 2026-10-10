@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-phase4-run-seal-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id","schema_version","tooling_version","run_id","status","started_at","finished_at","timezone","preflight_sha256","genesis_hashes","fixture_anchor_blocks","attempt_counts","teardown","checker","failure_reason","artifact_inventory"],
+  "$defs": {"sha256":{"type":"string","pattern":"^[0-9a-f]{64}$"},"nonempty":{"type":"string","minLength":1}},
+  "properties": {
+    "schema_id":{"const":"assetxchain-exp2-phase4-run-seal"},"schema_version":{"const":1},"tooling_version":{"const":"phase4-formal-tooling-v1"},"run_id":{"$ref":"#/$defs/nonempty"},"status":{"enum":["completed","invalid"]},"started_at":{"$ref":"#/$defs/nonempty"},"finished_at":{"$ref":"#/$defs/nonempty"},"timezone":{"const":"Asia/Shanghai"},"preflight_sha256":{"$ref":"#/$defs/sha256"},
+    "genesis_hashes":{"type":"object"},"fixture_anchor_blocks":{"type":"object"},
+    "attempt_counts":{"type":"object","additionalProperties":false,"required":["planned_units","completed_units","planned_attempts","completed_attempts"],"properties":{"planned_units":{"type":"integer","minimum":0},"completed_units":{"type":"integer","minimum":0},"planned_attempts":{"type":"integer","minimum":0},"completed_attempts":{"type":"integer","minimum":0}}},
+    "teardown":{"type":"object","additionalProperties":false,"required":["owned_processes_stopped","closed_ports","residual_listener_count"],"properties":{"owned_processes_stopped":{"type":"boolean"},"closed_ports":{"type":"array","items":{"type":"integer","minimum":1}},"residual_listener_count":{"type":"integer","minimum":0}}},
+    "checker":{"type":"object","additionalProperties":false,"required":["status","expected_outcome_mismatches","invariant_violations","false_accepts","false_rejects","duplicates","dirty_state","event_mismatches","timeouts"],"properties":{"status":{"enum":["PASS","FAIL"]},"expected_outcome_mismatches":{"type":"integer","minimum":0},"invariant_violations":{"type":"integer","minimum":0},"false_accepts":{"type":"integer","minimum":0},"false_rejects":{"type":"integer","minimum":0},"duplicates":{"type":"integer","minimum":0},"dirty_state":{"type":"integer","minimum":0},"event_mismatches":{"type":"integer","minimum":0},"timeouts":{"type":"integer","minimum":0}}},
+    "failure_reason":{"type":["string","null"]},
+    "artifact_inventory":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["root","path","bytes","sha256"],"properties":{"root":{"enum":["raw","log"]},"path":{"$ref":"#/$defs/nonempty"},"bytes":{"type":"integer","minimum":0},"sha256":{"$ref":"#/$defs/sha256"}}}}
+  }
+}

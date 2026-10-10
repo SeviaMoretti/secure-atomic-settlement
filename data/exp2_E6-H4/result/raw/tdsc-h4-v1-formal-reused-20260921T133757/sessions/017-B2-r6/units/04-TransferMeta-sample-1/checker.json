@@ -1,0 +1,163 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "unit": "tdsc-h4-v1-formal-reused-20260921T133757/017-B2-r6/04-TransferMeta-sample-1",
+  "baseline": "B2",
+  "operation": "TransferMeta",
+  "session_id": "017-B2-r6",
+  "kind": "sample",
+  "node_mode": "reused",
+  "timing_metrics": [
+    {
+      "phase": "create",
+      "preparation_ms": 50.520227,
+      "encoding_and_inner_signature_ms": 1.219757,
+      "nonce_rpc_ms": 2.455651,
+      "outer_signing_ms": 46.460245,
+      "submission_to_inclusion_ms": 5958.677252,
+      "inclusion_to_finalization_ms": 11664.478641,
+      "evidence_after_inclusion_ms": 23673.141738,
+      "evidence_rpc_ms": 3.410138,
+      "c0_to_inclusion_ms": 6009.197479,
+      "c0_to_finalization_ms": 17673.67612,
+      "last_head_observation_age_ms": 44.586597,
+      "block_number": 32,
+      "completion_blocks": 1
+    },
+    {
+      "phase": "fund",
+      "preparation_ms": 47.862597,
+      "encoding_and_inner_signature_ms": 2.264622,
+      "nonce_rpc_ms": 0.888433,
+      "outer_signing_ms": 44.506373,
+      "submission_to_inclusion_ms": 5948.949045,
+      "inclusion_to_finalization_ms": 12336.156776,
+      "evidence_after_inclusion_ms": 17679.634828,
+      "evidence_rpc_ms": 3.334272,
+      "c0_to_inclusion_ms": 5996.811642,
+      "c0_to_finalization_ms": 18332.968418,
+      "last_head_observation_age_ms": 50.050196,
+      "block_number": 33,
+      "completion_blocks": 1
+    },
+    {
+      "phase": "settle",
+      "preparation_ms": 48.874909,
+      "encoding_and_inner_signature_ms": 0.325712,
+      "nonce_rpc_ms": 1.075831,
+      "outer_signing_ms": 47.273874,
+      "submission_to_inclusion_ms": 4822.198553,
+      "inclusion_to_finalization_ms": 12801.679052,
+      "evidence_after_inclusion_ms": 12811.230307,
+      "evidence_rpc_ms": 2.721424,
+      "c0_to_inclusion_ms": 4871.073462,
+      "c0_to_finalization_ms": 17672.752514,
+      "last_head_observation_age_ms": 49.718792,
+      "block_number": 34,
+      "completion_blocks": 1
+    }
+  ],
+  "order_inclusion_ms": 16877.185677,
+  "order_finalization_ms": 29678.864729,
+  "sum_phase_inclusion_ms": 16877.082583,
+  "sum_phase_finalization_ms": 53679.397052,
+  "fixture_ms": 20975.557977,
+  "audit_after_measurement_ms": 34.042643,
+  "payload_audit": {
+    "status": "PASS",
+    "original_signature_verified": true,
+    "decoded": [
+      {
+        "tx_hash": "0xe89af3850909d0b2422849ce7db9cf0b1451b95957df1879556a7d4b42f81cd5",
+        "method": "createOrder",
+        "events": [
+          {
+            "method": "OrderCreated",
+            "args": [
+              "0xfb3a3a6e4ffa8a02c2ecdd520adefa3a473a0dc6542add0fdd2339201bcc8358",
+              "0xcec22b50853bc64212f9b3c1722a3c3a64fc7568442e933b054b831773fa5633",
+              "TransferMeta",
+              "0x5c06cfeb690351703362fe840e276d8aac9629f74522edce531c03375443545e"
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0xd25b9b64e658b0c32051cc9ab1920a8d28685cb011ddc5da4b221a4f18df70b6",
+        "method": "fundOrder",
+        "events": [
+          {
+            "method": "OrderFunded",
+            "args": [
+              "0xfb3a3a6e4ffa8a02c2ecdd520adefa3a473a0dc6542add0fdd2339201bcc8358",
+              "0x4acbf1eae5dd9aa0ca8be33d01782141d618f90efc7dcf8119a4eef08859b901",
+              "0xf80c637ddf4e767f0af5b11514f625cf90277b71825475fedb3a0255caf6ecb7",
+              10000000000000,
+              43
+            ]
+          },
+          {
+            "method": "PaymentEscrowed",
+            "args": [
+              "0xfb3a3a6e4ffa8a02c2ecdd520adefa3a473a0dc6542add0fdd2339201bcc8358",
+              "0xf80c637ddf4e767f0af5b11514f625cf90277b71825475fedb3a0255caf6ecb7",
+              10000000000000
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0xcb87271c2f410017e00c91e0359a7ffac72b96d4a9ac9017cdae14a5676cacfd",
+        "method": "settle",
+        "events": [
+          {
+            "method": "AuthorizationStatusChanged",
+            "args": [
+              "0x47446432575c91240e9684d42960fa64c3bbf86737951ee43faf633c6fe1d2f5",
+              "Consumed"
+            ]
+          },
+          {
+            "method": "PaymentReleased",
+            "args": [
+              "0xfb3a3a6e4ffa8a02c2ecdd520adefa3a473a0dc6542add0fdd2339201bcc8358",
+              "0xf80c637ddf4e767f0af5b11514f625cf90277b71825475fedb3a0255caf6ecb7",
+              10000000000000
+            ]
+          },
+          {
+            "method": "SettlementFinalized",
+            "args": [
+              "0x1a8ec255dd195ebf7d35406d0166b5f39c556f6e51e506413e2718c6d154975a",
+              "0xfb3a3a6e4ffa8a02c2ecdd520adefa3a473a0dc6542add0fdd2339201bcc8358",
+              "0x6866a2567dbd907045e7f032ac81c6f2d7d601bb1bb5a38624179be7d268c7c5"
+            ]
+          }
+        ]
+      }
+    ],
+    "settlements": [
+      {
+        "method": "SettlementFinalized",
+        "args": [
+          "0x1a8ec255dd195ebf7d35406d0166b5f39c556f6e51e506413e2718c6d154975a",
+          "0xfb3a3a6e4ffa8a02c2ecdd520adefa3a473a0dc6542add0fdd2339201bcc8358",
+          "0x6866a2567dbd907045e7f032ac81c6f2d7d601bb1bb5a38624179be7d268c7c5"
+        ]
+      }
+    ]
+  },
+  "online_execution": {
+    "status": "PASS",
+    "errors": [],
+    "instrumentation": "off",
+    "log_path": "/home/gz785/code/exp2/logs/tdsc-h4-v1-formal-reused-20260921T133757/017-B2-r6.node.log",
+    "matches": [],
+    "boundary": "live block construction WasmExecutor::call(BlockBuilder_apply_extrinsic), including host/runtime invocation overhead; not replay, not pure Wasm instructions",
+    "clock": "node-local monotonic; never subtracted from client clock"
+  },
+  "instrumentation": "off",
+  "calibration_pair_id": null,
+  "online_calibration": "NOT_THIS_RUN",
+  "paper_final": false
+}

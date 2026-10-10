@@ -1,0 +1,127 @@
+from __future__ import annotations
+
+import sys
+import unittest
+from pathlib import Path
+
+
+EXP_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(EXP_ROOT / "scripts/common"))
+sys.path.insert(0, str(EXP_ROOT / "scripts/baselines"))
+
+from b1_adapter import (  # noqa: E402
+    B1Adapter,
+    ContractValidationError,
+    common_error_for_native,
+)
+from phase3_contract import Operation, Phase, PhaseInvocation  # noqa: E402
+
+
+class RecordingTransport:
+    def __init__(self, *, native_error: str | None = None) -> None:
+        self.requests: list[dict] = []
+        self.native_error = native_error
+
+    def request(self, request: dict) -> dict:
+        self.requests.append(request)
+        if request["kind"] == "query_bundle":
+            return {
+                "snapshot": {
+                    "baseline_id": "B1",
+                    "authority_source": "contract",
+                    "sequence": len(self.requests),
+                }
+            }
+        return {
+            "dispatch_success": self.native_error is None,
+            "native_error": self.native_error,
+            "events": ["OrderCreated"] if self.native_error is None else [],
+            "receipt": {"block_number": 1},
+        }
+
+
+def invocation(phase: Phase) -> PhaseInvocation:
+    return PhaseInvocation(
+        run_id="adapter-test-only",
+        baseline_id="B1",
+        scenario_id="LEG-META-01",
+        attempt_id=phase.value,
+        repetition=0,
+        phase=phase,
+        operation=None if phase is Phase.SETUP else Operation.TRANSFER_META,
+        actor_role="OWNER",
+        expected_outcome="accept",
+        expected_error_code=None,
+        payload={
+            "calls": [{"message": "register_meta", "args": {}}],
+            "args": {"order_id": "0x" + "11" * 32},
+            "query": {"order_id": "0x" + "11" * 32},
+            "transferred_value": "0",
+        },
+    )
+
+
+class B1AdapterTests(unittest.TestCase):
+    def test_routes_all_eight_phases_without_business_state(self) -> None:
+        transport = RecordingTransport()
+        adapter = B1Adapter(transport)
+        for phase in Phase:
+            result = adapter.invoke(invocation(phase))
+            self.assertEqual(result["baseline_id"], "B1")
+            self.assertEqual(result["phase"], phase.value)
+            self.assertTrue(result["dispatch_success"])
+        messages = [
+            request["message"]
+            for request in transport.requests
+            if request["kind"] == "contract_message"
+        ]
+        self.assertEqual(
+            messages,
+            [
+                "create_order",
+                "fund_order",
+                "settle",
+                "cancel_open",
+                "expire_open",
+                "refund_funded",
+            ],
+        )
+        self.assertTrue(
+            all(
+                request.get("messages", [])[0:1] == ["q_meta"]
+                for request in transport.requests
+                if request["kind"] == "query_bundle"
+            )
+        )
+
+    def test_rejection_uses_frozen_mapping_and_preserves_native_error(self) -> None:
+        transport = RecordingTransport(native_error="InsufficientBalance")
+        result = B1Adapter(transport).fund_order(invocation(Phase.FUND_ORDER))
+        self.assertFalse(result["dispatch_success"])
+        self.assertEqual(result["native_error"], "InsufficientBalance")
+        self.assertEqual(result["common_error_code"], "InsufficientBalance")
+
+    def test_unknown_native_error_is_blocking(self) -> None:
+        with self.assertRaises(ContractValidationError):
+            common_error_for_native("SyntheticTimeout")
+
+    def test_mapping_covers_rust_error_vocabulary(self) -> None:
+        lib = (
+            EXP_ROOT.parent
+            / "assetxchain-b1/contracts/market_pure_contract/lib.rs"
+        )
+        if not lib.exists():
+            lib = Path("/home/gz785/code/assetxchain-b1/contracts/market_pure_contract/lib.rs")
+        source = lib.read_text(encoding="utf-8")
+        error_body = source.split("pub enum Error {", 1)[1].split("}", 1)[0]
+        native_errors = {
+            line.strip().rstrip(",")
+            for line in error_body.splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        }
+        for native_error in native_errors:
+            self.assertIsNotNone(common_error_for_native(native_error), native_error)
+
+
+if __name__ == "__main__":
+    unittest.main()

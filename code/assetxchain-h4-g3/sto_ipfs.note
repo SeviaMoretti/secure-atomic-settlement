@@ -1,0 +1,42 @@
+pallet-storage_ipfs
+pallet-storage_ipfs::do_register_asset-->enc_data(链下)-->pallet-sto_ipfs::upload_enc_data(链下)-->调用pallet-dataassets::register_asset
+
+Phase 4 prototype:
+- provider 注册必须走 CollateralRole::IpfsProvider 质押。
+- storage_ipfs 暂不接 runtime，只作为 workspace prototype 编译和测试。
+- 当前只实现链内本地 provider/order/bind/proof 状态。
+- 真实 IPFS 可用性检查预留在 IpfsAvailabilityVerifier。
+- XCM / 存储链可用性检查预留在 XcmAvailabilityVerifier。
+- 实际 IPFS 检查、XCM 消息发送、存储链回调和 provider 退出生命周期后续实现。
+
+##链下
+数据加密：使用对称密钥或非对称加密方案对原始数据进行加密。
+分片与哈希计算：将加密后的文件分片，计算Merkle Root（ raw_data_hash）。
+上传至IPFS：将加密数据上传到IPFS节点，获得Data CID
+**元数据构建**：创建一个包含Data CID、加密算法信息、文件大小、描述等信息的JSON文件，并上传至IPFS获取 Metadata CID。
+
+
+##链上（pallet-sto_ipfs）
+CID 校验：验证传入的CID格式是否合法。
+确权触发：接收用户提交的存储信息，并调用pallet-dataassets进行资产注册（修改对应逻辑）。
+存储状态维护：记录资产与IPFS CID的对应关系，以及质押金（存储资金）对应的存储有效期或激励状态。
+
+
+数据资产---质押金-->两部分（质押金+存储费用池（assetid资产唯一对应的子账户,元证或权证交易后一小部分自动流入这个账户））
+激励：优质数据奖励、数据创建者永久分成、
+存储商扣费逻辑：1、（不能扣数据创建者的那部分分成）先从资产的子账户，若没有了；2、从质押金中扣，质押金低于某一额度（就不扣了）就将资产状态AssetStatus修改为Weak，一段时间后还是没有补充资产就会“死亡”
+
+
+########需要修改的问题：pallet-dataassets中的authorize_market中资产授权给市场之后，资产所有者还能不能对资产进行交易，若所有者交易资产（授权给市场的），市场的
+信用问题（还在市场上挂着的资产，被交易后，自动解除授权关系，因为延迟等问题，资产会在市场上挂一段时间，那么在这期间出现购买资产的买方，都会购买失败）
+
+
+加密->raw_data_hash,data_size_bytes,encryption_info
+上传ipfs->cid
+
+CID映射管理：维护AssetID与IPFS CID的绑定关系，从主树读
+跨链资金代扣：锁定用户的主链代币，或通过跨链资产交易（DEX机制）兑换存储链代币。
+构造 XCM 指令：将用户的存储需求打包成标准XCM消息，发送给存储平行链。
+异步状态接收：接收来自存储平行链的XCM回调消息（存储成功、存储失效、订单过期）。
+
+存储证明这些不是由交易链负责，应该使用跨链消息传递与存储链对接（存储链作为之前的存储服务提供者）

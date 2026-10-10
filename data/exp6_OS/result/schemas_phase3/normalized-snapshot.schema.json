@@ -1,0 +1,511 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-normalized-snapshot-v1",
+  "title": "AssetXChain normalized authoritative snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "contract_version",
+    "baseline_id",
+    "authority_source",
+    "observed_at",
+    "meta",
+    "right",
+    "order",
+    "authorization",
+    "payment",
+    "evidence",
+    "market",
+    "identity",
+    "state_commitment",
+    "projection"
+  ],
+  "$defs": {
+    "hex32": {
+      "type": "string",
+      "pattern": "^0x[0-9a-f]{64}$"
+    },
+    "nullable_hex32": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^0x[0-9a-f]{64}$"
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "nullable_decimal": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "nullable_integer": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "nullable_boolean": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    }
+  },
+  "properties": {
+    "schema_id": {
+      "const": "assetxchain-exp2-normalized-snapshot"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "contract_version": {
+      "const": "phase3-adapter-contract-v1"
+    },
+    "baseline_id": {
+      "enum": [
+        "B1",
+        "B2",
+        "G3"
+      ]
+    },
+    "authority_source": {
+      "enum": [
+        "contract",
+        "runtime"
+      ]
+    },
+    "observed_at": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "block_number",
+        "attempt_sequence"
+      ],
+      "properties": {
+        "block_number": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attempt_sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exists",
+        "asset_id",
+        "owner",
+        "status",
+        "state_version",
+        "owner_index_matches",
+        "active_right_count",
+        "active_order_id"
+      ],
+      "properties": {
+        "exists": {
+          "type": "boolean"
+        },
+        "asset_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "owner": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state_version": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "owner_index_matches": {
+          "$ref": "#/$defs/nullable_boolean"
+        },
+        "active_right_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "active_order_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        }
+      }
+    },
+    "right": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exists",
+        "right_id",
+        "holder",
+        "status",
+        "state_version",
+        "parent_asset_id",
+        "valid",
+        "remaining_uses",
+        "holder_index_matches",
+        "parent_index_matches",
+        "active_order_id"
+      ],
+      "properties": {
+        "exists": {
+          "type": "boolean"
+        },
+        "right_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "holder": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state_version": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "parent_asset_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "valid": {
+          "$ref": "#/$defs/nullable_boolean"
+        },
+        "remaining_uses": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "holder_index_matches": {
+          "$ref": "#/$defs/nullable_boolean"
+        },
+        "parent_index_matches": {
+          "$ref": "#/$defs/nullable_boolean"
+        },
+        "active_order_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        }
+      }
+    },
+    "order": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exists",
+        "order_id",
+        "operation",
+        "state",
+        "seller",
+        "buyer",
+        "expiry",
+        "grace_deadline",
+        "active_capacity_occupied",
+        "funded_capacity_occupied"
+      ],
+      "properties": {
+        "exists": {
+          "type": "boolean"
+        },
+        "order_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "operation": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "TransferMeta",
+            "IssueRight",
+            "TransferRight",
+            null
+          ]
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "Open",
+            "Funded",
+            "Settled",
+            "Cancelled",
+            "Expired",
+            "Refunded",
+            null
+          ]
+        },
+        "seller": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "buyer": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "expiry": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "grace_deadline": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "active_capacity_occupied": {
+          "type": "boolean"
+        },
+        "funded_capacity_occupied": {
+          "type": "boolean"
+        }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exists",
+        "authorization_id",
+        "status",
+        "policy_hash",
+        "issued_count",
+        "reserved_count",
+        "issued_use_units",
+        "reserved_use_units",
+        "consumed",
+        "consumed_order_id"
+      ],
+      "properties": {
+        "exists": {
+          "type": "boolean"
+        },
+        "authorization_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "policy_hash": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "issued_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reserved_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "issued_use_units": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reserved_use_units": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "consumed": {
+          "type": "boolean"
+        },
+        "consumed_order_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        }
+      }
+    },
+    "payment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "escrow_amount",
+        "buyer_balance",
+        "seller_balance",
+        "royalty_balance",
+        "market_balance",
+        "safety_balance"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "Unfunded",
+            "Escrowed",
+            "Released",
+            "Refunded"
+          ]
+        },
+        "escrow_amount": {
+          "$ref": "#/$defs/decimal"
+        },
+        "buyer_balance": {
+          "$ref": "#/$defs/decimal"
+        },
+        "seller_balance": {
+          "$ref": "#/$defs/decimal"
+        },
+        "royalty_balance": {
+          "$ref": "#/$defs/nullable_decimal"
+        },
+        "market_balance": {
+          "$ref": "#/$defs/decimal"
+        },
+        "safety_balance": {
+          "$ref": "#/$defs/nullable_decimal"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "settlement_record_count",
+        "settlement_id",
+        "record_fields_hash",
+        "pre_state_commitment"
+      ],
+      "properties": {
+        "settlement_record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "settlement_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "record_fields_hash": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "pre_state_commitment": {
+          "$ref": "#/$defs/nullable_hex32"
+        }
+      }
+    },
+    "market": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exists",
+        "market_id",
+        "status",
+        "capabilities",
+        "active_orders",
+        "funded_orders",
+        "active_exposure_value"
+      ],
+      "properties": {
+        "exists": {
+          "type": "boolean"
+        },
+        "market_id": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "TransferMeta",
+              "IssueRight",
+              "TransferRight"
+            ]
+          }
+        },
+        "active_orders": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "funded_orders": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "active_exposure_value": {
+          "$ref": "#/$defs/decimal"
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "settlement_protocol_version",
+        "settlement_domain_id",
+        "order_commitment_hash",
+        "seller_nonce",
+        "buyer_nonce",
+        "authorization_nonce",
+        "object_state_version"
+      ],
+      "properties": {
+        "settlement_protocol_version": {
+          "const": 1
+        },
+        "settlement_domain_id": {
+          "const": "axc/p2/shared"
+        },
+        "order_commitment_hash": {
+          "$ref": "#/$defs/nullable_hex32"
+        },
+        "seller_nonce": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "buyer_nonce": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "authorization_nonce": {
+          "$ref": "#/$defs/nullable_integer"
+        },
+        "object_state_version": {
+          "$ref": "#/$defs/nullable_integer"
+        }
+      }
+    },
+    "state_commitment": {
+      "$ref": "#/$defs/hex32"
+    },
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "availability",
+        "authoritative",
+        "order_state",
+        "settlement_record_count"
+      ],
+      "properties": {
+        "availability": {
+          "enum": [
+            "N/A",
+            "observed",
+            "unavailable"
+          ]
+        },
+        "authoritative": {
+          "const": false
+        },
+        "order_state": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "settlement_record_count": {
+          "$ref": "#/$defs/nullable_integer"
+        }
+      }
+    }
+  }
+}

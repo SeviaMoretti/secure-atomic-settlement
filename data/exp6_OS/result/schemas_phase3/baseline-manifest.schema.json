@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assetxchain-exp2-baseline-manifest-v1",
+  "title": "AssetXChain Phase 3 baseline manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "baseline_id",
+    "baseline_name",
+    "baseline_profile_version",
+    "contract_version",
+    "validity_level",
+    "git",
+    "authority",
+    "ownership",
+    "prohibited_dependencies",
+    "build",
+    "shared_fixture",
+    "adapter"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "assetxchain-exp2-baseline-manifest"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "baseline_id": {
+      "enum": [
+        "B1",
+        "B2",
+        "G3"
+      ]
+    },
+    "baseline_name": {
+      "enum": [
+        "Contract-only",
+        "Runtime-only",
+        "AssetXChain-CRS"
+      ]
+    },
+    "baseline_profile_version": {
+      "const": "1"
+    },
+    "contract_version": {
+      "const": "phase3-adapter-contract-v1"
+    },
+    "validity_level": {
+      "const": "legacy-pilot"
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worktree",
+        "branch",
+        "head",
+        "formal_base_commit",
+        "source_preservation_commit",
+        "phase2_g3_commit",
+        "dirty_expected"
+      ],
+      "properties": {
+        "worktree": {
+          "type": "string",
+          "pattern": "^/home/gz785/code/assetxchain(-b1|-b2|-g3-v2)$"
+        },
+        "branch": {
+          "type": "string",
+          "pattern": "^codex/"
+        },
+        "head": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "formal_base_commit": {
+          "const": "393bc52af495ccd72ff883059d7715cbb153f964"
+        },
+        "source_preservation_commit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "phase2_g3_commit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "dirty_expected": {
+          "type": "boolean"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain_authority",
+        "market_logic",
+        "payment_authority",
+        "order_authority",
+        "settlement_evidence_authority",
+        "projection_role",
+        "normalized_authority_source"
+      ],
+      "properties": {
+        "domain_authority": {
+          "enum": [
+            "contract",
+            "runtime"
+          ]
+        },
+        "market_logic": {
+          "enum": [
+            "contract",
+            "runtime"
+          ]
+        },
+        "payment_authority": {
+          "enum": [
+            "contract-order-escrow-ledger",
+            "runtime-escrow"
+          ]
+        },
+        "order_authority": {
+          "enum": [
+            "contract",
+            "runtime"
+          ]
+        },
+        "settlement_evidence_authority": {
+          "enum": [
+            "contract",
+            "runtime"
+          ]
+        },
+        "projection_role": {
+          "enum": [
+            "not-applicable",
+            "recoverable-contract-projection"
+          ]
+        },
+        "normalized_authority_source": {
+          "enum": [
+            "contract",
+            "runtime"
+          ]
+        }
+      }
+    },
+    "ownership": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "owner",
+          "role"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "prohibited_dependencies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_root",
+        "entries"
+      ],
+      "properties": {
+        "source_root": {
+          "type": "string",
+          "pattern": "^/home/gz785/code/assetxchain"
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "cwd",
+              "command",
+              "artifact_kind"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cwd": {
+                "type": "string",
+                "pattern": "^/home/gz785/code/assetxchain"
+              },
+              "command": {
+                "type": "string",
+                "pattern": "^cargo "
+              },
+              "artifact_kind": {
+                "enum": [
+                  "test",
+                  "wasm-check",
+                  "runtime-check"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "shared_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fixture_profile_id",
+        "vector_bundle_id",
+        "vector_bundle",
+        "generator",
+        "consumer"
+      ],
+      "properties": {
+        "fixture_profile_id": {
+          "const": "assetxchain-paper2-shared-fixture-v1"
+        },
+        "vector_bundle_id": {
+          "const": "assetxchain-paper2-shared-vectors-v1"
+        },
+        "vector_bundle": {
+          "const": "fixtures/phase3/assetxchain-paper2-shared-fixture-v1.json"
+        },
+        "generator": {
+          "const": "scripts/common/generate_shared_fixture.py"
+        },
+        "consumer": {
+          "const": "scripts/common/shared_fixture_codec.py#baseline_consumer_view"
+        }
+      }
+    },
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interface",
+        "implementation_status",
+        "entrypoint",
+        "planned_step"
+      ],
+      "properties": {
+        "interface": {
+          "const": "scripts/common/phase3_contract.py#BaselineAdapter"
+        },
+        "implementation_status": {
+          "enum": [
+            "missing",
+            "implemented"
+          ]
+        },
+        "entrypoint": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "planned_step": {
+          "enum": [
+            "S3.5",
+            "S3.8",
+            "S3.9"
+          ]
+        }
+      }
+    }
+  }
+}

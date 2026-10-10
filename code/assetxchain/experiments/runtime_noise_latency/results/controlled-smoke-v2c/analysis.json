@@ -1,0 +1,215 @@
+{
+  "status": "PASS",
+  "schema": "runtime-noise-analysis-v2",
+  "repetitions": 1,
+  "groups": [
+    {
+      "noise": 0,
+      "variant": "single_tree",
+      "mean_ms": 2044.123394000002,
+      "median_ms": 2044.123394000002,
+      "min_ms": 2044.123394000002,
+      "max_ms": 2044.123394000002,
+      "samples": [
+        2044.123394000002
+      ]
+    },
+    {
+      "noise": 0,
+      "variant": "dual_prefix",
+      "mean_ms": 2002.8975399999981,
+      "median_ms": 2002.8975399999981,
+      "min_ms": 2002.8975399999981,
+      "max_ms": 2002.8975399999981,
+      "samples": [
+        2002.8975399999981
+      ]
+    },
+    {
+      "noise": 512,
+      "variant": "single_tree",
+      "mean_ms": 2157.1444410000004,
+      "median_ms": 2157.1444410000004,
+      "min_ms": 2157.1444410000004,
+      "max_ms": 2157.1444410000004,
+      "samples": [
+        2157.1444410000004
+      ]
+    },
+    {
+      "noise": 512,
+      "variant": "dual_prefix",
+      "mean_ms": 2147.6301139999996,
+      "median_ms": 2147.6301139999996,
+      "min_ms": 2147.6301139999996,
+      "max_ms": 2147.6301139999996,
+      "samples": [
+        2147.6301139999996
+      ]
+    },
+    {
+      "noise": 2048,
+      "variant": "single_tree",
+      "mean_ms": 2379.8183959999988,
+      "median_ms": 2379.8183959999988,
+      "min_ms": 2379.8183959999988,
+      "max_ms": 2379.8183959999988,
+      "samples": [
+        2379.8183959999988
+      ]
+    },
+    {
+      "noise": 2048,
+      "variant": "dual_prefix",
+      "mean_ms": 2414.4112160000004,
+      "median_ms": 2414.4112160000004,
+      "min_ms": 2414.4112160000004,
+      "max_ms": 2414.4112160000004,
+      "samples": [
+        2414.4112160000004
+      ]
+    }
+  ],
+  "interaction_definition": "(single noisy - single zero) - (dual noisy - dual zero); positive favors dual",
+  "effects": [
+    {
+      "noise": 512,
+      "single_increment_ms": 113.02104699999836,
+      "dual_increment_ms": 144.73257400000148,
+      "interaction_ms": -31.711527000003116,
+      "interaction_samples": [
+        -31.711527000003116
+      ],
+      "bootstrap_95ci_ms": null,
+      "one_sided_sign_permutation_p": 1.0,
+      "direction_supported_in_this_sample": false,
+      "bonferroni_one_sided_p": 1
+    },
+    {
+      "noise": 2048,
+      "single_increment_ms": 335.69500199999675,
+      "dual_increment_ms": 411.5136760000023,
+      "interaction_ms": -75.81867400000556,
+      "interaction_samples": [
+        -75.81867400000556
+      ],
+      "bootstrap_95ci_ms": null,
+      "one_sided_sign_permutation_p": 1.0,
+      "direction_supported_in_this_sample": false,
+      "bonferroni_one_sided_p": 1
+    }
+  ],
+  "records": [
+    {
+      "variant": "dual_prefix",
+      "noise": 0,
+      "repetition": 0,
+      "latency_ms": 2002.8975399999981,
+      "phase_ms": 4004.0194730000003,
+      "completion_blocks": 1,
+      "accepted": 0,
+      "included": 0,
+      "noise_same_block": 0,
+      "target_index": 1,
+      "target_block_extrinsics": 2,
+      "raw": "r00_dual_prefix_n0.json",
+      "target_block_proposal_ms": 1
+    },
+    {
+      "variant": "single_tree",
+      "noise": 0,
+      "repetition": 0,
+      "latency_ms": 2044.123394000002,
+      "phase_ms": 4002.6494520000015,
+      "completion_blocks": 1,
+      "accepted": 0,
+      "included": 0,
+      "noise_same_block": 0,
+      "target_index": 1,
+      "target_block_extrinsics": 2,
+      "raw": "r00_single_tree_n0.json",
+      "target_block_proposal_ms": 1
+    },
+    {
+      "variant": "single_tree",
+      "noise": 512,
+      "repetition": 0,
+      "latency_ms": 2157.1444410000004,
+      "phase_ms": 4003.338732,
+      "completion_blocks": 1,
+      "accepted": 512,
+      "included": 512,
+      "noise_same_block": 512,
+      "target_index": 1,
+      "target_block_extrinsics": 514,
+      "raw": "r00_single_tree_n512.json",
+      "target_block_proposal_ms": 80
+    },
+    {
+      "variant": "dual_prefix",
+      "noise": 512,
+      "repetition": 0,
+      "latency_ms": 2147.6301139999996,
+      "phase_ms": 4001.472120000002,
+      "completion_blocks": 1,
+      "accepted": 512,
+      "included": 512,
+      "noise_same_block": 512,
+      "target_index": 1,
+      "target_block_extrinsics": 514,
+      "raw": "r00_dual_prefix_n512.json",
+      "target_block_proposal_ms": 72
+    },
+    {
+      "variant": "dual_prefix",
+      "noise": 2048,
+      "repetition": 0,
+      "latency_ms": 2414.4112160000004,
+      "phase_ms": 4003.156780999998,
+      "completion_blocks": 1,
+      "accepted": 2048,
+      "included": 2048,
+      "noise_same_block": 1343,
+      "target_index": 1,
+      "target_block_extrinsics": 1345,
+      "raw": "r00_dual_prefix_n2048.json",
+      "target_block_proposal_ms": 213
+    },
+    {
+      "variant": "single_tree",
+      "noise": 2048,
+      "repetition": 0,
+      "latency_ms": 2379.8183959999988,
+      "phase_ms": 4002.6068430000014,
+      "completion_blocks": 1,
+      "accepted": 2048,
+      "included": 2048,
+      "noise_same_block": 1343,
+      "target_index": 1,
+      "target_block_extrinsics": 1345,
+      "raw": "r00_single_tree_n2048.json",
+      "target_block_proposal_ms": 203
+    }
+  ],
+  "source_hashes": {
+    "r00_dual_prefix_n0.json": "1eef1ffa7eda0b41c52f87a9f710d780771700a5a9b027e7e78f5b2507f9bde8",
+    "r00_single_tree_n0.json": "c90f553565bf401d2f9235efec4f0dfdea9fc96609169644ed86c69a8156dbe3",
+    "r00_single_tree_n512.json": "8f7d74ba4bc13f720f5d972bb3b5904c35e772f8df556dae1a320e4ad3b16ebd",
+    "r00_dual_prefix_n512.json": "a8268993db2aa901bcfb1797ab140b539b495bfc4a8e2ef3e4d2fabb2f0f4545",
+    "r00_dual_prefix_n2048.json": "cdbe9e75d33ebd0093642d99ea0ba62fc18e2d3f1b2fe2240cd5e3cd428ee1af",
+    "r00_single_tree_n2048.json": "d4d346d924ca20764f6f26979789aa5082068c4824f68c253cd5e0add85cacee"
+  },
+  "analyzer_sha256": "7d5017ec5ebffa95ecc6573eea69ea35ca6a8ad75f19209a8f359071f32a8e44",
+  "runtime_code_hashes": {
+    "dual_prefix": "0xc6808fe4a74a783d650aeb7468501c9f0a59fc1d9e3cfc5ec6cd5e4775cb2e78",
+    "single_tree": "0x4387acbd71fb01c6e7a121694945c4918d6078310759ecedc76343fb56094817"
+  },
+  "limits": [
+    "Each cell is one independent fresh dev chain and one probe. R=5 cannot estimate tail latency reliably.",
+    "Fixed phase is relative to received head; includes local WebSocket observation delay.",
+    "Noise is a finite presigned registration burst, not sustained TPS or large historical state.",
+    "Probe transfers a certificate and reads both asset and certificate state; only part of its access is isolated.",
+    "Common global state, execution CPU, transaction pool, block space, root computation and consensus are shared.",
+    "No one-sided hypothesis outcome is required for the correctness gate."
+  ]
+}

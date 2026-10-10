@@ -1,0 +1,15 @@
+diff --git a/pallets/dataassets/src/lib.rs b/pallets/dataassets/src/lib.rs
+index 47eebc7..7c25069 100644
+--- a/pallets/dataassets/src/lib.rs
++++ b/pallets/dataassets/src/lib.rs
+@@ -741,7 +741,9 @@ pub mod pallet {
+         }
+ 
+         fn certificate_trie_info() -> sp_core::storage::ChildInfo {
+-            sp_core::storage::ChildInfo::new_default(CERTIFICATE_TRIE_ID)
++            // Noise experiment single-tree variant: metadata and rights share
++            // the same child trie. The key construction remains unchanged.
++            sp_core::storage::ChildInfo::new_default(ASSET_TRIE_ID)
+         }
+ 
+         fn make_asset_key(asset_id: &[u8; 32]) -> Vec<u8> {

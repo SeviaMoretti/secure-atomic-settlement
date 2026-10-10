@@ -1,0 +1,26 @@
+[package]
+name = "market_orderbook"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["guozheng <your-email@example.com>"]
+publish = false 
+
+[dependencies]
+ink.workspace = true
+scale-info.workspace = true
+codec.workspace = true
+market_standard = { path = "../market_standard", default-features = false }
+
+[lib]
+path = "lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["std"]
+std = [
+    "ink/std",
+    "codec/std",
+    "scale-info/std",
+    "market_standard/std",
+]
