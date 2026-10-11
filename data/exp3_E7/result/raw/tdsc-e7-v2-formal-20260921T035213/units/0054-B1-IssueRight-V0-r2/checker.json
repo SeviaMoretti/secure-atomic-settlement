@@ -1,0 +1,118 @@
+{
+  "net_effect_status": "PASS",
+  "errors": [],
+  "episode_id": "tdsc-e7-v2-formal-20260921T035213/0054-B1-IssueRight-V0-r2",
+  "replay_no_write_checks": [],
+  "payload_audit": {
+    "status": "PASS",
+    "original_signature_verified": true,
+    "decoded": [
+      {
+        "tx_hash": "0x389aa80d5a0b8f3923f4baa06269b20e090e4d51af1f92081d04440e41f687f9",
+        "method": "create_order",
+        "events": [
+          {
+            "method": "OrderCreated",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::OrderCreated",
+            "args": [
+              "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8",
+              "0x712c81a07c4fa5e17f18bc1f96f137e2f9b8ab7169d8d1687a981159ecc88ac6",
+              "IssueRight",
+              "0x4b60d001dc312560560b9bb4065f3d79dea66b4d1bcaa6ff020784801ee99be1"
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0x90c6b13af6f5e95e46e5560cb6ef8c752903ec5d88fc7a8343e1b71f9b9927e5",
+        "method": "fund_order",
+        "events": [
+          {
+            "method": "IssueQuotaReserved",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::IssueQuotaReserved",
+            "args": [
+              "0xe8be229dbe77814d4a2fa555e759314c73b07d08a105b4d00cbc74ef552a69e8",
+              "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8",
+              1
+            ]
+          },
+          {
+            "method": "OrderFunded",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::OrderFunded",
+            "args": [
+              "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8",
+              "0xb8727d005a481a67aa939949b647c2f9cf22d701725903f721cb53ada9c12306",
+              "0xeba2ab0d619af7350727de22eb963abaa74b39d6aeabba14b28832987582f42e",
+              3000000000000,
+              62
+            ]
+          },
+          {
+            "method": "PaymentEscrowed",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::PaymentEscrowed",
+            "args": [
+              "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8",
+              "0xeba2ab0d619af7350727de22eb963abaa74b39d6aeabba14b28832987582f42e",
+              3000000000000
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0x5d38d092f8f9f047968c677aea89bb6126e1499faf2c57144997b65569e10817",
+        "method": "settle",
+        "events": [
+          {
+            "method": "IssueQuotaConverted",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::IssueQuotaConverted",
+            "args": [
+              "0xe8be229dbe77814d4a2fa555e759314c73b07d08a105b4d00cbc74ef552a69e8",
+              "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8"
+            ]
+          },
+          {
+            "method": "PaymentReleased",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::PaymentReleased",
+            "args": [
+              "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8",
+              "0xeba2ab0d619af7350727de22eb963abaa74b39d6aeabba14b28832987582f42e",
+              3000000000000
+            ]
+          },
+          {
+            "method": "OrderSettled",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::OrderSettled",
+            "args": [
+              "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8"
+            ]
+          },
+          {
+            "method": "SettlementFinalized",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::SettlementFinalized",
+            "args": [
+              "0x8fcdcac704fd38fa5d250fa3539056c06f62e9058e18cdd24f8fc8a1d21f8615",
+              "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8",
+              "0x85b04f289d94d868808dde380b123e63e212947567c609f793938b9564a82dcf"
+            ]
+          }
+        ]
+      }
+    ],
+    "settlements": [
+      {
+        "method": "SettlementFinalized",
+        "qualified_identifier": "market_pure_contract::market_pure_contract::SettlementFinalized",
+        "args": [
+          "0x8fcdcac704fd38fa5d250fa3539056c06f62e9058e18cdd24f8fc8a1d21f8615",
+          "0xea2ac9d37e5c8db7c91c78c799b6585cd467e5dc6bab237435e9e46d4924ddb8",
+          "0x85b04f289d94d868808dde380b123e63e212947567c609f793938b9564a82dcf"
+        ]
+      }
+    ]
+  },
+  "formal_ready": false,
+  "remaining_gates": [
+    "fresh/reused bridge coverage",
+    "frozen source and artifact gate"
+  ]
+}

@@ -1,0 +1,657 @@
+{
+  "barrier_released_ns": "41294693904380",
+  "rpc_overlap": true,
+  "submissions": [
+    {
+      "label": "quota-1",
+      "actor": "BUYER_1",
+      "account": "5FecF2X4cEK82BP1njc7Xv4V14EsQPrY5cMKFZu96CrCBm8y",
+      "nonce": "0",
+      "signed_at_ns": "41294649938792",
+      "signed_bytes": "0x9d0484009e9024db51388f9fd3190488737bd978dfa829f30ec479b63321b95e31e5262f01b05971d5f1925f046605065df136ff41ba9605331af5c3a5ada5e463e45570095d69b411d43c70abf93160dc8e43635bee133ff4d91e28ee299cb0c724450880850000000013101873361f5011a0233501aca36fa3fb16059d7c1a9587f247ca15321bbf6214c11873361f5011a0233501aca36fa3fb16059d7c1a9587f247ca15321bbf6214c19e9024db51388f9fd3190488737bd978dfa829f30ec479b63321b95e31e5262f0030ef7dba0200000000000000000000005e0000000000000000000000006a589cca2657798c74618bafd0c778173b9f686b9339a1d69dd46f7ad33b4f13de8b46c162d4e85127d4fd0619f48060bf194b392c6828ecb5be8b90b59b82",
+      "tx_hash": "0xc458708f2e3743b32fc9baed95a58c71d25ed70deb1a8b32a8378a1cf21f05bb",
+      "rpc_started_ns": "41294693965745",
+      "rpc_ack_ns": "41294736473201",
+      "in_block_ns": "41299648058807",
+      "statuses": [
+        {
+          "status": "Ready",
+          "at_ns": "41294737577844"
+        },
+        {
+          "status": "InBlock",
+          "at_ns": "41299648058807"
+        }
+      ],
+      "block_hash": "0xa76101a175d12d56ade052aca4aa6aa0848e753b88f3b5785439d2802655b20f",
+      "parent_hash": "0x03d75cea5535faaf40bdda18571bbca6de490155e4f50d5da128a71a581a118c",
+      "block_number": 76,
+      "extrinsic_index": 2,
+      "dispatch_error": {
+        "section": "marketRuntime",
+        "name": "QuotaExceeded"
+      },
+      "events": [
+        {
+          "index": 8,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "balances",
+          "method": "Withdraw",
+          "data": [
+            "5FecF2X4cEK82BP1njc7Xv4V14EsQPrY5cMKFZu96CrCBm8y",
+            1645885297
+          ],
+          "topics": []
+        },
+        {
+          "index": 9,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "transactionPayment",
+          "method": "TransactionFeePaid",
+          "data": [
+            "5FecF2X4cEK82BP1njc7Xv4V14EsQPrY5cMKFZu96CrCBm8y",
+            1645885297,
+            0
+          ],
+          "topics": []
+        },
+        {
+          "index": 10,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "system",
+          "method": "ExtrinsicFailed",
+          "data": [
+            {
+              "module": {
+                "index": 19,
+                "error": "0x1e000000"
+              }
+            },
+            {
+              "weight": {
+                "refTime": 1645885000,
+                "proofSize": 12184
+              },
+              "class": "Normal",
+              "paysFee": "Yes"
+            }
+          ],
+          "topics": []
+        }
+      ],
+      "block_events": [
+        {
+          "index": 0,
+          "phase": {
+            "applyExtrinsic": 0
+          },
+          "section": "system",
+          "method": "ExtrinsicSuccess",
+          "data": [
+            {
+              "weight": {
+                "refTime": 261973000,
+                "proofSize": 1493
+              },
+              "class": "Mandatory",
+              "paysFee": "Yes"
+            }
+          ],
+          "topics": []
+        },
+        {
+          "index": 1,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "balances",
+          "method": "Withdraw",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            1645885297
+          ],
+          "topics": []
+        },
+        {
+          "index": 2,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "IssueQuotaReserved",
+          "data": [
+            "0xc2206b097ce0a7f8f31b709541e6a6e72a8e322f8a593b389de1265dcb83657d",
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            1,
+            1
+          ],
+          "topics": []
+        },
+        {
+          "index": 3,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "balances",
+          "method": "Reserved",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            3000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 4,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "OrderFunded",
+          "data": [
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            "0x129fdc6502ef59077b957739051572b4dfff51f3ca2012f9537d841dc70aea73",
+            "0xdacdd2be2e945a0314d2cd409ac61177342b2d7dc3bedc43a2f4a17c88f017ad",
+            3000000000000,
+            86
+          ],
+          "topics": []
+        },
+        {
+          "index": 5,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "PaymentEscrowed",
+          "data": [
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            "0xdacdd2be2e945a0314d2cd409ac61177342b2d7dc3bedc43a2f4a17c88f017ad",
+            3000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 6,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "transactionPayment",
+          "method": "TransactionFeePaid",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            1645885297,
+            0
+          ],
+          "topics": []
+        },
+        {
+          "index": 7,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "system",
+          "method": "ExtrinsicSuccess",
+          "data": [
+            {
+              "weight": {
+                "refTime": 1645885000,
+                "proofSize": 12184
+              },
+              "class": "Normal",
+              "paysFee": "Yes"
+            }
+          ],
+          "topics": []
+        },
+        {
+          "index": 8,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "balances",
+          "method": "Withdraw",
+          "data": [
+            "5FecF2X4cEK82BP1njc7Xv4V14EsQPrY5cMKFZu96CrCBm8y",
+            1645885297
+          ],
+          "topics": []
+        },
+        {
+          "index": 9,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "transactionPayment",
+          "method": "TransactionFeePaid",
+          "data": [
+            "5FecF2X4cEK82BP1njc7Xv4V14EsQPrY5cMKFZu96CrCBm8y",
+            1645885297,
+            0
+          ],
+          "topics": []
+        },
+        {
+          "index": 10,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "system",
+          "method": "ExtrinsicFailed",
+          "data": [
+            {
+              "module": {
+                "index": 19,
+                "error": "0x1e000000"
+              }
+            },
+            {
+              "weight": {
+                "refTime": 1645885000,
+                "proofSize": 12184
+              },
+              "class": "Normal",
+              "paysFee": "Yes"
+            }
+          ],
+          "topics": []
+        },
+        {
+          "index": 11,
+          "phase": {
+            "finalization": null
+          },
+          "section": "balances",
+          "method": "Deposit",
+          "data": [
+            "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            5000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 12,
+          "phase": {
+            "finalization": null
+          },
+          "section": "balances",
+          "method": "Issued",
+          "data": [
+            5000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 13,
+          "phase": {
+            "finalization": null
+          },
+          "section": "rewards",
+          "method": "RewardPaid",
+          "data": [
+            "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            5000000000000,
+            76
+          ],
+          "topics": []
+        }
+      ],
+      "fee": 1645885297
+    },
+    {
+      "label": "quota-2",
+      "actor": "BUYER_2",
+      "account": "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+      "nonce": "0",
+      "signed_at_ns": "41294693805409",
+      "signed_bytes": "0x9d048400129fdc6502ef59077b957739051572b4dfff51f3ca2012f9537d841dc70aea73015cee59ff13a634d816d5e5e83be7e13d3948425e129ef0cd654eab33494d8f3a2ece6b6c0f327cfc134a379460d0c1ee630f3964e08abc447fc5867919d37285850000000013109abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be9123899abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389129fdc6502ef59077b957739051572b4dfff51f3ca2012f9537d841dc70aea730030ef7dba0200000000000000000000005e0000000000000000000000a22629b23e3599fdc152c3edcccf6a2e9e50397f84367798aabd45ac98465b6171b70328ed9f0fdb346bce2acbb941f7969cf48527d56f1c6ca2bfd84a384089",
+      "tx_hash": "0xc182adb940c8bd15fb1901602204f31be8e3458d5b80de0db14a14286c96b94c",
+      "rpc_started_ns": "41294694304541",
+      "rpc_ack_ns": "41294736479547",
+      "in_block_ns": "41299649785100",
+      "statuses": [
+        {
+          "status": "Ready",
+          "at_ns": "41294737600430"
+        },
+        {
+          "status": "InBlock",
+          "at_ns": "41299649785100"
+        }
+      ],
+      "block_hash": "0xa76101a175d12d56ade052aca4aa6aa0848e753b88f3b5785439d2802655b20f",
+      "parent_hash": "0x03d75cea5535faaf40bdda18571bbca6de490155e4f50d5da128a71a581a118c",
+      "block_number": 76,
+      "extrinsic_index": 1,
+      "dispatch_error": null,
+      "events": [
+        {
+          "index": 1,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "balances",
+          "method": "Withdraw",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            1645885297
+          ],
+          "topics": []
+        },
+        {
+          "index": 2,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "IssueQuotaReserved",
+          "data": [
+            "0xc2206b097ce0a7f8f31b709541e6a6e72a8e322f8a593b389de1265dcb83657d",
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            1,
+            1
+          ],
+          "topics": []
+        },
+        {
+          "index": 3,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "balances",
+          "method": "Reserved",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            3000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 4,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "OrderFunded",
+          "data": [
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            "0x129fdc6502ef59077b957739051572b4dfff51f3ca2012f9537d841dc70aea73",
+            "0xdacdd2be2e945a0314d2cd409ac61177342b2d7dc3bedc43a2f4a17c88f017ad",
+            3000000000000,
+            86
+          ],
+          "topics": []
+        },
+        {
+          "index": 5,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "PaymentEscrowed",
+          "data": [
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            "0xdacdd2be2e945a0314d2cd409ac61177342b2d7dc3bedc43a2f4a17c88f017ad",
+            3000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 6,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "transactionPayment",
+          "method": "TransactionFeePaid",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            1645885297,
+            0
+          ],
+          "topics": []
+        },
+        {
+          "index": 7,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "system",
+          "method": "ExtrinsicSuccess",
+          "data": [
+            {
+              "weight": {
+                "refTime": 1645885000,
+                "proofSize": 12184
+              },
+              "class": "Normal",
+              "paysFee": "Yes"
+            }
+          ],
+          "topics": []
+        }
+      ],
+      "block_events": [
+        {
+          "index": 0,
+          "phase": {
+            "applyExtrinsic": 0
+          },
+          "section": "system",
+          "method": "ExtrinsicSuccess",
+          "data": [
+            {
+              "weight": {
+                "refTime": 261973000,
+                "proofSize": 1493
+              },
+              "class": "Mandatory",
+              "paysFee": "Yes"
+            }
+          ],
+          "topics": []
+        },
+        {
+          "index": 1,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "balances",
+          "method": "Withdraw",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            1645885297
+          ],
+          "topics": []
+        },
+        {
+          "index": 2,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "IssueQuotaReserved",
+          "data": [
+            "0xc2206b097ce0a7f8f31b709541e6a6e72a8e322f8a593b389de1265dcb83657d",
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            1,
+            1
+          ],
+          "topics": []
+        },
+        {
+          "index": 3,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "balances",
+          "method": "Reserved",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            3000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 4,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "OrderFunded",
+          "data": [
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            "0x129fdc6502ef59077b957739051572b4dfff51f3ca2012f9537d841dc70aea73",
+            "0xdacdd2be2e945a0314d2cd409ac61177342b2d7dc3bedc43a2f4a17c88f017ad",
+            3000000000000,
+            86
+          ],
+          "topics": []
+        },
+        {
+          "index": 5,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "marketRuntime",
+          "method": "PaymentEscrowed",
+          "data": [
+            "0x9abf151ac867a9bf9a7b0f962c1a93e2d8ab5af08fae9dd12c3da082be912389",
+            "0xdacdd2be2e945a0314d2cd409ac61177342b2d7dc3bedc43a2f4a17c88f017ad",
+            3000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 6,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "transactionPayment",
+          "method": "TransactionFeePaid",
+          "data": [
+            "5CV8CzwjwcNiDxr2GkpcYXNqZ1k2EvPmfpwQZFXuZ6MqybpZ",
+            1645885297,
+            0
+          ],
+          "topics": []
+        },
+        {
+          "index": 7,
+          "phase": {
+            "applyExtrinsic": 1
+          },
+          "section": "system",
+          "method": "ExtrinsicSuccess",
+          "data": [
+            {
+              "weight": {
+                "refTime": 1645885000,
+                "proofSize": 12184
+              },
+              "class": "Normal",
+              "paysFee": "Yes"
+            }
+          ],
+          "topics": []
+        },
+        {
+          "index": 8,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "balances",
+          "method": "Withdraw",
+          "data": [
+            "5FecF2X4cEK82BP1njc7Xv4V14EsQPrY5cMKFZu96CrCBm8y",
+            1645885297
+          ],
+          "topics": []
+        },
+        {
+          "index": 9,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "transactionPayment",
+          "method": "TransactionFeePaid",
+          "data": [
+            "5FecF2X4cEK82BP1njc7Xv4V14EsQPrY5cMKFZu96CrCBm8y",
+            1645885297,
+            0
+          ],
+          "topics": []
+        },
+        {
+          "index": 10,
+          "phase": {
+            "applyExtrinsic": 2
+          },
+          "section": "system",
+          "method": "ExtrinsicFailed",
+          "data": [
+            {
+              "module": {
+                "index": 19,
+                "error": "0x1e000000"
+              }
+            },
+            {
+              "weight": {
+                "refTime": 1645885000,
+                "proofSize": 12184
+              },
+              "class": "Normal",
+              "paysFee": "Yes"
+            }
+          ],
+          "topics": []
+        },
+        {
+          "index": 11,
+          "phase": {
+            "finalization": null
+          },
+          "section": "balances",
+          "method": "Deposit",
+          "data": [
+            "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            5000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 12,
+          "phase": {
+            "finalization": null
+          },
+          "section": "balances",
+          "method": "Issued",
+          "data": [
+            5000000000000
+          ],
+          "topics": []
+        },
+        {
+          "index": 13,
+          "phase": {
+            "finalization": null
+          },
+          "section": "rewards",
+          "method": "RewardPaid",
+          "data": [
+            "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            5000000000000,
+            76
+          ],
+          "topics": []
+        }
+      ],
+      "fee": 1645885297
+    }
+  ]
+}

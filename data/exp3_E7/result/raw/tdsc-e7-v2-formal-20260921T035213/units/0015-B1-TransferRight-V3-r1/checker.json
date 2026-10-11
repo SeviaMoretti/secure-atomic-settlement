@@ -1,0 +1,100 @@
+{
+  "net_effect_status": "PASS",
+  "errors": [],
+  "episode_id": "tdsc-e7-v2-formal-20260921T035213/0015-B1-TransferRight-V3-r1",
+  "replay_no_write_checks": [
+    {
+      "status": "PASS",
+      "errors": [],
+      "rows": [
+        {
+          "tx_hash": "0x54cf68b58220faeb7e58f566ac60cf8e0517607aae7e57228ead6e3355e9e40f",
+          "extrinsic_index": 2,
+          "business_reads": 2,
+          "business_write_calls": 0
+        },
+        {
+          "tx_hash": "0x618214454517cce0b343682ade7bd79dd2f46faad01c4a18626d9111c78be252",
+          "extrinsic_index": 3,
+          "business_reads": 2,
+          "business_write_calls": 0
+        },
+        {
+          "tx_hash": "0x27a167900f560c9b90061a32c39509d0cd091c7c99ee9e5e8bbe0f19f923820b",
+          "extrinsic_index": 4,
+          "business_reads": 2,
+          "business_write_calls": 0
+        }
+      ],
+      "scope": "no-business-write-calls-in-block-replay"
+    }
+  ],
+  "payload_audit": {
+    "status": "PASS",
+    "original_signature_verified": true,
+    "decoded": [
+      {
+        "tx_hash": "0x2149911d52737f4cec1c7e5ba9dea9b02ed60f4c2ce9c3c0624bcb2093104d50",
+        "method": "settle",
+        "events": [
+          {
+            "method": "PaymentReleased",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::PaymentReleased",
+            "args": [
+              "0x3c4b04e86c36f3d054b54361199fcb148435196e175c3f2e3d4867ec900c39d2",
+              "0x9be74ae7d78cc0796b1b407cf6dff01770fa8dbc7d1a7e6c711ed1d7ec4bcf37",
+              4000000000000
+            ]
+          },
+          {
+            "method": "OrderSettled",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::OrderSettled",
+            "args": [
+              "0x3c4b04e86c36f3d054b54361199fcb148435196e175c3f2e3d4867ec900c39d2"
+            ]
+          },
+          {
+            "method": "SettlementFinalized",
+            "qualified_identifier": "market_pure_contract::market_pure_contract::SettlementFinalized",
+            "args": [
+              "0x7a218e439629b2e366a43a284dc764a7bb77a5e4626ab829c013047dabd1bbc7",
+              "0x3c4b04e86c36f3d054b54361199fcb148435196e175c3f2e3d4867ec900c39d2",
+              "0xb31c9e97e455b994ae84bf2d08d177fb5aca42b3ccd80ea6c9f262eeae0f0e75"
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0x54cf68b58220faeb7e58f566ac60cf8e0517607aae7e57228ead6e3355e9e40f",
+        "method": "settle",
+        "events": []
+      },
+      {
+        "tx_hash": "0x618214454517cce0b343682ade7bd79dd2f46faad01c4a18626d9111c78be252",
+        "method": "settle",
+        "events": []
+      },
+      {
+        "tx_hash": "0x27a167900f560c9b90061a32c39509d0cd091c7c99ee9e5e8bbe0f19f923820b",
+        "method": "settle",
+        "events": []
+      }
+    ],
+    "settlements": [
+      {
+        "method": "SettlementFinalized",
+        "qualified_identifier": "market_pure_contract::market_pure_contract::SettlementFinalized",
+        "args": [
+          "0x7a218e439629b2e366a43a284dc764a7bb77a5e4626ab829c013047dabd1bbc7",
+          "0x3c4b04e86c36f3d054b54361199fcb148435196e175c3f2e3d4867ec900c39d2",
+          "0xb31c9e97e455b994ae84bf2d08d177fb5aca42b3ccd80ea6c9f262eeae0f0e75"
+        ]
+      }
+    ]
+  },
+  "formal_ready": false,
+  "remaining_gates": [
+    "fresh/reused bridge coverage",
+    "frozen source and artifact gate"
+  ]
+}

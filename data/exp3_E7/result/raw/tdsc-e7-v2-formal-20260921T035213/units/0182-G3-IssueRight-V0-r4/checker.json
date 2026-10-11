@@ -1,0 +1,88 @@
+{
+  "net_effect_status": "PASS",
+  "errors": [],
+  "episode_id": "tdsc-e7-v2-formal-20260921T035213/0182-G3-IssueRight-V0-r4",
+  "replay_no_write_checks": [],
+  "payload_audit": {
+    "status": "PASS",
+    "original_signature_verified": true,
+    "decoded": [
+      {
+        "tx_hash": "0x2aa05c9795083760e053cc28b14b129eefaec345ae090c06fdde37be59edeeb0",
+        "method": "e7_attack_create",
+        "events": [
+          {
+            "method": "OrderCreated",
+            "args": [
+              "0xb717b81e01091f5dbb72013cb2011630f3f49d326adae5c9e352021fcc1a1d0d",
+              "0x846c90cf7ba62d01126028236b7c07d2476f995d50bc6af1e88563b4608a7a3b",
+              "IssueRight",
+              "0xf7ede624128805ffd766ad1f34e12dd2b2d79dc7e2232ab74c6c3a88114c8945"
+            ]
+          },
+          {
+            "method": "IntentRelayed",
+            "qualified_identifier": "market_orderbook::market_orderbook::IntentRelayed",
+            "args": [
+              "0xb717b81e01091f5dbb72013cb2011630f3f49d326adae5c9e352021fcc1a1d0d",
+              "IssueRight"
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0x1f4b6a5db55f272a7737ac384dba946174d93f3740e527723ad56857b34da407",
+        "method": "e7_attack_fund",
+        "events": [
+          {
+            "method": "OrderFunded",
+            "args": [
+              "0xb717b81e01091f5dbb72013cb2011630f3f49d326adae5c9e352021fcc1a1d0d",
+              "0x607bb54759ff3d03cccfc5da888cc24d0ef0d7d3cf3d21c8206cd02ae7d1aa50",
+              "0x82afab42dcbf42bde73495d4c5cfa14af975fe67841a1f3a2248f8b14bea9619",
+              3000000000000,
+              74
+            ]
+          },
+          {
+            "method": "PaymentEscrowed",
+            "args": [
+              "0xb717b81e01091f5dbb72013cb2011630f3f49d326adae5c9e352021fcc1a1d0d",
+              "0x82afab42dcbf42bde73495d4c5cfa14af975fe67841a1f3a2248f8b14bea9619",
+              3000000000000
+            ]
+          }
+        ]
+      },
+      {
+        "tx_hash": "0x2434b320bb7fbd6c1247be18610101325472df04fb27c112eb63cba5ee137752",
+        "method": "e7_attack_settle",
+        "events": [
+          {
+            "method": "SettlementFinalized",
+            "args": [
+              "0xfe18aab6c586e679b0f67d1acd35662ae5447753eb3f9fe2aa0856b6a507bddb",
+              "0xb717b81e01091f5dbb72013cb2011630f3f49d326adae5c9e352021fcc1a1d0d",
+              "0xc31f3252b48cab07b33b8fea40b611b0c28493493923d4eefdb2ac7da1cf5953"
+            ]
+          }
+        ]
+      }
+    ],
+    "settlements": [
+      {
+        "method": "SettlementFinalized",
+        "args": [
+          "0xfe18aab6c586e679b0f67d1acd35662ae5447753eb3f9fe2aa0856b6a507bddb",
+          "0xb717b81e01091f5dbb72013cb2011630f3f49d326adae5c9e352021fcc1a1d0d",
+          "0xc31f3252b48cab07b33b8fea40b611b0c28493493923d4eefdb2ac7da1cf5953"
+        ]
+      }
+    ]
+  },
+  "formal_ready": false,
+  "remaining_gates": [
+    "fresh/reused bridge coverage",
+    "frozen source and artifact gate"
+  ]
+}
